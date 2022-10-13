@@ -18,9 +18,9 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| A cursor for use in pagination.
 -}
-cursor : SelectionSet String GithubNoFormat.Object.DeploymentEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.DeploymentEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 {-| The item at the end of the edge.

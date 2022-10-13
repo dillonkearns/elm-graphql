@@ -27,21 +27,21 @@ actor object____ =
 {-| Identifies the assignable associated with the event.
 -}
 assignable : SelectionSet decodesTo GithubNoFormat.Interface.Assignable
- -> SelectionSet decodesTo GithubNoFormat.Object.AssignedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.AssignedEvent
 assignable object____ =
       Object.selectionForCompositeField "assignable" [] (object____) (Basics.identity)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.AssignedEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.AssignedEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.AssignedEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.AssignedEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the user who was assigned.

@@ -141,7 +141,7 @@ commitComments fillInOptionals____ object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Repository
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -238,7 +238,7 @@ description =
 -}
 descriptionHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.Repository
 descriptionHTML =
-    Object.selectionForField "ScalarCodecs.Html" "descriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "descriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The number of kilobytes this repository occupies on disk.
@@ -252,7 +252,7 @@ diskUsage =
 -}
 forkCount : SelectionSet Int Github.Object.Repository
 forkCount =
-    Object.selectionForField "Int" "forkCount" [] Decode.int
+    Object.selectionForField "(Int)" "forkCount" [] Decode.int
 
 
 type alias ForksOptionalArguments =
@@ -299,14 +299,14 @@ forks fillInOptionals____ object____ =
 -}
 hasIssuesEnabled : SelectionSet Bool Github.Object.Repository
 hasIssuesEnabled =
-    Object.selectionForField "Bool" "hasIssuesEnabled" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasIssuesEnabled" [] Decode.bool
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
 hasWikiEnabled : SelectionSet Bool Github.Object.Repository
 hasWikiEnabled =
-    Object.selectionForField "Bool" "hasWikiEnabled" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasWikiEnabled" [] Decode.bool
 
 
 {-| The repository's URL.
@@ -318,42 +318,42 @@ homepageUrl =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Repository
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Indicates if the repository is unmaintained.
 -}
 isArchived : SelectionSet Bool Github.Object.Repository
 isArchived =
-    Object.selectionForField "Bool" "isArchived" [] Decode.bool
+    Object.selectionForField "(Bool)" "isArchived" [] Decode.bool
 
 
 {-| Identifies if the repository is a fork.
 -}
 isFork : SelectionSet Bool Github.Object.Repository
 isFork =
-    Object.selectionForField "Bool" "isFork" [] Decode.bool
+    Object.selectionForField "(Bool)" "isFork" [] Decode.bool
 
 
 {-| Indicates if the repository has been locked or not.
 -}
 isLocked : SelectionSet Bool Github.Object.Repository
 isLocked =
-    Object.selectionForField "Bool" "isLocked" [] Decode.bool
+    Object.selectionForField "(Bool)" "isLocked" [] Decode.bool
 
 
 {-| Identifies if the repository is a mirror.
 -}
 isMirror : SelectionSet Bool Github.Object.Repository
 isMirror =
-    Object.selectionForField "Bool" "isMirror" [] Decode.bool
+    Object.selectionForField "(Bool)" "isMirror" [] Decode.bool
 
 
 {-| Identifies if the repository is private.
 -}
 isPrivate : SelectionSet Bool Github.Object.Repository
 isPrivate =
-    Object.selectionForField "Bool" "isPrivate" [] Decode.bool
+    Object.selectionForField "(Bool)" "isPrivate" [] Decode.bool
 
 
 type alias IssueRequiredArguments =
@@ -633,14 +633,14 @@ mirrorUrl =
 -}
 name : SelectionSet String Github.Object.Repository
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The repository's name with owner.
 -}
 nameWithOwner : SelectionSet String Github.Object.Repository
 nameWithOwner =
-    Object.selectionForField "String" "nameWithOwner" [] Decode.string
+    Object.selectionForField "(String)" "nameWithOwner" [] Decode.string
 
 
 type alias ObjectOptionalArguments =
@@ -757,14 +757,14 @@ projects fillInOptionals____ object____ =
 -}
 projectsResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Repository
 projectsResourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "projectsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing repository's projects
 -}
 projectsUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Repository
 projectsUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "projectsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias ProtectedBranchesOptionalArguments =
@@ -1011,7 +1011,7 @@ repositoryTopics fillInOptionals____ object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Repository
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -1035,14 +1035,14 @@ shortDescriptionHTML fillInOptionals____ =
             [ Argument.optional "limit" filledInOptionals____.limit Encode.int ]
                 |> List.filterMap Basics.identity
     in
-    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The SSH URL to clone this repository
 -}
 sshUrl : SelectionSet Github.ScalarCodecs.GitSSHRemote Github.Object.Repository
 sshUrl =
-    Object.selectionForField "ScalarCodecs.GitSSHRemote" "sshUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitSSHRemote |> .decoder)
+    Object.selectionForField "(ScalarCodecs.GitSSHRemote)" "sshUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitSSHRemote |> .decoder)
 
 
 type alias StargazersOptionalArguments =
@@ -1084,49 +1084,49 @@ stargazers fillInOptionals____ object____ =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Repository
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this repository
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Repository
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Indicates whether the viewer has admin permissions on this repository.
 -}
 viewerCanAdminister : SelectionSet Bool Github.Object.Repository
 viewerCanAdminister =
-    Object.selectionForField "Bool" "viewerCanAdminister" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanAdminister" [] Decode.bool
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
 viewerCanCreateProjects : SelectionSet Bool Github.Object.Repository
 viewerCanCreateProjects =
-    Object.selectionForField "Bool" "viewerCanCreateProjects" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanCreateProjects" [] Decode.bool
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
 viewerCanSubscribe : SelectionSet Bool Github.Object.Repository
 viewerCanSubscribe =
-    Object.selectionForField "Bool" "viewerCanSubscribe" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Indicates whether the viewer can update the topics of this repository.
 -}
 viewerCanUpdateTopics : SelectionSet Bool Github.Object.Repository
 viewerCanUpdateTopics =
-    Object.selectionForField "Bool" "viewerCanUpdateTopics" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanUpdateTopics" [] Decode.bool
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
 viewerHasStarred : SelectionSet Bool Github.Object.Repository
 viewerHasStarred =
-    Object.selectionForField "Bool" "viewerHasStarred" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerHasStarred" [] Decode.bool
 
 
 {-| The users permission level on the repository. Will return null if authenticated as an GitHub App.
@@ -1140,7 +1140,7 @@ viewerPermission =
 -}
 viewerSubscription : SelectionSet Github.Enum.SubscriptionState.SubscriptionState Github.Object.Repository
 viewerSubscription =
-    Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] Github.Enum.SubscriptionState.decoder
+    Object.selectionForField "(Enum.SubscriptionState.SubscriptionState)" "viewerSubscription" [] Github.Enum.SubscriptionState.decoder
 
 
 type alias WatchersOptionalArguments =

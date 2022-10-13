@@ -26,41 +26,41 @@ actor object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.CrossReferencedEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.CrossReferencedEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.CrossReferencedEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.CrossReferencedEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Reference originated in a different repository.
 -}
-isCrossRepository : SelectionSet Bool GithubNoFormat.Object.CrossReferencedEvent
+isCrossRepository : SelectionSet (Bool) GithubNoFormat.Object.CrossReferencedEvent
 isCrossRepository =
-      Object.selectionForField "Bool" "isCrossRepository" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isCrossRepository" [] (Decode.bool)
 
 
 {-| Identifies when the reference was made.
 -}
-referencedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.CrossReferencedEvent
+referencedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.CrossReferencedEvent
 referencedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "referencedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "referencedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.CrossReferencedEvent
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.CrossReferencedEvent
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Issue or pull request that made the reference.
 -}
 source : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
- -> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.CrossReferencedEvent
 source object____ =
       Object.selectionForCompositeField "source" [] (object____) (Basics.identity)
 
@@ -68,20 +68,20 @@ source object____ =
 {-| Issue or pull request to which the reference was made.
 -}
 target : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
- -> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.CrossReferencedEvent
 target object____ =
       Object.selectionForCompositeField "target" [] (object____) (Basics.identity)
 
 
 {-| The HTTP URL for this pull request.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.CrossReferencedEvent
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.CrossReferencedEvent
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Checks if the target will be closed when the source is merged.
 -}
-willCloseTarget : SelectionSet Bool GithubNoFormat.Object.CrossReferencedEvent
+willCloseTarget : SelectionSet (Bool) GithubNoFormat.Object.CrossReferencedEvent
 willCloseTarget =
-      Object.selectionForField "Bool" "willCloseTarget" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "willCloseTarget" [] (Decode.bool)

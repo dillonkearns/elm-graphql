@@ -279,6 +279,6 @@ maybeFragments =
     }
 {-| ID of the object.
 -}
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Node
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.Node
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)

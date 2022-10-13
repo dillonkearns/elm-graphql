@@ -49,7 +49,7 @@ maybeFragments =
  onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
  onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
+type alias AvatarUrlOptionalArguments = { size : OptionalArgument (Int) }
 
 {-| A URL pointing to the actor's public avatar.
 
@@ -57,7 +57,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
- -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.Actor
+ -> SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.Actor
 avatarUrl fillInOptionals____ =
     let
         filledInOptionals____ =
@@ -67,25 +67,25 @@ avatarUrl fillInOptionals____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap Basics.identity
     in
-      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The username of the actor.
 -}
-login : SelectionSet String GithubNoFormat.Interface.Actor
+login : SelectionSet (String) GithubNoFormat.Interface.Actor
 login =
-      Object.selectionForField "String" "login" [] (Decode.string)
+      Object.selectionForField "(String)" "login" [] (Decode.string)
 
 
 {-| The HTTP path for this actor.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.Actor
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.Actor
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this actor.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.Actor
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.Actor
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

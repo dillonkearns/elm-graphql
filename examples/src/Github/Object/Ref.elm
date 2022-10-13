@@ -64,21 +64,21 @@ associatedPullRequests fillInOptionals____ object____ =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Ref
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The ref name.
 -}
 name : SelectionSet String Github.Object.Ref
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The ref's prefix, such as `refs/heads/` or `refs/tags/`.
 -}
 prefix : SelectionSet String Github.Object.Ref
 prefix =
-    Object.selectionForField "String" "prefix" [] Decode.string
+    Object.selectionForField "(String)" "prefix" [] Decode.string
 
 
 {-| The repository the ref belongs to.

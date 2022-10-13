@@ -45,7 +45,7 @@ content object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ProjectCard
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who created this card
@@ -67,7 +67,7 @@ databaseId =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.ProjectCard
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The card note
@@ -100,7 +100,7 @@ projectColumn object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.ProjectCard
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The state of ProjectCard
@@ -115,11 +115,11 @@ state =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ProjectCard
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this card
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.ProjectCard
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

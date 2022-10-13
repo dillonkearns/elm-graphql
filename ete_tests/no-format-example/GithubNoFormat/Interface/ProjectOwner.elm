@@ -46,12 +46,12 @@ maybeFragments =
       onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
  onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.ProjectOwner
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.ProjectOwner
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
-type alias ProjectRequiredArguments = { number : Int }
+type alias ProjectRequiredArguments = { number : (Int) }
 
 {-| Find project by number.
 
@@ -65,13 +65,13 @@ project requiredArgs____ object____ =
       Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ProjectsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
- , search : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
+type alias ProjectsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ProjectOrder)
+ , search : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.ProjectState.ProjectState))) }
 
 {-| A list of projects under the owner.
 
@@ -86,7 +86,7 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument Int
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
- -> SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.ProjectOwner
 projects fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -101,20 +101,20 @@ projects fillInOptionals____ object____ =
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.ProjectOwner
+projectsResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.ProjectOwner
 projectsResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "projectsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.ProjectOwner
+projectsUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.ProjectOwner
 projectsUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "projectsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
-viewerCanCreateProjects : SelectionSet Bool GithubNoFormat.Interface.ProjectOwner
+viewerCanCreateProjects : SelectionSet (Bool) GithubNoFormat.Interface.ProjectOwner
 viewerCanCreateProjects =
-      Object.selectionForField "Bool" "viewerCanCreateProjects" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanCreateProjects" [] (Decode.bool)

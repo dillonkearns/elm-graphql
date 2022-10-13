@@ -59,18 +59,18 @@ maybeFragments =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.Subscribable
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
 viewerCanSubscribe : SelectionSet Bool Github.Interface.Subscribable
 viewerCanSubscribe =
-    Object.selectionForField "Bool" "viewerCanSubscribe" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
 viewerSubscription : SelectionSet Github.Enum.SubscriptionState.SubscriptionState Github.Interface.Subscribable
 viewerSubscription =
-    Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] Github.Enum.SubscriptionState.decoder
+    Object.selectionForField "(Enum.SubscriptionState.SubscriptionState)" "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

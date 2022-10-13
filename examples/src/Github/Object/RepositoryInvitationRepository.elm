@@ -24,7 +24,7 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.RepositoryInvitationRepository
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The description of the repository.
@@ -38,28 +38,28 @@ description =
 -}
 descriptionHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.RepositoryInvitationRepository
 descriptionHTML =
-    Object.selectionForField "ScalarCodecs.Html" "descriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "descriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
 -}
 forkCount : SelectionSet Int Github.Object.RepositoryInvitationRepository
 forkCount =
-    Object.selectionForField "Int" "forkCount" [] Decode.int
+    Object.selectionForField "(Int)" "forkCount" [] Decode.int
 
 
 {-| Indicates if the repository has issues feature enabled.
 -}
 hasIssuesEnabled : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 hasIssuesEnabled =
-    Object.selectionForField "Bool" "hasIssuesEnabled" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasIssuesEnabled" [] Decode.bool
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
 hasWikiEnabled : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 hasWikiEnabled =
-    Object.selectionForField "Bool" "hasWikiEnabled" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasWikiEnabled" [] Decode.bool
 
 
 {-| The repository's URL.
@@ -73,35 +73,35 @@ homepageUrl =
 -}
 isArchived : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isArchived =
-    Object.selectionForField "Bool" "isArchived" [] Decode.bool
+    Object.selectionForField "(Bool)" "isArchived" [] Decode.bool
 
 
 {-| Identifies if the repository is a fork.
 -}
 isFork : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isFork =
-    Object.selectionForField "Bool" "isFork" [] Decode.bool
+    Object.selectionForField "(Bool)" "isFork" [] Decode.bool
 
 
 {-| Indicates if the repository has been locked or not.
 -}
 isLocked : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isLocked =
-    Object.selectionForField "Bool" "isLocked" [] Decode.bool
+    Object.selectionForField "(Bool)" "isLocked" [] Decode.bool
 
 
 {-| Identifies if the repository is a mirror.
 -}
 isMirror : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isMirror =
-    Object.selectionForField "Bool" "isMirror" [] Decode.bool
+    Object.selectionForField "(Bool)" "isMirror" [] Decode.bool
 
 
 {-| Identifies if the repository is private.
 -}
 isPrivate : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isPrivate =
-    Object.selectionForField "Bool" "isPrivate" [] Decode.bool
+    Object.selectionForField "(Bool)" "isPrivate" [] Decode.bool
 
 
 {-| The license associated with the repository
@@ -139,14 +139,14 @@ mirrorUrl =
 -}
 name : SelectionSet String Github.Object.RepositoryInvitationRepository
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The repository's name with owner.
 -}
 nameWithOwner : SelectionSet String Github.Object.RepositoryInvitationRepository
 nameWithOwner =
-    Object.selectionForField "String" "nameWithOwner" [] Decode.string
+    Object.selectionForField "(String)" "nameWithOwner" [] Decode.string
 
 
 {-| The owner of the repository associated with this invitation repository.
@@ -169,7 +169,7 @@ pushedAt =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.RepositoryInvitationRepository
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -193,7 +193,7 @@ shortDescriptionHTML fillInOptionals____ =
             [ Argument.optional "limit" filledInOptionals____.limit Encode.int ]
                 |> List.filterMap Basics.identity
     in
-    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -201,11 +201,11 @@ shortDescriptionHTML fillInOptionals____ =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.RepositoryInvitationRepository
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this repository
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.RepositoryInvitationRepository
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

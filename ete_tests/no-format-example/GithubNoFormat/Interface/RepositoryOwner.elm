@@ -49,7 +49,7 @@ maybeFragments =
       onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
  onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
+type alias AvatarUrlOptionalArguments = { size : OptionalArgument (Int) }
 
 {-| A URL pointing to the owner's public avatar.
 
@@ -57,7 +57,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
- -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.RepositoryOwner
 avatarUrl fillInOptionals____ =
     let
         filledInOptionals____ =
@@ -67,29 +67,29 @@ avatarUrl fillInOptionals____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap Basics.identity
     in
-      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.RepositoryOwner
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.RepositoryOwner
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The username used to login.
 -}
-login : SelectionSet String GithubNoFormat.Interface.RepositoryOwner
+login : SelectionSet (String) GithubNoFormat.Interface.RepositoryOwner
 login =
-      Object.selectionForField "String" "login" [] (Decode.string)
+      Object.selectionForField "(String)" "login" [] (Decode.string)
 
 
-type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
- , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
- , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
- , isLocked : OptionalArgument Bool }
+type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
+ , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories this user has pinned to their profile
 
@@ -105,7 +105,7 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
 -}
 pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
- -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.RepositoryOwner
 pinnedRepositories fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -118,15 +118,15 @@ pinnedRepositories fillInOptionals____ object____ =
       Object.selectionForCompositeField "pinnedRepositories" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
- , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
- , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
- , isLocked : OptionalArgument Bool
- , isFork : OptionalArgument Bool }
+type alias RepositoriesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
+ , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , isLocked : OptionalArgument (Bool)
+ , isFork : OptionalArgument (Bool) }
 
 {-| A list of repositories that the user owns.
 
@@ -143,7 +143,7 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
- -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.RepositoryOwner
 repositories fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -156,7 +156,7 @@ repositories fillInOptionals____ object____ =
       Object.selectionForCompositeField "repositories" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias RepositoryRequiredArguments = { name : String }
+type alias RepositoryRequiredArguments = { name : (String) }
 
 {-| Find Repository.
 
@@ -172,13 +172,13 @@ repository requiredArgs____ object____ =
 
 {-| The HTTP URL for the owner.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryOwner
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.RepositoryOwner
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for the owner.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryOwner
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.RepositoryOwner
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

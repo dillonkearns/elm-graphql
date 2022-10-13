@@ -26,26 +26,26 @@ actor object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.DemilestonedEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.DemilestonedEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.DemilestonedEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.DemilestonedEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the milestone title associated with the 'demilestoned' event.
 -}
-milestoneTitle : SelectionSet String GithubNoFormat.Object.DemilestonedEvent
+milestoneTitle : SelectionSet (String) GithubNoFormat.Object.DemilestonedEvent
 milestoneTitle =
-      Object.selectionForField "String" "milestoneTitle" [] (Decode.string)
+      Object.selectionForField "(String)" "milestoneTitle" [] (Decode.string)
 
 
 {-| Object referenced by event.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Union.MilestoneItem
- -> SelectionSet decodesTo GithubNoFormat.Object.DemilestonedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.DemilestonedEvent
 subject object____ =
       Object.selectionForCompositeField "subject" [] (object____) (Basics.identity)

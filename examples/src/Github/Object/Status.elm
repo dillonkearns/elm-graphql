@@ -57,11 +57,11 @@ contexts object____ =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Status
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The combined commit status.
 -}
 state : SelectionSet Github.Enum.StatusState.StatusState Github.Object.Status
 state =
-    Object.selectionForField "Enum.StatusState.StatusState" "state" [] Github.Enum.StatusState.decoder
+    Object.selectionForField "(Enum.StatusState.StatusState)" "state" [] Github.Enum.StatusState.decoder

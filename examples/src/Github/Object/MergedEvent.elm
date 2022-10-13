@@ -41,12 +41,12 @@ commit object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.MergedEvent
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.MergedEvent
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the Ref associated with the `merge` event.
@@ -62,7 +62,7 @@ mergeRef object____ =
 -}
 mergeRefName : SelectionSet String Github.Object.MergedEvent
 mergeRefName =
-    Object.selectionForField "String" "mergeRefName" [] Decode.string
+    Object.selectionForField "(String)" "mergeRefName" [] Decode.string
 
 
 {-| PullRequest referenced by event.
@@ -78,11 +78,11 @@ pullRequest object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.MergedEvent
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this merged event.
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.MergedEvent
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

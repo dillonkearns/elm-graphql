@@ -16,19 +16,19 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-cursor : SelectionSet String GithubNoFormat.Object.StarredRepositoryEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.StarredRepositoryEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.StarredRepositoryEdge
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.StarredRepositoryEdge
 node object____ =
       Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| Identifies when the item was starred.
 -}
-starredAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.StarredRepositoryEdge
+starredAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.StarredRepositoryEdge
 starredAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "starredAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "starredAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

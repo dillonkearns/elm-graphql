@@ -18,14 +18,14 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| The GUID for this identity
 -}
-guid : SelectionSet String GithubNoFormat.Object.ExternalIdentity
+guid : SelectionSet (String) GithubNoFormat.Object.ExternalIdentity
 guid =
-      Object.selectionForField "String" "guid" [] (Decode.string)
+      Object.selectionForField "(String)" "guid" [] (Decode.string)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.ExternalIdentity
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.ExternalIdentity
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Organization invitation for this SCIM-provisioned external identity

@@ -18,30 +18,30 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.GitSignatureState
 {-| Email used to sign this object.
 -}
-email : SelectionSet String GithubNoFormat.Object.UnknownSignature
+email : SelectionSet (String) GithubNoFormat.Object.UnknownSignature
 email =
-      Object.selectionForField "String" "email" [] (Decode.string)
+      Object.selectionForField "(String)" "email" [] (Decode.string)
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
-isValid : SelectionSet Bool GithubNoFormat.Object.UnknownSignature
+isValid : SelectionSet (Bool) GithubNoFormat.Object.UnknownSignature
 isValid =
-      Object.selectionForField "Bool" "isValid" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isValid" [] (Decode.bool)
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
-payload : SelectionSet String GithubNoFormat.Object.UnknownSignature
+payload : SelectionSet (String) GithubNoFormat.Object.UnknownSignature
 payload =
-      Object.selectionForField "String" "payload" [] (Decode.string)
+      Object.selectionForField "(String)" "payload" [] (Decode.string)
 
 
 {-| ASCII-armored signature header from object.
 -}
-signature : SelectionSet String GithubNoFormat.Object.UnknownSignature
+signature : SelectionSet (String) GithubNoFormat.Object.UnknownSignature
 signature =
-      Object.selectionForField "String" "signature" [] (Decode.string)
+      Object.selectionForField "(String)" "signature" [] (Decode.string)
 
 
 {-| GitHub user corresponding to the email signing this commit.
@@ -54,6 +54,6 @@ signer object____ =
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.
 -}
-state : SelectionSet GithubNoFormat.Enum.GitSignatureState.GitSignatureState GithubNoFormat.Object.UnknownSignature
+state : SelectionSet (GithubNoFormat.Enum.GitSignatureState.GitSignatureState) GithubNoFormat.Object.UnknownSignature
 state =
-      Object.selectionForField "Enum.GitSignatureState.GitSignatureState" "state" [] (GithubNoFormat.Enum.GitSignatureState.decoder)
+      Object.selectionForField "(Enum.GitSignatureState.GitSignatureState)" "state" [] (GithubNoFormat.Enum.GitSignatureState.decoder)

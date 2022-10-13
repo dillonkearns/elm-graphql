@@ -16,19 +16,19 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-cursor : SelectionSet String GithubNoFormat.Object.LanguageEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.LanguageEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.Language
- -> SelectionSet decodesTo GithubNoFormat.Object.LanguageEdge
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.LanguageEdge
 node object____ =
       Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| The number of bytes of code written in the language.
 -}
-size : SelectionSet Int GithubNoFormat.Object.LanguageEdge
+size : SelectionSet (Int) GithubNoFormat.Object.LanguageEdge
 size =
-      Object.selectionForField "Int" "size" [] (Decode.int)
+      Object.selectionForField "(Int)" "size" [] (Decode.int)

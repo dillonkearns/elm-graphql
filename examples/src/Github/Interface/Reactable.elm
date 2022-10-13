@@ -67,7 +67,7 @@ databaseId =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.Reactable
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -119,4 +119,4 @@ reactions fillInOptionals____ object____ =
 -}
 viewerCanReact : SelectionSet Bool Github.Interface.Reactable
 viewerCanReact =
-    Object.selectionForField "Bool" "viewerCanReact" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanReact" [] Decode.bool

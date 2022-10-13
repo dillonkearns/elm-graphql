@@ -18,34 +18,34 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| The point cost for the current query counting against the rate limit.
 -}
-cost : SelectionSet Int GithubNoFormat.Object.RateLimit
+cost : SelectionSet (Int) GithubNoFormat.Object.RateLimit
 cost =
-      Object.selectionForField "Int" "cost" [] (Decode.int)
+      Object.selectionForField "(Int)" "cost" [] (Decode.int)
 
 
 {-| The maximum number of points the client is permitted to consume in a 60 minute window.
 -}
-limit : SelectionSet Int GithubNoFormat.Object.RateLimit
+limit : SelectionSet (Int) GithubNoFormat.Object.RateLimit
 limit =
-      Object.selectionForField "Int" "limit" [] (Decode.int)
+      Object.selectionForField "(Int)" "limit" [] (Decode.int)
 
 
 {-| The maximum number of nodes this query may return
 -}
-nodeCount : SelectionSet Int GithubNoFormat.Object.RateLimit
+nodeCount : SelectionSet (Int) GithubNoFormat.Object.RateLimit
 nodeCount =
-      Object.selectionForField "Int" "nodeCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "nodeCount" [] (Decode.int)
 
 
 {-| The number of points remaining in the current rate limit window.
 -}
-remaining : SelectionSet Int GithubNoFormat.Object.RateLimit
+remaining : SelectionSet (Int) GithubNoFormat.Object.RateLimit
 remaining =
-      Object.selectionForField "Int" "remaining" [] (Decode.int)
+      Object.selectionForField "(Int)" "remaining" [] (Decode.int)
 
 
 {-| The time at which the current rate limit window resets in UTC epoch seconds.
 -}
-resetAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.RateLimit
+resetAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.RateLimit
 resetAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "resetAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "resetAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

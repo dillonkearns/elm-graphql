@@ -81,13 +81,13 @@ maybeFragments =
     }
 {-| The HTML path to this resource.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.UniformResourceLocatable
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.UniformResourceLocatable
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The URL to this resource.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.UniformResourceLocatable
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.UniformResourceLocatable
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

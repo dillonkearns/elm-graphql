@@ -18,9 +18,9 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.ReactionContent
 {-| Identifies the emoji reaction.
 -}
-content : SelectionSet GithubNoFormat.Enum.ReactionContent.ReactionContent GithubNoFormat.Object.ReactionGroup
+content : SelectionSet (GithubNoFormat.Enum.ReactionContent.ReactionContent) GithubNoFormat.Object.ReactionGroup
 content =
-      Object.selectionForField "Enum.ReactionContent.ReactionContent" "content" [] (GithubNoFormat.Enum.ReactionContent.decoder)
+      Object.selectionForField "(Enum.ReactionContent.ReactionContent)" "content" [] (GithubNoFormat.Enum.ReactionContent.decoder)
 
 
 {-| Identifies when the reaction was created.
@@ -33,15 +33,15 @@ createdAt =
 {-| The subject that was reacted to.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Interface.Reactable
- -> SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ReactionGroup
 subject object____ =
       Object.selectionForCompositeField "subject" [] (object____) (Basics.identity)
 
 
-type alias UsersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias UsersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| Users who have reacted to the reaction subject with the emotion represented by this reaction group
 
@@ -53,7 +53,7 @@ type alias UsersOptionalArguments = { first : OptionalArgument Int
 -}
 users : (UsersOptionalArguments -> UsersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactingUserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ReactionGroup
 users fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -68,6 +68,6 @@ users fillInOptionals____ object____ =
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
-viewerHasReacted : SelectionSet Bool GithubNoFormat.Object.ReactionGroup
+viewerHasReacted : SelectionSet (Bool) GithubNoFormat.Object.ReactionGroup
 viewerHasReacted =
-      Object.selectionForField "Bool" "viewerHasReacted" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerHasReacted" [] (Decode.bool)

@@ -25,14 +25,14 @@ clientMutationId =
 
 {-| Names of the provided topics that are not valid.
 -}
-invalidTopicNames : SelectionSet (Maybe ((List String))) GithubNoFormat.Object.UpdateTopicsPayload
+invalidTopicNames : SelectionSet (Maybe ((List (String)))) GithubNoFormat.Object.UpdateTopicsPayload
 invalidTopicNames =
-      Object.selectionForField "(Maybe ((List String)))" "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
+      Object.selectionForField "(Maybe ((List (String))))" "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| The updated repository.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.UpdateTopicsPayload
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.UpdateTopicsPayload
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)

@@ -57,33 +57,33 @@ maybeFragments =
 -}
 abbreviatedOid : SelectionSet String Github.Interface.GitObject
 abbreviatedOid =
-    Object.selectionForField "String" "abbreviatedOid" [] Decode.string
+    Object.selectionForField "(String)" "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
 commitResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Interface.GitObject
 commitResourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : SelectionSet Github.ScalarCodecs.Uri Github.Interface.GitObject
 commitUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.GitObject
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The Git object ID
 -}
 oid : SelectionSet Github.ScalarCodecs.GitObjectID Github.Interface.GitObject
 oid =
-    Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+    Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the Git object belongs to

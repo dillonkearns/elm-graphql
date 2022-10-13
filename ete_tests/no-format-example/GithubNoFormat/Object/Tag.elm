@@ -18,28 +18,28 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : SelectionSet String GithubNoFormat.Object.Tag
+abbreviatedOid : SelectionSet (String) GithubNoFormat.Object.Tag
 abbreviatedOid =
-      Object.selectionForField "String" "abbreviatedOid" [] (Decode.string)
+      Object.selectionForField "(String)" "abbreviatedOid" [] (Decode.string)
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Tag
+commitResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Tag
 commitResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "commitResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "commitResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Tag
+commitUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Tag
 commitUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "commitUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "commitUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Tag
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Tag
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The Git tag message.
@@ -51,22 +51,22 @@ message =
 
 {-| The Git tag name.
 -}
-name : SelectionSet String GithubNoFormat.Object.Tag
+name : SelectionSet (String) GithubNoFormat.Object.Tag
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| The Git object ID
 -}
-oid : SelectionSet GithubNoFormat.ScalarCodecs.GitObjectID GithubNoFormat.Object.Tag
+oid : SelectionSet (GithubNoFormat.ScalarCodecs.GitObjectID) GithubNoFormat.Object.Tag
 oid =
-      Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+      Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the Git object belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.Tag
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Tag
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
@@ -82,6 +82,6 @@ tagger object____ =
 {-| The Git object the tag points to.
 -}
 target : SelectionSet decodesTo GithubNoFormat.Interface.GitObject
- -> SelectionSet decodesTo GithubNoFormat.Object.Tag
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Tag
 target object____ =
       Object.selectionForCompositeField "target" [] (object____) (Basics.identity)

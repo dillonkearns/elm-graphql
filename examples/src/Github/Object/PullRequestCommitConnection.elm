@@ -50,4 +50,4 @@ pageInfo object____ =
 -}
 totalCount : SelectionSet Int Github.Object.PullRequestCommitConnection
 totalCount =
-    Object.selectionForField "Int" "totalCount" [] Decode.int
+    Object.selectionForField "(Int)" "totalCount" [] Decode.int

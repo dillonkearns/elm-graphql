@@ -46,7 +46,7 @@ avatarUrl fillInOptionals____ =
             [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap Basics.identity
     in
-    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The user's public profile bio.
@@ -60,7 +60,7 @@ bio =
 -}
 bioHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.User
 bioHTML =
-    Object.selectionForField "ScalarCodecs.Html" "bioHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "bioHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -106,7 +106,7 @@ company =
 -}
 companyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.User
 companyHTML =
-    Object.selectionForField "ScalarCodecs.Html" "companyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "companyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 type alias ContributedRepositoriesOptionalArguments =
@@ -154,7 +154,7 @@ contributedRepositories fillInOptionals____ object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.User
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -169,7 +169,7 @@ databaseId =
 -}
 email : SelectionSet String Github.Object.User
 email =
-    Object.selectionForField "String" "email" [] Decode.string
+    Object.selectionForField "(String)" "email" [] Decode.string
 
 
 type alias FollowersOptionalArguments =
@@ -323,56 +323,56 @@ gists fillInOptionals____ object____ =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.User
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
 -}
 isBountyHunter : SelectionSet Bool Github.Object.User
 isBountyHunter =
-    Object.selectionForField "Bool" "isBountyHunter" [] Decode.bool
+    Object.selectionForField "(Bool)" "isBountyHunter" [] Decode.bool
 
 
 {-| Whether or not this user is a participant in the GitHub Campus Experts Program.
 -}
 isCampusExpert : SelectionSet Bool Github.Object.User
 isCampusExpert =
-    Object.selectionForField "Bool" "isCampusExpert" [] Decode.bool
+    Object.selectionForField "(Bool)" "isCampusExpert" [] Decode.bool
 
 
 {-| Whether or not this user is a GitHub Developer Program member.
 -}
 isDeveloperProgramMember : SelectionSet Bool Github.Object.User
 isDeveloperProgramMember =
-    Object.selectionForField "Bool" "isDeveloperProgramMember" [] Decode.bool
+    Object.selectionForField "(Bool)" "isDeveloperProgramMember" [] Decode.bool
 
 
 {-| Whether or not this user is a GitHub employee.
 -}
 isEmployee : SelectionSet Bool Github.Object.User
 isEmployee =
-    Object.selectionForField "Bool" "isEmployee" [] Decode.bool
+    Object.selectionForField "(Bool)" "isEmployee" [] Decode.bool
 
 
 {-| Whether or not the user has marked themselves as for hire.
 -}
 isHireable : SelectionSet Bool Github.Object.User
 isHireable =
-    Object.selectionForField "Bool" "isHireable" [] Decode.bool
+    Object.selectionForField "(Bool)" "isHireable" [] Decode.bool
 
 
 {-| Whether or not this user is a site administrator.
 -}
 isSiteAdmin : SelectionSet Bool Github.Object.User
 isSiteAdmin =
-    Object.selectionForField "Bool" "isSiteAdmin" [] Decode.bool
+    Object.selectionForField "(Bool)" "isSiteAdmin" [] Decode.bool
 
 
 {-| Whether or not this user is the viewing user.
 -}
 isViewer : SelectionSet Bool Github.Object.User
 isViewer =
-    Object.selectionForField "Bool" "isViewer" [] Decode.bool
+    Object.selectionForField "(Bool)" "isViewer" [] Decode.bool
 
 
 type alias IssueCommentsOptionalArguments =
@@ -456,7 +456,7 @@ location =
 -}
 login : SelectionSet String Github.Object.User
 login =
-    Object.selectionForField "String" "login" [] Decode.string
+    Object.selectionForField "(String)" "login" [] Decode.string
 
 
 {-| The user's public profile name.
@@ -734,7 +734,7 @@ repository requiredArgs____ object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.User
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias StarredRepositoriesOptionalArguments =
@@ -778,28 +778,28 @@ starredRepositories fillInOptionals____ object____ =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.User
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this user
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.User
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Whether or not the viewer is able to follow the user.
 -}
 viewerCanFollow : SelectionSet Bool Github.Object.User
 viewerCanFollow =
-    Object.selectionForField "Bool" "viewerCanFollow" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanFollow" [] Decode.bool
 
 
 {-| Whether or not this user is followed by the viewer.
 -}
 viewerIsFollowing : SelectionSet Bool Github.Object.User
 viewerIsFollowing =
-    Object.selectionForField "Bool" "viewerIsFollowing" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerIsFollowing" [] Decode.bool
 
 
 type alias WatchingOptionalArguments =

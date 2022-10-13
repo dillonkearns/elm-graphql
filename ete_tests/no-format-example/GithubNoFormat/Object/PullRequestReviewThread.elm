@@ -16,10 +16,10 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-type alias CommentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of pull request comments associated with the thread.
 
@@ -31,7 +31,7 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestReviewThread
 comments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -44,15 +44,15 @@ comments fillInOptionals____ object____ =
       Object.selectionForCompositeField "comments" optionalArgs____ (object____) (Basics.identity)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestReviewThread
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.PullRequestReviewThread
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the pull request associated with this thread.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestReviewThread
 pullRequest object____ =
       Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
@@ -60,6 +60,6 @@ pullRequest object____ =
 {-| Identifies the repository associated with this thread.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestReviewThread
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)

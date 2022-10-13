@@ -28,36 +28,36 @@ author object____ =
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : SelectionSet GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation GithubNoFormat.Object.PullRequestReview
+authorAssociation : SelectionSet (GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation) GithubNoFormat.Object.PullRequestReview
 authorAssociation =
-      Object.selectionForField "Enum.CommentAuthorAssociation.CommentAuthorAssociation" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
+      Object.selectionForField "(Enum.CommentAuthorAssociation.CommentAuthorAssociation)" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
 
 
 {-| Identifies the pull request review body.
 -}
-body : SelectionSet String GithubNoFormat.Object.PullRequestReview
+body : SelectionSet (String) GithubNoFormat.Object.PullRequestReview
 body =
-      Object.selectionForField "String" "body" [] (Decode.string)
+      Object.selectionForField "(String)" "body" [] (Decode.string)
 
 
 {-| The body of this review rendered to HTML.
 -}
-bodyHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.PullRequestReview
+bodyHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.PullRequestReview
 bodyHTML =
-      Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The body of this review rendered as plain text.
 -}
-bodyText : SelectionSet String GithubNoFormat.Object.PullRequestReview
+bodyText : SelectionSet (String) GithubNoFormat.Object.PullRequestReview
 bodyText =
-      Object.selectionForField "String" "bodyText" [] (Decode.string)
+      Object.selectionForField "(String)" "bodyText" [] (Decode.string)
 
 
-type alias CommentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of review comments for the current pull request review.
 
@@ -69,7 +69,7 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestReview
 comments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -92,16 +92,16 @@ commit object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.PullRequestReview
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.PullRequestReview
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : SelectionSet Bool GithubNoFormat.Object.PullRequestReview
+createdViaEmail : SelectionSet (Bool) GithubNoFormat.Object.PullRequestReview
 createdViaEmail =
-      Object.selectionForField "Bool" "createdViaEmail" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "createdViaEmail" [] (Decode.bool)
 
 
 {-| Identifies the primary key from the database.
@@ -120,9 +120,9 @@ editor object____ =
       Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestReview
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.PullRequestReview
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The moment the editor made the last edit
@@ -142,7 +142,7 @@ publishedAt =
 {-| Identifies the pull request associated with this pull request review.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestReview
 pullRequest object____ =
       Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
@@ -150,23 +150,23 @@ pullRequest object____ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestReview
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path permalink for this PullRequestReview.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequestReview
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequestReview
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the current state of the pull request review.
 -}
-state : SelectionSet GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState GithubNoFormat.Object.PullRequestReview
+state : SelectionSet (GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState) GithubNoFormat.Object.PullRequestReview
 state =
-      Object.selectionForField "Enum.PullRequestReviewState.PullRequestReviewState" "state" [] (GithubNoFormat.Enum.PullRequestReviewState.decoder)
+      Object.selectionForField "(Enum.PullRequestReviewState.PullRequestReviewState)" "state" [] (GithubNoFormat.Enum.PullRequestReviewState.decoder)
 
 
 {-| Identifies when the Pull Request Review was submitted
@@ -179,22 +179,22 @@ submittedAt =
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.PullRequestReview
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.PullRequestReview
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL permalink for this PullRequestReview.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequestReview
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequestReview
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias UserContentEditsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of edits to this content.
 
@@ -221,27 +221,27 @@ userContentEdits fillInOptionals____ object____ =
 
 {-| Check if the current viewer can delete this object.
 -}
-viewerCanDelete : SelectionSet Bool GithubNoFormat.Object.PullRequestReview
+viewerCanDelete : SelectionSet (Bool) GithubNoFormat.Object.PullRequestReview
 viewerCanDelete =
-      Object.selectionForField "Bool" "viewerCanDelete" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanDelete" [] (Decode.bool)
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : SelectionSet Bool GithubNoFormat.Object.PullRequestReview
+viewerCanUpdate : SelectionSet (Bool) GithubNoFormat.Object.PullRequestReview
 viewerCanUpdate =
-      Object.selectionForField "Bool" "viewerCanUpdate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanUpdate" [] (Decode.bool)
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : SelectionSet (List GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) GithubNoFormat.Object.PullRequestReview
+viewerCannotUpdateReasons : SelectionSet ((List (GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason))) GithubNoFormat.Object.PullRequestReview
 viewerCannotUpdateReasons =
-      Object.selectionForField "(List Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+      Object.selectionForField "((List (Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)))" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : SelectionSet Bool GithubNoFormat.Object.PullRequestReview
+viewerDidAuthor : SelectionSet (Bool) GithubNoFormat.Object.PullRequestReview
 viewerDidAuthor =
-      Object.selectionForField "Bool" "viewerDidAuthor" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerDidAuthor" [] (Decode.bool)

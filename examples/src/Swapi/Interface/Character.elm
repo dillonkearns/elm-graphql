@@ -52,14 +52,14 @@ maybeFragments =
 -}
 appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
 appearsIn =
-    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+    Object.selectionForField "((List (Enum.Episode.Episode)))" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.
 -}
 avatarUrl : SelectionSet String Swapi.Interface.Character
 avatarUrl =
-    Object.selectionForField "String" "avatarUrl" [] Decode.string
+    Object.selectionForField "(String)" "avatarUrl" [] Decode.string
 
 
 {-| The friends of the character, or an empty list if they have none.
@@ -75,11 +75,11 @@ friends object____ =
 -}
 id : SelectionSet CustomScalarCodecs.Id Swapi.Interface.Character
 id =
-    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(CustomScalarCodecs.Id)" "id" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the character.
 -}
 name : SelectionSet String Swapi.Interface.Character
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string

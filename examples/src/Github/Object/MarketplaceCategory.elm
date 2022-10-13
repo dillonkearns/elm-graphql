@@ -37,39 +37,39 @@ howItWorks =
 -}
 name : SelectionSet String Github.Object.MarketplaceCategory
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| How many Marketplace listings have this as their primary category.
 -}
 primaryListingCount : SelectionSet Int Github.Object.MarketplaceCategory
 primaryListingCount =
-    Object.selectionForField "Int" "primaryListingCount" [] Decode.int
+    Object.selectionForField "(Int)" "primaryListingCount" [] Decode.int
 
 
 {-| The HTTP path for this Marketplace category.
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceCategory
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| How many Marketplace listings have this as their secondary category.
 -}
 secondaryListingCount : SelectionSet Int Github.Object.MarketplaceCategory
 secondaryListingCount =
-    Object.selectionForField "Int" "secondaryListingCount" [] Decode.int
+    Object.selectionForField "(Int)" "secondaryListingCount" [] Decode.int
 
 
 {-| The short name of the category used in its URL.
 -}
 slug : SelectionSet String Github.Object.MarketplaceCategory
 slug =
-    Object.selectionForField "String" "slug" [] Decode.string
+    Object.selectionForField "(String)" "slug" [] Decode.string
 
 
 {-| The HTTP URL for this Marketplace category.
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceCategory
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

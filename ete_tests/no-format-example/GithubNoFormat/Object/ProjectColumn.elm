@@ -16,10 +16,10 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-type alias CardsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CardsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| List of cards in the column
 
@@ -31,7 +31,7 @@ type alias CardsOptionalArguments = { first : OptionalArgument Int
 -}
 cards : (CardsOptionalArguments -> CardsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ProjectColumn
 cards fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -46,9 +46,9 @@ cards fillInOptionals____ object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ProjectColumn
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ProjectColumn
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -59,43 +59,43 @@ databaseId =
       Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.ProjectColumn
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.ProjectColumn
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The project column's name.
 -}
-name : SelectionSet String GithubNoFormat.Object.ProjectColumn
+name : SelectionSet (String) GithubNoFormat.Object.ProjectColumn
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| The project that contains this column.
 -}
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
- -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ProjectColumn
 project object____ =
       Object.selectionForCompositeField "project" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this project column
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.ProjectColumn
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.ProjectColumn
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ProjectColumn
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ProjectColumn
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this project column
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.ProjectColumn
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.ProjectColumn
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

@@ -60,7 +60,7 @@ externalIdentities fillInOptionals____ object____ =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.OrganizationIdentityProvider
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The x509 certificate used by the Identity Provder to sign assertions and responses.

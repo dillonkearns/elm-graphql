@@ -27,7 +27,7 @@ actor object____ =
 {-| Object that was closed.
 -}
 closable : SelectionSet decodesTo GithubNoFormat.Interface.Closable
- -> SelectionSet decodesTo GithubNoFormat.Object.ClosedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ClosedEvent
 closable object____ =
       Object.selectionForCompositeField "closable" [] (object____) (Basics.identity)
 
@@ -51,11 +51,11 @@ commit object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ClosedEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ClosedEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.ClosedEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.ClosedEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)

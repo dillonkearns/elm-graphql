@@ -30,7 +30,7 @@ clientMutationId =
 -}
 deletedColumnId : SelectionSet Github.ScalarCodecs.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
-    Object.selectionForField "ScalarCodecs.Id" "deletedColumnId" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "deletedColumnId" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The project the deleted column was in.

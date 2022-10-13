@@ -26,69 +26,69 @@ creator object____ =
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
 -}
-hasDismissableStaleReviews : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+hasDismissableStaleReviews : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 hasDismissableStaleReviews =
-      Object.selectionForField "Bool" "hasDismissableStaleReviews" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasDismissableStaleReviews" [] (Decode.bool)
 
 
 {-| Are reviews required to update this branch.
 -}
-hasRequiredReviews : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+hasRequiredReviews : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 hasRequiredReviews =
-      Object.selectionForField "Bool" "hasRequiredReviews" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasRequiredReviews" [] (Decode.bool)
 
 
 {-| Are status checks required to update this branch.
 -}
-hasRequiredStatusChecks : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+hasRequiredStatusChecks : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 hasRequiredStatusChecks =
-      Object.selectionForField "Bool" "hasRequiredStatusChecks" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasRequiredStatusChecks" [] (Decode.bool)
 
 
 {-| Is pushing to this branch restricted.
 -}
-hasRestrictedPushes : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+hasRestrictedPushes : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 hasRestrictedPushes =
-      Object.selectionForField "Bool" "hasRestrictedPushes" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasRestrictedPushes" [] (Decode.bool)
 
 
 {-| Is dismissal of pull request reviews restricted.
 -}
-hasRestrictedReviewDismissals : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+hasRestrictedReviewDismissals : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 hasRestrictedReviewDismissals =
-      Object.selectionForField "Bool" "hasRestrictedReviewDismissals" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasRestrictedReviewDismissals" [] (Decode.bool)
 
 
 {-| Are branches required to be up to date before merging.
 -}
-hasStrictRequiredStatusChecks : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+hasStrictRequiredStatusChecks : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 hasStrictRequiredStatusChecks =
-      Object.selectionForField "Bool" "hasStrictRequiredStatusChecks" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasStrictRequiredStatusChecks" [] (Decode.bool)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.ProtectedBranch
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.ProtectedBranch
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Can admins overwrite branch protection.
 -}
-isAdminEnforced : SelectionSet Bool GithubNoFormat.Object.ProtectedBranch
+isAdminEnforced : SelectionSet (Bool) GithubNoFormat.Object.ProtectedBranch
 isAdminEnforced =
-      Object.selectionForField "Bool" "isAdminEnforced" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isAdminEnforced" [] (Decode.bool)
 
 
 {-| Identifies the name of the protected branch.
 -}
-name : SelectionSet String GithubNoFormat.Object.ProtectedBranch
+name : SelectionSet (String) GithubNoFormat.Object.ProtectedBranch
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
-type alias PushAllowancesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias PushAllowancesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list push allowances for this protected branch.
 
@@ -100,7 +100,7 @@ type alias PushAllowancesOptionalArguments = { first : OptionalArgument Int
 -}
 pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PushAllowanceConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ProtectedBranch
 pushAllowances fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -116,7 +116,7 @@ pushAllowances fillInOptionals____ object____ =
 {-| The repository associated with this protected branch.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ProtectedBranch
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
@@ -128,10 +128,10 @@ requiredStatusCheckContexts =
       Object.selectionForField "(Maybe ((List (Maybe String))))" "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
 
 
-type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list review dismissal allowances for this protected branch.
 
@@ -143,7 +143,7 @@ type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgume
 -}
 reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissalAllowanceConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals____ object____ =
     let
         filledInOptionals____ =

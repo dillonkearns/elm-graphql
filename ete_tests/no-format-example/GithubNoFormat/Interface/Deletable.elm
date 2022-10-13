@@ -57,6 +57,6 @@ maybeFragments =
     }
 {-| Check if the current viewer can delete this object.
 -}
-viewerCanDelete : SelectionSet Bool GithubNoFormat.Interface.Deletable
+viewerCanDelete : SelectionSet (Bool) GithubNoFormat.Interface.Deletable
 viewerCanDelete =
-      Object.selectionForField "Bool" "viewerCanDelete" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanDelete" [] (Decode.bool)

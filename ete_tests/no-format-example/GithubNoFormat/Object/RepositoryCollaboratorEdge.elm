@@ -16,19 +16,19 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.RepositoryPermission
-cursor : SelectionSet String GithubNoFormat.Object.RepositoryCollaboratorEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.RepositoryCollaboratorEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryCollaboratorEdge
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.RepositoryCollaboratorEdge
 node object____ =
       Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| The permission the user has on the repository.
 -}
-permission : SelectionSet GithubNoFormat.Enum.RepositoryPermission.RepositoryPermission GithubNoFormat.Object.RepositoryCollaboratorEdge
+permission : SelectionSet (GithubNoFormat.Enum.RepositoryPermission.RepositoryPermission) GithubNoFormat.Object.RepositoryCollaboratorEdge
 permission =
-      Object.selectionForField "Enum.RepositoryPermission.RepositoryPermission" "permission" [] (GithubNoFormat.Enum.RepositoryPermission.decoder)
+      Object.selectionForField "(Enum.RepositoryPermission.RepositoryPermission)" "permission" [] (GithubNoFormat.Enum.RepositoryPermission.decoder)

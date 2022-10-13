@@ -57,7 +57,7 @@ maybeFragments =
 -}
 closed : SelectionSet Bool Github.Interface.Closable
 closed =
-    Object.selectionForField "Bool" "closed" [] Decode.bool
+    Object.selectionForField "(Bool)" "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.

@@ -30,14 +30,14 @@ body =
 -}
 key : SelectionSet String Github.Object.CodeOfConduct
 key =
-    Object.selectionForField "String" "key" [] Decode.string
+    Object.selectionForField "(String)" "key" [] Decode.string
 
 
 {-| The formal name of the CoC
 -}
 name : SelectionSet String Github.Object.CodeOfConduct
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The path to the CoC

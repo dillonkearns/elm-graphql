@@ -23,14 +23,14 @@ import Json.Decode as Decode
 -}
 mode : SelectionSet Int Github.Object.TreeEntry
 mode =
-    Object.selectionForField "Int" "mode" [] Decode.int
+    Object.selectionForField "(Int)" "mode" [] Decode.int
 
 
 {-| Entry file name.
 -}
 name : SelectionSet String Github.Object.TreeEntry
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| Entry file object.
@@ -46,7 +46,7 @@ object object____ =
 -}
 oid : SelectionSet Github.ScalarCodecs.GitObjectID Github.Object.TreeEntry
 oid =
-    Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+    Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the tree entry belongs to
@@ -62,4 +62,4 @@ repository object____ =
 -}
 type_ : SelectionSet String Github.Object.TreeEntry
 type_ =
-    Object.selectionForField "String" "type" [] Decode.string
+    Object.selectionForField "(String)" "type" [] Decode.string

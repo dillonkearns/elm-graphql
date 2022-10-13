@@ -32,7 +32,7 @@ author object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Release
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the description of the release.
@@ -44,21 +44,21 @@ description =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Release
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether or not the release is a draft
 -}
 isDraft : SelectionSet Bool Github.Object.Release
 isDraft =
-    Object.selectionForField "Bool" "isDraft" [] Decode.bool
+    Object.selectionForField "(Bool)" "isDraft" [] Decode.bool
 
 
 {-| Whether or not the release is a prerelease
 -}
 isPrerelease : SelectionSet Bool Github.Object.Release
 isPrerelease =
-    Object.selectionForField "Bool" "isPrerelease" [] Decode.bool
+    Object.selectionForField "(Bool)" "isPrerelease" [] Decode.bool
 
 
 {-| Identifies the title of the release.
@@ -113,7 +113,7 @@ releaseAssets fillInOptionals____ object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Release
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The Git tag the release points to
@@ -130,11 +130,11 @@ tag object____ =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Release
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this issue
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Release
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

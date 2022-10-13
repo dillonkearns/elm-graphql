@@ -21,14 +21,14 @@ import Json.Decode as Decode
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Topic
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The topic's name.
 -}
 name : SelectionSet String Github.Object.Topic
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant

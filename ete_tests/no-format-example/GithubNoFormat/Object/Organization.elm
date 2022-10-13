@@ -22,7 +22,7 @@ import GithubNoFormat.Enum.RepositoryPrivacy
 import GithubNoFormat.Enum.RepositoryAffiliation
 import GithubNoFormat.Enum.TeamPrivacy
 import GithubNoFormat.Enum.TeamRole
-type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
+type alias AvatarUrlOptionalArguments = { size : OptionalArgument (Int) }
 
 {-| A URL pointing to the organization's public avatar.
 
@@ -30,7 +30,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
- -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+ -> SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 avatarUrl fillInOptionals____ =
     let
         filledInOptionals____ =
@@ -40,7 +40,7 @@ avatarUrl fillInOptionals____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap Basics.identity
     in
-      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -65,9 +65,9 @@ email =
       Object.selectionForField "(Maybe String)" "email" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Organization
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Organization
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The organization's public profile location.
@@ -79,15 +79,15 @@ location =
 
 {-| The organization's login name.
 -}
-login : SelectionSet String GithubNoFormat.Object.Organization
+login : SelectionSet (String) GithubNoFormat.Object.Organization
 login =
-      Object.selectionForField "String" "login" [] (Decode.string)
+      Object.selectionForField "(String)" "login" [] (Decode.string)
 
 
-type alias MembersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias MembersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of users who are members of this organization.
 
@@ -99,7 +99,7 @@ type alias MembersOptionalArguments = { first : OptionalArgument Int
 -}
 members : (MembersOptionalArguments -> MembersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Organization
 members fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -121,16 +121,16 @@ name =
 
 {-| The HTTP path creating a new team
 -}
-newTeamResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+newTeamResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 newTeamResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "newTeamResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "newTeamResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL creating a new team
 -}
-newTeamUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+newTeamUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 newTeamUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "newTeamUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "newTeamUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The billing email for the organization.
@@ -140,14 +140,14 @@ organizationBillingEmail =
       Object.selectionForField "(Maybe String)" "organizationBillingEmail" [] (Decode.string |> Decode.nullable)
 
 
-type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
- , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
- , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
- , isLocked : OptionalArgument Bool }
+type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
+ , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories this user has pinned to their profile
 
@@ -163,7 +163,7 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
 -}
 pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Organization
 pinnedRepositories fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -176,7 +176,7 @@ pinnedRepositories fillInOptionals____ object____ =
       Object.selectionForCompositeField "pinnedRepositories" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias ProjectRequiredArguments = { number : Int }
+type alias ProjectRequiredArguments = { number : (Int) }
 
 {-| Find project by number.
 
@@ -190,13 +190,13 @@ project requiredArgs____ object____ =
       Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ProjectsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
- , search : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
+type alias ProjectsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ProjectOrder)
+ , search : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.ProjectState.ProjectState))) }
 
 {-| A list of projects under the owner.
 
@@ -211,7 +211,7 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument Int
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Organization
 projects fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -226,27 +226,27 @@ projects fillInOptionals____ object____ =
 
 {-| The HTTP path listing organization's projects
 -}
-projectsResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+projectsResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 projectsResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "projectsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing organization's projects
 -}
-projectsUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+projectsUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 projectsUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "projectsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
- , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
- , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
- , isLocked : OptionalArgument Bool
- , isFork : OptionalArgument Bool }
+type alias RepositoriesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
+ , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , isLocked : OptionalArgument (Bool)
+ , isFork : OptionalArgument (Bool) }
 
 {-| A list of repositories that the user owns.
 
@@ -263,7 +263,7 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Organization
 repositories fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -276,7 +276,7 @@ repositories fillInOptionals____ object____ =
       Object.selectionForCompositeField "repositories" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias RepositoryRequiredArguments = { name : String }
+type alias RepositoryRequiredArguments = { name : (String) }
 
 {-| Find Repository.
 
@@ -292,9 +292,9 @@ repository requiredArgs____ object____ =
 
 {-| The HTTP path for this user
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The Organization's SAML Identity Providers
@@ -305,7 +305,7 @@ samlIdentityProvider object____ =
       Object.selectionForCompositeField "samlIdentityProvider" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias TeamRequiredArguments = { slug : String }
+type alias TeamRequiredArguments = { slug : (String) }
 
 {-| Find an organization's team by its slug.
 
@@ -319,17 +319,17 @@ team requiredArgs____ object____ =
       Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs____.slug (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias TeamsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , privacy : OptionalArgument GithubNoFormat.Enum.TeamPrivacy.TeamPrivacy
- , role : OptionalArgument GithubNoFormat.Enum.TeamRole.TeamRole
- , query : OptionalArgument String
- , userLogins : OptionalArgument (List String)
- , orderBy : OptionalArgument GithubNoFormat.InputObject.TeamOrder
- , ldapMapped : OptionalArgument Bool
- , rootTeamsOnly : OptionalArgument Bool }
+type alias TeamsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , privacy : OptionalArgument (GithubNoFormat.Enum.TeamPrivacy.TeamPrivacy)
+ , role : OptionalArgument (GithubNoFormat.Enum.TeamRole.TeamRole)
+ , query : OptionalArgument (String)
+ , userLogins : OptionalArgument ((List (String)))
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.TeamOrder)
+ , ldapMapped : OptionalArgument (Bool)
+ , rootTeamsOnly : OptionalArgument (Bool) }
 
 {-| A list of teams in this organization.
 
@@ -348,7 +348,7 @@ type alias TeamsOptionalArguments = { first : OptionalArgument Int
 -}
 teams : (TeamsOptionalArguments -> TeamsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Organization
 teams fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -363,58 +363,58 @@ teams fillInOptionals____ object____ =
 
 {-| The HTTP path listing organization's teams
 -}
-teamsResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+teamsResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 teamsResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "teamsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "teamsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing organization's teams
 -}
-teamsUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+teamsUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 teamsUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "teamsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "teamsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this user
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Organization
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Organization is adminable by the viewer.
 -}
-viewerCanAdminister : SelectionSet Bool GithubNoFormat.Object.Organization
+viewerCanAdminister : SelectionSet (Bool) GithubNoFormat.Object.Organization
 viewerCanAdminister =
-      Object.selectionForField "Bool" "viewerCanAdminister" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanAdminister" [] (Decode.bool)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
-viewerCanCreateProjects : SelectionSet Bool GithubNoFormat.Object.Organization
+viewerCanCreateProjects : SelectionSet (Bool) GithubNoFormat.Object.Organization
 viewerCanCreateProjects =
-      Object.selectionForField "Bool" "viewerCanCreateProjects" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanCreateProjects" [] (Decode.bool)
 
 
 {-| Viewer can create repositories on this organization
 -}
-viewerCanCreateRepositories : SelectionSet Bool GithubNoFormat.Object.Organization
+viewerCanCreateRepositories : SelectionSet (Bool) GithubNoFormat.Object.Organization
 viewerCanCreateRepositories =
-      Object.selectionForField "Bool" "viewerCanCreateRepositories" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanCreateRepositories" [] (Decode.bool)
 
 
 {-| Viewer can create teams on this organization.
 -}
-viewerCanCreateTeams : SelectionSet Bool GithubNoFormat.Object.Organization
+viewerCanCreateTeams : SelectionSet (Bool) GithubNoFormat.Object.Organization
 viewerCanCreateTeams =
-      Object.selectionForField "Bool" "viewerCanCreateTeams" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanCreateTeams" [] (Decode.bool)
 
 
 {-| Viewer is an active member of this organization.
 -}
-viewerIsAMember : SelectionSet Bool GithubNoFormat.Object.Organization
+viewerIsAMember : SelectionSet (Bool) GithubNoFormat.Object.Organization
 viewerIsAMember =
-      Object.selectionForField "Bool" "viewerIsAMember" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerIsAMember" [] (Decode.bool)
 
 
 {-| The organization's public profile URL.

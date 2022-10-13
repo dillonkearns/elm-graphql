@@ -19,9 +19,9 @@ import GithubNoFormat.Enum.OrganizationInvitationType
 import GithubNoFormat.Enum.OrganizationInvitationRole
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.OrganizationInvitation
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.OrganizationInvitation
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The email address of the user invited to the organization.
@@ -31,16 +31,16 @@ email =
       Object.selectionForField "(Maybe String)" "email" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.OrganizationInvitation
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.OrganizationInvitation
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The type of invitation that was sent (e.g. email, user).
 -}
-invitationType : SelectionSet GithubNoFormat.Enum.OrganizationInvitationType.OrganizationInvitationType GithubNoFormat.Object.OrganizationInvitation
+invitationType : SelectionSet (GithubNoFormat.Enum.OrganizationInvitationType.OrganizationInvitationType) GithubNoFormat.Object.OrganizationInvitation
 invitationType =
-      Object.selectionForField "Enum.OrganizationInvitationType.OrganizationInvitationType" "invitationType" [] (GithubNoFormat.Enum.OrganizationInvitationType.decoder)
+      Object.selectionForField "(Enum.OrganizationInvitationType.OrganizationInvitationType)" "invitationType" [] (GithubNoFormat.Enum.OrganizationInvitationType.decoder)
 
 
 {-| The user who was invited to the organization.
@@ -54,7 +54,7 @@ invitee object____ =
 {-| The user who created the invitation.
 -}
 inviter : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitation
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.OrganizationInvitation
 inviter object____ =
       Object.selectionForCompositeField "inviter" [] (object____) (Basics.identity)
 
@@ -62,13 +62,13 @@ inviter object____ =
 {-| The organization the invite is for
 -}
 organization : SelectionSet decodesTo GithubNoFormat.Object.Organization
- -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitation
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.OrganizationInvitation
 organization object____ =
       Object.selectionForCompositeField "organization" [] (object____) (Basics.identity)
 
 
 {-| The user's pending role in the organization (e.g. member, owner).
 -}
-role : SelectionSet GithubNoFormat.Enum.OrganizationInvitationRole.OrganizationInvitationRole GithubNoFormat.Object.OrganizationInvitation
+role : SelectionSet (GithubNoFormat.Enum.OrganizationInvitationRole.OrganizationInvitationRole) GithubNoFormat.Object.OrganizationInvitation
 role =
-      Object.selectionForField "Enum.OrganizationInvitationRole.OrganizationInvitationRole" "role" [] (GithubNoFormat.Enum.OrganizationInvitationRole.decoder)
+      Object.selectionForField "(Enum.OrganizationInvitationRole.OrganizationInvitationRole)" "role" [] (GithubNoFormat.Enum.OrganizationInvitationRole.decoder)

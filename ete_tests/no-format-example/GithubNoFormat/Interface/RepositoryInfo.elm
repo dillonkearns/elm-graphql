@@ -48,9 +48,9 @@ maybeFragments =
     }
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Interface.RepositoryInfo
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Interface.RepositoryInfo
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The description of the repository.
@@ -62,30 +62,30 @@ description =
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Interface.RepositoryInfo
+descriptionHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Interface.RepositoryInfo
 descriptionHTML =
-      Object.selectionForField "ScalarCodecs.Html" "descriptionHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "descriptionHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
 -}
-forkCount : SelectionSet Int GithubNoFormat.Interface.RepositoryInfo
+forkCount : SelectionSet (Int) GithubNoFormat.Interface.RepositoryInfo
 forkCount =
-      Object.selectionForField "Int" "forkCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "forkCount" [] (Decode.int)
 
 
 {-| Indicates if the repository has issues feature enabled.
 -}
-hasIssuesEnabled : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+hasIssuesEnabled : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 hasIssuesEnabled =
-      Object.selectionForField "Bool" "hasIssuesEnabled" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasIssuesEnabled" [] (Decode.bool)
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
-hasWikiEnabled : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+hasWikiEnabled : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 hasWikiEnabled =
-      Object.selectionForField "Bool" "hasWikiEnabled" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasWikiEnabled" [] (Decode.bool)
 
 
 {-| The repository's URL.
@@ -97,37 +97,37 @@ homepageUrl =
 
 {-| Indicates if the repository is unmaintained.
 -}
-isArchived : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+isArchived : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 isArchived =
-      Object.selectionForField "Bool" "isArchived" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isArchived" [] (Decode.bool)
 
 
 {-| Identifies if the repository is a fork.
 -}
-isFork : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+isFork : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 isFork =
-      Object.selectionForField "Bool" "isFork" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isFork" [] (Decode.bool)
 
 
 {-| Indicates if the repository has been locked or not.
 -}
-isLocked : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+isLocked : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 isLocked =
-      Object.selectionForField "Bool" "isLocked" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isLocked" [] (Decode.bool)
 
 
 {-| Identifies if the repository is a mirror.
 -}
-isMirror : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+isMirror : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 isMirror =
-      Object.selectionForField "Bool" "isMirror" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isMirror" [] (Decode.bool)
 
 
 {-| Identifies if the repository is private.
 -}
-isPrivate : SelectionSet Bool GithubNoFormat.Interface.RepositoryInfo
+isPrivate : SelectionSet (Bool) GithubNoFormat.Interface.RepositoryInfo
 isPrivate =
-      Object.selectionForField "Bool" "isPrivate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isPrivate" [] (Decode.bool)
 
 
 {-| The license associated with the repository
@@ -162,22 +162,22 @@ mirrorUrl =
 
 {-| The name of the repository.
 -}
-name : SelectionSet String GithubNoFormat.Interface.RepositoryInfo
+name : SelectionSet (String) GithubNoFormat.Interface.RepositoryInfo
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| The repository's name with owner.
 -}
-nameWithOwner : SelectionSet String GithubNoFormat.Interface.RepositoryInfo
+nameWithOwner : SelectionSet (String) GithubNoFormat.Interface.RepositoryInfo
 nameWithOwner =
-      Object.selectionForField "String" "nameWithOwner" [] (Decode.string)
+      Object.selectionForField "(String)" "nameWithOwner" [] (Decode.string)
 
 
 {-| The User owner of the repository.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
- -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryInfo
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.RepositoryInfo
 owner object____ =
       Object.selectionForCompositeField "owner" [] (object____) (Basics.identity)
 
@@ -191,12 +191,12 @@ pushedAt =
 
 {-| The HTTP path for this repository
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryInfo
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.RepositoryInfo
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument Int }
+type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument (Int) }
 
 {-| A description of the repository, rendered to HTML without any links in it.
 
@@ -204,7 +204,7 @@ type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument In
 
 -}
 shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
- -> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Interface.RepositoryInfo
+ -> SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Interface.RepositoryInfo
 shortDescriptionHTML fillInOptionals____ =
     let
         filledInOptionals____ =
@@ -214,19 +214,19 @@ shortDescriptionHTML fillInOptionals____ =
             [ Argument.optional "limit" filledInOptionals____.limit (Encode.int) ]
                 |> List.filterMap Basics.identity
     in
-      Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "shortDescriptionHTML" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Interface.RepositoryInfo
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Interface.RepositoryInfo
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this repository
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryInfo
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.RepositoryInfo
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

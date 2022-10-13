@@ -23,13 +23,13 @@ color =
       Object.selectionForField "(Maybe String)" "color" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Language
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Language
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the current language.
 -}
-name : SelectionSet String GithubNoFormat.Object.Language
+name : SelectionSet (String) GithubNoFormat.Object.Language
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)

@@ -52,12 +52,12 @@ greet :
     GreetRequiredArguments
     -> SelectionSet String RootQuery
 greet requiredArgs____ =
-    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs____.input Swapi.InputObject.encodeGreeting ] Decode.string
+    Object.selectionForField "(String)" "greet" [ Argument.required "input" requiredArgs____.input Swapi.InputObject.encodeGreeting ] Decode.string
 
 
 hello : SelectionSet String RootQuery
 hello =
-    Object.selectionForField "String" "hello" [] Decode.string
+    Object.selectionForField "(String)" "hello" [] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -129,9 +129,9 @@ human requiredArgs____ object____ =
 
 now : SelectionSet CustomScalarCodecs.PosixTime RootQuery
 now =
-    Object.selectionForField "CustomScalarCodecs.PosixTime" "now" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecPosixTime |> .decoder)
+    Object.selectionForField "(CustomScalarCodecs.PosixTime)" "now" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecPosixTime |> .decoder)
 
 
 today : SelectionSet String RootQuery
 today =
-    Object.selectionForField "String" "today" [] Decode.string
+    Object.selectionForField "(String)" "today" [] Decode.string

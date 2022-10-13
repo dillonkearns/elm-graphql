@@ -40,7 +40,7 @@ avatarUrl fillInOptionals____ =
             [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap Basics.identity
     in
-    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The timestamp of the Git action (authoring or committing).

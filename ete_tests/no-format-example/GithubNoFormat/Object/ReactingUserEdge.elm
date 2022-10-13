@@ -16,19 +16,19 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-cursor : SelectionSet String GithubNoFormat.Object.ReactingUserEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.ReactingUserEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.ReactingUserEdge
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ReactingUserEdge
 node object____ =
       Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| The moment when the user made the reaction.
 -}
-reactedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ReactingUserEdge
+reactedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ReactingUserEdge
 reactedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "reactedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "reactedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

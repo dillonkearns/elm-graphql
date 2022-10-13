@@ -18,16 +18,16 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| Entry file mode.
 -}
-mode : SelectionSet Int GithubNoFormat.Object.TreeEntry
+mode : SelectionSet (Int) GithubNoFormat.Object.TreeEntry
 mode =
-      Object.selectionForField "Int" "mode" [] (Decode.int)
+      Object.selectionForField "(Int)" "mode" [] (Decode.int)
 
 
 {-| Entry file name.
 -}
-name : SelectionSet String GithubNoFormat.Object.TreeEntry
+name : SelectionSet (String) GithubNoFormat.Object.TreeEntry
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| Entry file object.
@@ -40,21 +40,21 @@ object object____ =
 
 {-| Entry file Git object ID.
 -}
-oid : SelectionSet GithubNoFormat.ScalarCodecs.GitObjectID GithubNoFormat.Object.TreeEntry
+oid : SelectionSet (GithubNoFormat.ScalarCodecs.GitObjectID) GithubNoFormat.Object.TreeEntry
 oid =
-      Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+      Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the tree entry belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.TreeEntry
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.TreeEntry
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| Entry file type.
 -}
-type_ : SelectionSet String GithubNoFormat.Object.TreeEntry
+type_ : SelectionSet (String) GithubNoFormat.Object.TreeEntry
 type_ =
-      Object.selectionForField "String" "type" [] (Decode.string)
+      Object.selectionForField "(String)" "type" [] (Decode.string)

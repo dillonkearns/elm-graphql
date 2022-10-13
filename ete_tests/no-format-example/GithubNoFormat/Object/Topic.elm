@@ -16,16 +16,16 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Topic
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Topic
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The topic's name.
 -}
-name : SelectionSet String GithubNoFormat.Object.Topic
+name : SelectionSet (String) GithubNoFormat.Object.Topic
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant
@@ -33,6 +33,6 @@ first.
 
 -}
 relatedTopics : SelectionSet decodesTo GithubNoFormat.Object.Topic
- -> SelectionSet (List decodesTo) GithubNoFormat.Object.Topic
+ -> SelectionSet ((List (decodesTo))) GithubNoFormat.Object.Topic
 relatedTopics object____ =
       Object.selectionForCompositeField "relatedTopics" [] (object____) (Basics.identity >> Decode.list)

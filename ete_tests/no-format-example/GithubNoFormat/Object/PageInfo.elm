@@ -25,16 +25,16 @@ endCursor =
 
 {-| When paginating forwards, are there more items?
 -}
-hasNextPage : SelectionSet Bool GithubNoFormat.Object.PageInfo
+hasNextPage : SelectionSet (Bool) GithubNoFormat.Object.PageInfo
 hasNextPage =
-      Object.selectionForField "Bool" "hasNextPage" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasNextPage" [] (Decode.bool)
 
 
 {-| When paginating backwards, are there more items?
 -}
-hasPreviousPage : SelectionSet Bool GithubNoFormat.Object.PageInfo
+hasPreviousPage : SelectionSet (Bool) GithubNoFormat.Object.PageInfo
 hasPreviousPage =
-      Object.selectionForField "Bool" "hasPreviousPage" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasPreviousPage" [] (Decode.bool)
 
 
 {-| When paginating backwards, the cursor to continue.

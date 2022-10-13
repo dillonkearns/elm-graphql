@@ -23,32 +23,32 @@ import Json.Decode as Decode
 -}
 cost : SelectionSet Int Github.Object.RateLimit
 cost =
-    Object.selectionForField "Int" "cost" [] Decode.int
+    Object.selectionForField "(Int)" "cost" [] Decode.int
 
 
 {-| The maximum number of points the client is permitted to consume in a 60 minute window.
 -}
 limit : SelectionSet Int Github.Object.RateLimit
 limit =
-    Object.selectionForField "Int" "limit" [] Decode.int
+    Object.selectionForField "(Int)" "limit" [] Decode.int
 
 
 {-| The maximum number of nodes this query may return
 -}
 nodeCount : SelectionSet Int Github.Object.RateLimit
 nodeCount =
-    Object.selectionForField "Int" "nodeCount" [] Decode.int
+    Object.selectionForField "(Int)" "nodeCount" [] Decode.int
 
 
 {-| The number of points remaining in the current rate limit window.
 -}
 remaining : SelectionSet Int Github.Object.RateLimit
 remaining =
-    Object.selectionForField "Int" "remaining" [] Decode.int
+    Object.selectionForField "(Int)" "remaining" [] Decode.int
 
 
 {-| The time at which the current rate limit window resets in UTC epoch seconds.
 -}
 resetAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.RateLimit
 resetAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "resetAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "resetAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

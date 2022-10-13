@@ -27,4 +27,4 @@ hello :
     HelloRequiredArguments
     -> SelectionSet String RootQuery
 hello requiredArgs____ =
-    Object.selectionForField "String" "hello" [ Argument.required "name" requiredArgs____.name Encode.string ] Decode.string
+    Object.selectionForField "(String)" "hello" [ Argument.required "name" requiredArgs____.name Encode.string ] Decode.string

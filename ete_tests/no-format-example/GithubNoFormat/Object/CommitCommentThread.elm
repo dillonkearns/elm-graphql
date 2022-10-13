@@ -16,10 +16,10 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-type alias CommentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| The comments that exist in this thread.
 
@@ -31,7 +31,7 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.CommitCommentThread
 comments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -47,14 +47,14 @@ comments fillInOptionals____ object____ =
 {-| The commit the comments were made on.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
- -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.CommitCommentThread
 commit object____ =
       Object.selectionForCompositeField "commit" [] (object____) (Basics.identity)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.CommitCommentThread
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.CommitCommentThread
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The file the comments were made on.
@@ -74,6 +74,6 @@ position =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.CommitCommentThread
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)

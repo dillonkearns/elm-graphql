@@ -26,10 +26,10 @@ import GithubNoFormat.Enum.OrderDirection
 import GithubNoFormat.Enum.RepositoryLockReason
 import GithubNoFormat.Enum.RepositoryPermission
 import GithubNoFormat.Enum.SubscriptionState
-type alias AssignableUsersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias AssignableUsersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of users that can be assigned to issues in this repository.
 
@@ -41,7 +41,7 @@ type alias AssignableUsersOptionalArguments = { first : OptionalArgument Int
 -}
 assignableUsers : (AssignableUsersOptionalArguments -> AssignableUsersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 assignableUsers fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -62,11 +62,11 @@ codeOfConduct object____ =
       Object.selectionForCompositeField "codeOfConduct" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias CollaboratorsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , affiliation : OptionalArgument GithubNoFormat.Enum.CollaboratorAffiliation.CollaboratorAffiliation }
+type alias CollaboratorsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , affiliation : OptionalArgument (GithubNoFormat.Enum.CollaboratorAffiliation.CollaboratorAffiliation) }
 
 {-| A list of collaborators associated with the repository.
 
@@ -92,10 +92,10 @@ collaborators fillInOptionals____ object____ =
       Object.selectionForCompositeField "collaborators" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias CommitCommentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommitCommentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of commit comments associated with the repository.
 
@@ -107,7 +107,7 @@ type alias CommitCommentsOptionalArguments = { first : OptionalArgument Int
 -}
 commitComments : (CommitCommentsOptionalArguments -> CommitCommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 commitComments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -122,9 +122,9 @@ commitComments fillInOptionals____ object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Repository
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Repository
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -143,10 +143,10 @@ defaultBranchRef object____ =
       Object.selectionForCompositeField "defaultBranchRef" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias DeployKeysOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias DeployKeysOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of deploy keys that are on this repository.
 
@@ -158,7 +158,7 @@ type alias DeployKeysOptionalArguments = { first : OptionalArgument Int
 -}
 deployKeys : (DeployKeysOptionalArguments -> DeployKeysOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.DeployKeyConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 deployKeys fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -171,11 +171,11 @@ deployKeys fillInOptionals____ object____ =
       Object.selectionForCompositeField "deployKeys" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias DeploymentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , environments : OptionalArgument (List String) }
+type alias DeploymentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , environments : OptionalArgument ((List (String))) }
 
 {-| Deployments associated with the repository
 
@@ -188,7 +188,7 @@ type alias DeploymentsOptionalArguments = { first : OptionalArgument Int
 -}
 deployments : (DeploymentsOptionalArguments -> DeploymentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.DeploymentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 deployments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -210,9 +210,9 @@ description =
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.Repository
+descriptionHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.Repository
 descriptionHTML =
-      Object.selectionForField "ScalarCodecs.Html" "descriptionHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "descriptionHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The number of kilobytes this repository occupies on disk.
@@ -224,19 +224,19 @@ diskUsage =
 
 {-| Returns how many forks there are of this repository in the whole network.
 -}
-forkCount : SelectionSet Int GithubNoFormat.Object.Repository
+forkCount : SelectionSet (Int) GithubNoFormat.Object.Repository
 forkCount =
-      Object.selectionForField "Int" "forkCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "forkCount" [] (Decode.int)
 
 
-type alias ForksOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
- , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
- , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
- , isLocked : OptionalArgument Bool }
+type alias ForksOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
+ , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , isLocked : OptionalArgument (Bool) }
 
 {-| A list of direct forked repositories.
 
@@ -252,7 +252,7 @@ type alias ForksOptionalArguments = { first : OptionalArgument Int
 -}
 forks : (ForksOptionalArguments -> ForksOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 forks fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -267,16 +267,16 @@ forks fillInOptionals____ object____ =
 
 {-| Indicates if the repository has issues feature enabled.
 -}
-hasIssuesEnabled : SelectionSet Bool GithubNoFormat.Object.Repository
+hasIssuesEnabled : SelectionSet (Bool) GithubNoFormat.Object.Repository
 hasIssuesEnabled =
-      Object.selectionForField "Bool" "hasIssuesEnabled" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasIssuesEnabled" [] (Decode.bool)
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
-hasWikiEnabled : SelectionSet Bool GithubNoFormat.Object.Repository
+hasWikiEnabled : SelectionSet (Bool) GithubNoFormat.Object.Repository
 hasWikiEnabled =
-      Object.selectionForField "Bool" "hasWikiEnabled" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hasWikiEnabled" [] (Decode.bool)
 
 
 {-| The repository's URL.
@@ -286,47 +286,47 @@ homepageUrl =
       Object.selectionForField "(Maybe ScalarCodecs.Uri)" "homepageUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Repository
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Repository
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Indicates if the repository is unmaintained.
 -}
-isArchived : SelectionSet Bool GithubNoFormat.Object.Repository
+isArchived : SelectionSet (Bool) GithubNoFormat.Object.Repository
 isArchived =
-      Object.selectionForField "Bool" "isArchived" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isArchived" [] (Decode.bool)
 
 
 {-| Identifies if the repository is a fork.
 -}
-isFork : SelectionSet Bool GithubNoFormat.Object.Repository
+isFork : SelectionSet (Bool) GithubNoFormat.Object.Repository
 isFork =
-      Object.selectionForField "Bool" "isFork" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isFork" [] (Decode.bool)
 
 
 {-| Indicates if the repository has been locked or not.
 -}
-isLocked : SelectionSet Bool GithubNoFormat.Object.Repository
+isLocked : SelectionSet (Bool) GithubNoFormat.Object.Repository
 isLocked =
-      Object.selectionForField "Bool" "isLocked" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isLocked" [] (Decode.bool)
 
 
 {-| Identifies if the repository is a mirror.
 -}
-isMirror : SelectionSet Bool GithubNoFormat.Object.Repository
+isMirror : SelectionSet (Bool) GithubNoFormat.Object.Repository
 isMirror =
-      Object.selectionForField "Bool" "isMirror" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isMirror" [] (Decode.bool)
 
 
 {-| Identifies if the repository is private.
 -}
-isPrivate : SelectionSet Bool GithubNoFormat.Object.Repository
+isPrivate : SelectionSet (Bool) GithubNoFormat.Object.Repository
 isPrivate =
-      Object.selectionForField "Bool" "isPrivate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isPrivate" [] (Decode.bool)
 
 
-type alias IssueRequiredArguments = { number : Int }
+type alias IssueRequiredArguments = { number : (Int) }
 
 {-| Returns a single issue from the current repository by number.
 
@@ -340,7 +340,7 @@ issue requiredArgs____ object____ =
       Object.selectionForCompositeField "issue" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias IssueOrPullRequestRequiredArguments = { number : Int }
+type alias IssueOrPullRequestRequiredArguments = { number : (Int) }
 
 {-| Returns a single issue-like object from the current repository by number.
 
@@ -354,13 +354,13 @@ issueOrPullRequest requiredArgs____ object____ =
       Object.selectionForCompositeField "issueOrPullRequest" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias IssuesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , labels : OptionalArgument (List String)
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder
- , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
+type alias IssuesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , labels : OptionalArgument ((List (String)))
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.IssueState.IssueState))) }
 
 {-| A list of issues that have been opened in the repository.
 
@@ -375,7 +375,7 @@ type alias IssuesOptionalArguments = { first : OptionalArgument Int
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 issues fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -388,7 +388,7 @@ issues fillInOptionals____ object____ =
       Object.selectionForCompositeField "issues" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias LabelRequiredArguments = { name : String }
+type alias LabelRequiredArguments = { name : (String) }
 
 {-| Returns a single label by name
 
@@ -402,11 +402,11 @@ label requiredArgs____ object____ =
       Object.selectionForCompositeField "label" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias LabelsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , query : OptionalArgument String }
+type alias LabelsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , query : OptionalArgument (String) }
 
 {-| A list of labels associated with the repository.
 
@@ -432,11 +432,11 @@ labels fillInOptionals____ object____ =
       Object.selectionForCompositeField "labels" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias LanguagesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.LanguageOrder }
+type alias LanguagesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.LanguageOrder) }
 
 {-| A list containing a breakdown of the language composition of the repository.
 
@@ -485,10 +485,10 @@ lockReason =
       Object.selectionForField "(Maybe Enum.RepositoryLockReason.RepositoryLockReason)" "lockReason" [] (GithubNoFormat.Enum.RepositoryLockReason.decoder |> Decode.nullable)
 
 
-type alias MentionableUsersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias MentionableUsersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of Users that can be mentioned in the context of the repository.
 
@@ -500,7 +500,7 @@ type alias MentionableUsersOptionalArguments = { first : OptionalArgument Int
 -}
 mentionableUsers : (MentionableUsersOptionalArguments -> MentionableUsersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 mentionableUsers fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -513,7 +513,7 @@ mentionableUsers fillInOptionals____ object____ =
       Object.selectionForCompositeField "mentionableUsers" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias MilestoneRequiredArguments = { number : Int }
+type alias MilestoneRequiredArguments = { number : (Int) }
 
 {-| Returns a single milestone from the current repository by number.
 
@@ -527,12 +527,12 @@ milestone requiredArgs____ object____ =
       Object.selectionForCompositeField "milestone" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias MilestonesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.MilestoneState.MilestoneState)
- , orderBy : OptionalArgument GithubNoFormat.InputObject.MilestoneOrder }
+type alias MilestonesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.MilestoneState.MilestoneState)))
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.MilestoneOrder) }
 
 {-| A list of milestones associated with the repository.
 
@@ -568,20 +568,20 @@ mirrorUrl =
 
 {-| The name of the repository.
 -}
-name : SelectionSet String GithubNoFormat.Object.Repository
+name : SelectionSet (String) GithubNoFormat.Object.Repository
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| The repository's name with owner.
 -}
-nameWithOwner : SelectionSet String GithubNoFormat.Object.Repository
+nameWithOwner : SelectionSet (String) GithubNoFormat.Object.Repository
 nameWithOwner =
-      Object.selectionForField "String" "nameWithOwner" [] (Decode.string)
+      Object.selectionForField "(String)" "nameWithOwner" [] (Decode.string)
 
 
-type alias ObjectOptionalArguments = { oid : OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID
- , expression : OptionalArgument String }
+type alias ObjectOptionalArguments = { oid : OptionalArgument (GithubNoFormat.ScalarCodecs.GitObjectID)
+ , expression : OptionalArgument (String) }
 
 {-| A Git object in the repository
 
@@ -607,7 +607,7 @@ object fillInOptionals____ object____ =
 {-| The User owner of the repository.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 owner object____ =
       Object.selectionForCompositeField "owner" [] (object____) (Basics.identity)
 
@@ -628,7 +628,7 @@ primaryLanguage object____ =
       Object.selectionForCompositeField "primaryLanguage" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ProjectRequiredArguments = { number : Int }
+type alias ProjectRequiredArguments = { number : (Int) }
 
 {-| Find project by number.
 
@@ -642,13 +642,13 @@ project requiredArgs____ object____ =
       Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ProjectsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
- , search : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
+type alias ProjectsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ProjectOrder)
+ , search : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.ProjectState.ProjectState))) }
 
 {-| A list of projects under the owner.
 
@@ -663,7 +663,7 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument Int
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 projects fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -678,22 +678,22 @@ projects fillInOptionals____ object____ =
 
 {-| The HTTP path listing repository's projects
 -}
-projectsResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Repository
+projectsResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Repository
 projectsResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "projectsResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing repository's projects
 -}
-projectsUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Repository
+projectsUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Repository
 projectsUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "projectsUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias ProtectedBranchesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ProtectedBranchesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of protected branches that are on this repository.
 
@@ -705,7 +705,7 @@ type alias ProtectedBranchesOptionalArguments = { first : OptionalArgument Int
 -}
 protectedBranches : (ProtectedBranchesOptionalArguments -> ProtectedBranchesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranchConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 protectedBranches fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -718,7 +718,7 @@ protectedBranches fillInOptionals____ object____ =
       Object.selectionForCompositeField "protectedBranches" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias PullRequestRequiredArguments = { number : Int }
+type alias PullRequestRequiredArguments = { number : (Int) }
 
 {-| Returns a single pull request from the current repository by number.
 
@@ -732,15 +732,15 @@ pullRequest requiredArgs____ object____ =
       Object.selectionForCompositeField "pullRequest" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
- , labels : OptionalArgument (List String)
- , headRefName : OptionalArgument String
- , baseRefName : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
+type alias PullRequestsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
+ , labels : OptionalArgument ((List (String)))
+ , headRefName : OptionalArgument (String)
+ , baseRefName : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }
 
 {-| A list of pull requests that have been opened in the repository.
 
@@ -757,7 +757,7 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 pullRequests fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -777,7 +777,7 @@ pushedAt =
       Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "pushedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-type alias RefRequiredArguments = { qualifiedName : String }
+type alias RefRequiredArguments = { qualifiedName : (String) }
 
 {-| Fetch a given ref from the repository
 
@@ -791,14 +791,14 @@ ref requiredArgs____ object____ =
       Object.selectionForCompositeField "ref" [ Argument.required "qualifiedName" requiredArgs____.qualifiedName (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias RefsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , direction : OptionalArgument GithubNoFormat.Enum.OrderDirection.OrderDirection
- , orderBy : OptionalArgument GithubNoFormat.InputObject.RefOrder }
+type alias RefsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , direction : OptionalArgument (GithubNoFormat.Enum.OrderDirection.OrderDirection)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.RefOrder) }
 
-type alias RefsRequiredArguments = { refPrefix : String }
+type alias RefsRequiredArguments = { refPrefix : (String) }
 
 {-| Fetch a list of refs from the repository
 
@@ -827,7 +827,7 @@ refs fillInOptionals____ requiredArgs____ object____ =
       Object.selectionForCompositeField "refs" (optionalArgs____ ++ [ Argument.required "refPrefix" requiredArgs____.refPrefix (Encode.string) ]) (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ReleaseRequiredArguments = { tagName : String }
+type alias ReleaseRequiredArguments = { tagName : (String) }
 
 {-| Lookup a single release given various criteria.
 
@@ -841,11 +841,11 @@ release requiredArgs____ object____ =
       Object.selectionForCompositeField "release" [ Argument.required "tagName" requiredArgs____.tagName (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ReleasesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ReleaseOrder }
+type alias ReleasesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ReleaseOrder) }
 
 {-| List of releases which are dependent on this repository.
 
@@ -858,7 +858,7 @@ type alias ReleasesOptionalArguments = { first : OptionalArgument Int
 -}
 releases : (ReleasesOptionalArguments -> ReleasesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReleaseConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 releases fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -871,10 +871,10 @@ releases fillInOptionals____ object____ =
       Object.selectionForCompositeField "releases" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias RepositoryTopicsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias RepositoryTopicsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of applied repository-topic associations for this repository.
 
@@ -886,7 +886,7 @@ type alias RepositoryTopicsOptionalArguments = { first : OptionalArgument Int
 -}
 repositoryTopics : (RepositoryTopicsOptionalArguments -> RepositoryTopicsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryTopicConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 repositoryTopics fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -901,12 +901,12 @@ repositoryTopics fillInOptionals____ object____ =
 
 {-| The HTTP path for this repository
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Repository
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Repository
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument Int }
+type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument (Int) }
 
 {-| A description of the repository, rendered to HTML without any links in it.
 
@@ -914,7 +914,7 @@ type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument In
 
 -}
 shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
- -> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.Repository
+ -> SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.Repository
 shortDescriptionHTML fillInOptionals____ =
     let
         filledInOptionals____ =
@@ -924,21 +924,21 @@ shortDescriptionHTML fillInOptionals____ =
             [ Argument.optional "limit" filledInOptionals____.limit (Encode.int) ]
                 |> List.filterMap Basics.identity
     in
-      Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "shortDescriptionHTML" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The SSH URL to clone this repository
 -}
-sshUrl : SelectionSet GithubNoFormat.ScalarCodecs.GitSSHRemote GithubNoFormat.Object.Repository
+sshUrl : SelectionSet (GithubNoFormat.ScalarCodecs.GitSSHRemote) GithubNoFormat.Object.Repository
 sshUrl =
-      Object.selectionForField "ScalarCodecs.GitSSHRemote" "sshUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitSSHRemote |> .decoder)
+      Object.selectionForField "(ScalarCodecs.GitSSHRemote)" "sshUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitSSHRemote |> .decoder)
 
 
-type alias StargazersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.StarOrder }
+type alias StargazersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.StarOrder) }
 
 {-| A list of users who have starred this starrable.
 
@@ -951,7 +951,7 @@ type alias StargazersOptionalArguments = { first : OptionalArgument Int
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 stargazers fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -967,51 +967,51 @@ stargazers fillInOptionals____ object____ =
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Repository
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Repository
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this repository
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Repository
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Repository
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Indicates whether the viewer has admin permissions on this repository.
 -}
-viewerCanAdminister : SelectionSet Bool GithubNoFormat.Object.Repository
+viewerCanAdminister : SelectionSet (Bool) GithubNoFormat.Object.Repository
 viewerCanAdminister =
-      Object.selectionForField "Bool" "viewerCanAdminister" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanAdminister" [] (Decode.bool)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
-viewerCanCreateProjects : SelectionSet Bool GithubNoFormat.Object.Repository
+viewerCanCreateProjects : SelectionSet (Bool) GithubNoFormat.Object.Repository
 viewerCanCreateProjects =
-      Object.selectionForField "Bool" "viewerCanCreateProjects" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanCreateProjects" [] (Decode.bool)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : SelectionSet Bool GithubNoFormat.Object.Repository
+viewerCanSubscribe : SelectionSet (Bool) GithubNoFormat.Object.Repository
 viewerCanSubscribe =
-      Object.selectionForField "Bool" "viewerCanSubscribe" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanSubscribe" [] (Decode.bool)
 
 
 {-| Indicates whether the viewer can update the topics of this repository.
 -}
-viewerCanUpdateTopics : SelectionSet Bool GithubNoFormat.Object.Repository
+viewerCanUpdateTopics : SelectionSet (Bool) GithubNoFormat.Object.Repository
 viewerCanUpdateTopics =
-      Object.selectionForField "Bool" "viewerCanUpdateTopics" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanUpdateTopics" [] (Decode.bool)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
-viewerHasStarred : SelectionSet Bool GithubNoFormat.Object.Repository
+viewerHasStarred : SelectionSet (Bool) GithubNoFormat.Object.Repository
 viewerHasStarred =
-      Object.selectionForField "Bool" "viewerHasStarred" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerHasStarred" [] (Decode.bool)
 
 
 {-| The users permission level on the repository. Will return null if authenticated as an GitHub App.
@@ -1023,15 +1023,15 @@ viewerPermission =
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : SelectionSet GithubNoFormat.Enum.SubscriptionState.SubscriptionState GithubNoFormat.Object.Repository
+viewerSubscription : SelectionSet (GithubNoFormat.Enum.SubscriptionState.SubscriptionState) GithubNoFormat.Object.Repository
 viewerSubscription =
-      Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)
+      Object.selectionForField "(Enum.SubscriptionState.SubscriptionState)" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)
 
 
-type alias WatchersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias WatchersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of users watching the repository.
 
@@ -1043,7 +1043,7 @@ type alias WatchersOptionalArguments = { first : OptionalArgument Int
 -}
 watchers : (WatchersOptionalArguments -> WatchersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Repository
 watchers fillInOptionals____ object____ =
     let
         filledInOptionals____ =

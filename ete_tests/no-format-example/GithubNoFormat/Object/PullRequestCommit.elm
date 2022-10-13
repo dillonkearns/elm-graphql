@@ -19,33 +19,33 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The Git commit object
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestCommit
 commit object____ =
       Object.selectionForCompositeField "commit" [] (object____) (Basics.identity)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestCommit
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.PullRequestCommit
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The pull request this commit belongs to
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequestCommit
 pullRequest object____ =
       Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this pull request commit
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequestCommit
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequestCommit
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this pull request commit
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequestCommit
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequestCommit
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

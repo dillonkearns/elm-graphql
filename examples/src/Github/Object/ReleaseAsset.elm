@@ -23,40 +23,40 @@ import Json.Decode as Decode
 -}
 contentType : SelectionSet String Github.Object.ReleaseAsset
 contentType =
-    Object.selectionForField "String" "contentType" [] Decode.string
+    Object.selectionForField "(String)" "contentType" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ReleaseAsset
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The number of times this asset was downloaded
 -}
 downloadCount : SelectionSet Int Github.Object.ReleaseAsset
 downloadCount =
-    Object.selectionForField "Int" "downloadCount" [] Decode.int
+    Object.selectionForField "(Int)" "downloadCount" [] Decode.int
 
 
 {-| Identifies the URL where you can download the release asset via the browser.
 -}
 downloadUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.ReleaseAsset
 downloadUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "downloadUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "downloadUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.ReleaseAsset
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the title of the release asset.
 -}
 name : SelectionSet String Github.Object.ReleaseAsset
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| Release that the asset is associated with
@@ -72,7 +72,7 @@ release object____ =
 -}
 size : SelectionSet Int Github.Object.ReleaseAsset
 size =
-    Object.selectionForField "Int" "size" [] Decode.int
+    Object.selectionForField "(Int)" "size" [] Decode.int
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -80,7 +80,7 @@ size =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ReleaseAsset
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The user that performed the upload
@@ -96,4 +96,4 @@ uploadedBy object____ =
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.ReleaseAsset
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

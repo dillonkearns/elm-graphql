@@ -23,54 +23,54 @@ import Json.Decode as Decode
 -}
 abbreviatedOid : SelectionSet String Github.Object.Blob
 abbreviatedOid =
-    Object.selectionForField "String" "abbreviatedOid" [] Decode.string
+    Object.selectionForField "(String)" "abbreviatedOid" [] Decode.string
 
 
 {-| Byte size of Blob object
 -}
 byteSize : SelectionSet Int Github.Object.Blob
 byteSize =
-    Object.selectionForField "Int" "byteSize" [] Decode.int
+    Object.selectionForField "(Int)" "byteSize" [] Decode.int
 
 
 {-| The HTTP path for this Git object
 -}
 commitResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Blob
 commitResourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Blob
 commitUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Blob
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Indicates whether the Blob is binary or text
 -}
 isBinary : SelectionSet Bool Github.Object.Blob
 isBinary =
-    Object.selectionForField "Bool" "isBinary" [] Decode.bool
+    Object.selectionForField "(Bool)" "isBinary" [] Decode.bool
 
 
 {-| Indicates whether the contents is truncated
 -}
 isTruncated : SelectionSet Bool Github.Object.Blob
 isTruncated =
-    Object.selectionForField "Bool" "isTruncated" [] Decode.bool
+    Object.selectionForField "(Bool)" "isTruncated" [] Decode.bool
 
 
 {-| The Git object ID
 -}
 oid : SelectionSet Github.ScalarCodecs.GitObjectID Github.Object.Blob
 oid =
-    Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+    Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the Git object belongs to

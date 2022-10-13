@@ -62,7 +62,7 @@ commit object____ =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.CommitCommentThread
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The file the comments were made on.

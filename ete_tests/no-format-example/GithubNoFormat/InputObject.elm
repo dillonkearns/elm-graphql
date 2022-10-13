@@ -63,8 +63,8 @@ buildAcceptTopicSuggestionInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, repositoryId = required____.repositoryId, name = required____.name }
 
 type alias AcceptTopicSuggestionInputRequiredFields =
-    { repositoryId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+    { repositoryId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
 type alias AcceptTopicSuggestionInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -73,8 +73,8 @@ type alias AcceptTopicSuggestionInputOptionalFields =
 -}
 type alias AcceptTopicSuggestionInput =
     { clientMutationId : (OptionalArgument String)
- , repositoryId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+ , repositoryId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
     
 
 {-| Encode a AcceptTopicSuggestionInput into a value that can be used as an argument.
@@ -99,8 +99,8 @@ buildAddCommentInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, subjectId = required____.subjectId, body = required____.body }
 
 type alias AddCommentInputRequiredFields =
-    { subjectId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+    { subjectId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
 type alias AddCommentInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -109,8 +109,8 @@ type alias AddCommentInputOptionalFields =
 -}
 type alias AddCommentInput =
     { clientMutationId : (OptionalArgument String)
- , subjectId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+ , subjectId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
     
 
 {-| Encode a AddCommentInput into a value that can be used as an argument.
@@ -135,7 +135,7 @@ buildAddProjectCardInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, projectColumnId = required____.projectColumnId, contentId = optionals____.contentId, note = optionals____.note }
 
 type alias AddProjectCardInputRequiredFields =
-    { projectColumnId : GithubNoFormat.ScalarCodecs.Id }
+    { projectColumnId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias AddProjectCardInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , contentId : (OptionalArgument GithubNoFormat.ScalarCodecs.Id)
@@ -146,7 +146,7 @@ type alias AddProjectCardInputOptionalFields =
 -}
 type alias AddProjectCardInput =
     { clientMutationId : (OptionalArgument String)
- , projectColumnId : GithubNoFormat.ScalarCodecs.Id
+ , projectColumnId : (GithubNoFormat.ScalarCodecs.Id)
  , contentId : (OptionalArgument GithubNoFormat.ScalarCodecs.Id)
  , note : (OptionalArgument String) }
     
@@ -173,8 +173,8 @@ buildAddProjectColumnInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, projectId = required____.projectId, name = required____.name }
 
 type alias AddProjectColumnInputRequiredFields =
-    { projectId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+    { projectId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
 type alias AddProjectColumnInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -183,8 +183,8 @@ type alias AddProjectColumnInputOptionalFields =
 -}
 type alias AddProjectColumnInput =
     { clientMutationId : (OptionalArgument String)
- , projectId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+ , projectId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
     
 
 {-| Encode a AddProjectColumnInput into a value that can be used as an argument.
@@ -209,8 +209,8 @@ buildAddPullRequestReviewCommentInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, commitOID = optionals____.commitOID, body = required____.body, path = optionals____.path, position = optionals____.position, inReplyTo = optionals____.inReplyTo }
 
 type alias AddPullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+    { pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
 type alias AddPullRequestReviewCommentInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , commitOID : (OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID)
@@ -223,9 +223,9 @@ type alias AddPullRequestReviewCommentInputOptionalFields =
 -}
 type alias AddPullRequestReviewCommentInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
+ , pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
  , commitOID : (OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID)
- , body : String
+ , body : (String)
  , path : (OptionalArgument String)
  , position : (OptionalArgument Int)
  , inReplyTo : (OptionalArgument GithubNoFormat.ScalarCodecs.Id) }
@@ -253,7 +253,7 @@ buildAddPullRequestReviewInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestId = required____.pullRequestId, commitOID = optionals____.commitOID, body = optionals____.body, event = optionals____.event, comments = optionals____.comments }
 
 type alias AddPullRequestReviewInputRequiredFields =
-    { pullRequestId : GithubNoFormat.ScalarCodecs.Id }
+    { pullRequestId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias AddPullRequestReviewInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , commitOID : (OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID)
@@ -266,7 +266,7 @@ type alias AddPullRequestReviewInputOptionalFields =
 -}
 type alias AddPullRequestReviewInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestId : GithubNoFormat.ScalarCodecs.Id
+ , pullRequestId : (GithubNoFormat.ScalarCodecs.Id)
  , commitOID : (OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID)
  , body : (OptionalArgument String)
  , event : (OptionalArgument GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent)
@@ -295,8 +295,8 @@ buildAddReactionInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, subjectId = required____.subjectId, content = required____.content }
 
 type alias AddReactionInputRequiredFields =
-    { subjectId : GithubNoFormat.ScalarCodecs.Id
- , content : GithubNoFormat.Enum.ReactionContent.ReactionContent }
+    { subjectId : (GithubNoFormat.ScalarCodecs.Id)
+ , content : (GithubNoFormat.Enum.ReactionContent.ReactionContent) }
 type alias AddReactionInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -305,8 +305,8 @@ type alias AddReactionInputOptionalFields =
 -}
 type alias AddReactionInput =
     { clientMutationId : (OptionalArgument String)
- , subjectId : GithubNoFormat.ScalarCodecs.Id
- , content : GithubNoFormat.Enum.ReactionContent.ReactionContent }
+ , subjectId : (GithubNoFormat.ScalarCodecs.Id)
+ , content : (GithubNoFormat.Enum.ReactionContent.ReactionContent) }
     
 
 {-| Encode a AddReactionInput into a value that can be used as an argument.
@@ -331,7 +331,7 @@ buildAddStarInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, starrableId = required____.starrableId }
 
 type alias AddStarInputRequiredFields =
-    { starrableId : GithubNoFormat.ScalarCodecs.Id }
+    { starrableId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias AddStarInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -340,7 +340,7 @@ type alias AddStarInputOptionalFields =
 -}
 type alias AddStarInput =
     { clientMutationId : (OptionalArgument String)
- , starrableId : GithubNoFormat.ScalarCodecs.Id }
+ , starrableId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a AddStarInput into a value that can be used as an argument.
@@ -366,14 +366,14 @@ buildCommitAuthor fillOptionals____ =
 
 type alias CommitAuthorOptionalFields =
     { id : (OptionalArgument GithubNoFormat.ScalarCodecs.Id)
- , emails : (OptionalArgument ((List String))) }
+ , emails : (OptionalArgument ((List (String)))) }
 
 
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
     { id : (OptionalArgument GithubNoFormat.ScalarCodecs.Id)
- , emails : (OptionalArgument ((List String))) }
+ , emails : (OptionalArgument ((List (String)))) }
     
 
 {-| Encode a CommitAuthor into a value that can be used as an argument.
@@ -398,8 +398,8 @@ buildCreateProjectInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, ownerId = required____.ownerId, name = required____.name, body = optionals____.body }
 
 type alias CreateProjectInputRequiredFields =
-    { ownerId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+    { ownerId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
 type alias CreateProjectInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , body : (OptionalArgument String) }
@@ -409,8 +409,8 @@ type alias CreateProjectInputOptionalFields =
 -}
 type alias CreateProjectInput =
     { clientMutationId : (OptionalArgument String)
- , ownerId : GithubNoFormat.ScalarCodecs.Id
- , name : String
+ , ownerId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String)
  , body : (OptionalArgument String) }
     
 
@@ -436,9 +436,9 @@ buildDeclineTopicSuggestionInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, repositoryId = required____.repositoryId, name = required____.name, reason = required____.reason }
 
 type alias DeclineTopicSuggestionInputRequiredFields =
-    { repositoryId : GithubNoFormat.ScalarCodecs.Id
- , name : String
- , reason : GithubNoFormat.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+    { repositoryId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String)
+ , reason : (GithubNoFormat.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason) }
 type alias DeclineTopicSuggestionInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -447,9 +447,9 @@ type alias DeclineTopicSuggestionInputOptionalFields =
 -}
 type alias DeclineTopicSuggestionInput =
     { clientMutationId : (OptionalArgument String)
- , repositoryId : GithubNoFormat.ScalarCodecs.Id
- , name : String
- , reason : GithubNoFormat.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+ , repositoryId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String)
+ , reason : (GithubNoFormat.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason) }
     
 
 {-| Encode a DeclineTopicSuggestionInput into a value that can be used as an argument.
@@ -474,7 +474,7 @@ buildDeleteProjectCardInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, cardId = required____.cardId }
 
 type alias DeleteProjectCardInputRequiredFields =
-    { cardId : GithubNoFormat.ScalarCodecs.Id }
+    { cardId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias DeleteProjectCardInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -483,7 +483,7 @@ type alias DeleteProjectCardInputOptionalFields =
 -}
 type alias DeleteProjectCardInput =
     { clientMutationId : (OptionalArgument String)
- , cardId : GithubNoFormat.ScalarCodecs.Id }
+ , cardId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a DeleteProjectCardInput into a value that can be used as an argument.
@@ -508,7 +508,7 @@ buildDeleteProjectColumnInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, columnId = required____.columnId }
 
 type alias DeleteProjectColumnInputRequiredFields =
-    { columnId : GithubNoFormat.ScalarCodecs.Id }
+    { columnId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias DeleteProjectColumnInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -517,7 +517,7 @@ type alias DeleteProjectColumnInputOptionalFields =
 -}
 type alias DeleteProjectColumnInput =
     { clientMutationId : (OptionalArgument String)
- , columnId : GithubNoFormat.ScalarCodecs.Id }
+ , columnId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a DeleteProjectColumnInput into a value that can be used as an argument.
@@ -542,7 +542,7 @@ buildDeleteProjectInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, projectId = required____.projectId }
 
 type alias DeleteProjectInputRequiredFields =
-    { projectId : GithubNoFormat.ScalarCodecs.Id }
+    { projectId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias DeleteProjectInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -551,7 +551,7 @@ type alias DeleteProjectInputOptionalFields =
 -}
 type alias DeleteProjectInput =
     { clientMutationId : (OptionalArgument String)
- , projectId : GithubNoFormat.ScalarCodecs.Id }
+ , projectId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a DeleteProjectInput into a value that can be used as an argument.
@@ -576,7 +576,7 @@ buildDeletePullRequestReviewInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId }
 
 type alias DeletePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id }
+    { pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias DeletePullRequestReviewInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -585,7 +585,7 @@ type alias DeletePullRequestReviewInputOptionalFields =
 -}
 type alias DeletePullRequestReviewInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id }
+ , pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a DeletePullRequestReviewInput into a value that can be used as an argument.
@@ -610,8 +610,8 @@ buildDismissPullRequestReviewInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, message = required____.message }
 
 type alias DismissPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , message : String }
+    { pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , message : (String) }
 type alias DismissPullRequestReviewInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -620,8 +620,8 @@ type alias DismissPullRequestReviewInputOptionalFields =
 -}
 type alias DismissPullRequestReviewInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , message : String }
+ , pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , message : (String) }
     
 
 {-| Encode a DismissPullRequestReviewInput into a value that can be used as an argument.
@@ -639,18 +639,18 @@ buildDraftPullRequestReviewComment required____ =
     { path = required____.path, position = required____.position, body = required____.body }
 
 type alias DraftPullRequestReviewCommentRequiredFields =
-    { path : String
- , position : Int
- , body : String }
+    { path : (String)
+ , position : (Int)
+ , body : (String) }
 
 
 
 {-| Type for the DraftPullRequestReviewComment input object.
 -}
 type alias DraftPullRequestReviewComment =
-    { path : String
- , position : Int
- , body : String }
+    { path : (String)
+ , position : (Int)
+ , body : (String) }
     
 
 {-| Encode a DraftPullRequestReviewComment into a value that can be used as an argument.
@@ -668,16 +668,16 @@ buildGistOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias GistOrderRequiredFields =
-    { field : GithubNoFormat.Enum.GistOrderField.GistOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.GistOrderField.GistOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the GistOrder input object.
 -}
 type alias GistOrder =
-    { field : GithubNoFormat.Enum.GistOrderField.GistOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.GistOrderField.GistOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a GistOrder into a value that can be used as an argument.
@@ -695,16 +695,16 @@ buildIssueOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias IssueOrderRequiredFields =
-    { field : GithubNoFormat.Enum.IssueOrderField.IssueOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.IssueOrderField.IssueOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the IssueOrder input object.
 -}
 type alias IssueOrder =
-    { field : GithubNoFormat.Enum.IssueOrderField.IssueOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.IssueOrderField.IssueOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a IssueOrder into a value that can be used as an argument.
@@ -722,16 +722,16 @@ buildLanguageOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias LanguageOrderRequiredFields =
-    { field : GithubNoFormat.Enum.LanguageOrderField.LanguageOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.LanguageOrderField.LanguageOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the LanguageOrder input object.
 -}
 type alias LanguageOrder =
-    { field : GithubNoFormat.Enum.LanguageOrderField.LanguageOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.LanguageOrderField.LanguageOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a LanguageOrder into a value that can be used as an argument.
@@ -756,7 +756,7 @@ buildLockLockableInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, lockableId = required____.lockableId, lockReason = optionals____.lockReason }
 
 type alias LockLockableInputRequiredFields =
-    { lockableId : GithubNoFormat.ScalarCodecs.Id }
+    { lockableId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias LockLockableInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , lockReason : (OptionalArgument GithubNoFormat.Enum.LockReason.LockReason) }
@@ -766,7 +766,7 @@ type alias LockLockableInputOptionalFields =
 -}
 type alias LockLockableInput =
     { clientMutationId : (OptionalArgument String)
- , lockableId : GithubNoFormat.ScalarCodecs.Id
+ , lockableId : (GithubNoFormat.ScalarCodecs.Id)
  , lockReason : (OptionalArgument GithubNoFormat.Enum.LockReason.LockReason) }
     
 
@@ -785,16 +785,16 @@ buildMilestoneOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias MilestoneOrderRequiredFields =
-    { field : GithubNoFormat.Enum.MilestoneOrderField.MilestoneOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.MilestoneOrderField.MilestoneOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the MilestoneOrder input object.
 -}
 type alias MilestoneOrder =
-    { field : GithubNoFormat.Enum.MilestoneOrderField.MilestoneOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.MilestoneOrderField.MilestoneOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a MilestoneOrder into a value that can be used as an argument.
@@ -819,8 +819,8 @@ buildMoveProjectCardInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, cardId = required____.cardId, columnId = required____.columnId, afterCardId = optionals____.afterCardId }
 
 type alias MoveProjectCardInputRequiredFields =
-    { cardId : GithubNoFormat.ScalarCodecs.Id
- , columnId : GithubNoFormat.ScalarCodecs.Id }
+    { cardId : (GithubNoFormat.ScalarCodecs.Id)
+ , columnId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias MoveProjectCardInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , afterCardId : (OptionalArgument GithubNoFormat.ScalarCodecs.Id) }
@@ -830,8 +830,8 @@ type alias MoveProjectCardInputOptionalFields =
 -}
 type alias MoveProjectCardInput =
     { clientMutationId : (OptionalArgument String)
- , cardId : GithubNoFormat.ScalarCodecs.Id
- , columnId : GithubNoFormat.ScalarCodecs.Id
+ , cardId : (GithubNoFormat.ScalarCodecs.Id)
+ , columnId : (GithubNoFormat.ScalarCodecs.Id)
  , afterCardId : (OptionalArgument GithubNoFormat.ScalarCodecs.Id) }
     
 
@@ -857,7 +857,7 @@ buildMoveProjectColumnInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, columnId = required____.columnId, afterColumnId = optionals____.afterColumnId }
 
 type alias MoveProjectColumnInputRequiredFields =
-    { columnId : GithubNoFormat.ScalarCodecs.Id }
+    { columnId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias MoveProjectColumnInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , afterColumnId : (OptionalArgument GithubNoFormat.ScalarCodecs.Id) }
@@ -867,7 +867,7 @@ type alias MoveProjectColumnInputOptionalFields =
 -}
 type alias MoveProjectColumnInput =
     { clientMutationId : (OptionalArgument String)
- , columnId : GithubNoFormat.ScalarCodecs.Id
+ , columnId : (GithubNoFormat.ScalarCodecs.Id)
  , afterColumnId : (OptionalArgument GithubNoFormat.ScalarCodecs.Id) }
     
 
@@ -886,16 +886,16 @@ buildProjectOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias ProjectOrderRequiredFields =
-    { field : GithubNoFormat.Enum.ProjectOrderField.ProjectOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.ProjectOrderField.ProjectOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the ProjectOrder input object.
 -}
 type alias ProjectOrder =
-    { field : GithubNoFormat.Enum.ProjectOrderField.ProjectOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.ProjectOrderField.ProjectOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a ProjectOrder into a value that can be used as an argument.
@@ -913,16 +913,16 @@ buildReactionOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias ReactionOrderRequiredFields =
-    { field : GithubNoFormat.Enum.ReactionOrderField.ReactionOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.ReactionOrderField.ReactionOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the ReactionOrder input object.
 -}
 type alias ReactionOrder =
-    { field : GithubNoFormat.Enum.ReactionOrderField.ReactionOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.ReactionOrderField.ReactionOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a ReactionOrder into a value that can be used as an argument.
@@ -940,16 +940,16 @@ buildRefOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias RefOrderRequiredFields =
-    { field : GithubNoFormat.Enum.RefOrderField.RefOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.RefOrderField.RefOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the RefOrder input object.
 -}
 type alias RefOrder =
-    { field : GithubNoFormat.Enum.RefOrderField.RefOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.RefOrderField.RefOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a RefOrder into a value that can be used as an argument.
@@ -967,16 +967,16 @@ buildReleaseOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias ReleaseOrderRequiredFields =
-    { field : GithubNoFormat.Enum.ReleaseOrderField.ReleaseOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.ReleaseOrderField.ReleaseOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the ReleaseOrder input object.
 -}
 type alias ReleaseOrder =
-    { field : GithubNoFormat.Enum.ReleaseOrderField.ReleaseOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.ReleaseOrderField.ReleaseOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a ReleaseOrder into a value that can be used as an argument.
@@ -1001,8 +1001,8 @@ buildRemoveOutsideCollaboratorInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, userId = required____.userId, organizationId = required____.organizationId }
 
 type alias RemoveOutsideCollaboratorInputRequiredFields =
-    { userId : GithubNoFormat.ScalarCodecs.Id
- , organizationId : GithubNoFormat.ScalarCodecs.Id }
+    { userId : (GithubNoFormat.ScalarCodecs.Id)
+ , organizationId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias RemoveOutsideCollaboratorInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1011,8 +1011,8 @@ type alias RemoveOutsideCollaboratorInputOptionalFields =
 -}
 type alias RemoveOutsideCollaboratorInput =
     { clientMutationId : (OptionalArgument String)
- , userId : GithubNoFormat.ScalarCodecs.Id
- , organizationId : GithubNoFormat.ScalarCodecs.Id }
+ , userId : (GithubNoFormat.ScalarCodecs.Id)
+ , organizationId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a RemoveOutsideCollaboratorInput into a value that can be used as an argument.
@@ -1037,8 +1037,8 @@ buildRemoveReactionInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, subjectId = required____.subjectId, content = required____.content }
 
 type alias RemoveReactionInputRequiredFields =
-    { subjectId : GithubNoFormat.ScalarCodecs.Id
- , content : GithubNoFormat.Enum.ReactionContent.ReactionContent }
+    { subjectId : (GithubNoFormat.ScalarCodecs.Id)
+ , content : (GithubNoFormat.Enum.ReactionContent.ReactionContent) }
 type alias RemoveReactionInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1047,8 +1047,8 @@ type alias RemoveReactionInputOptionalFields =
 -}
 type alias RemoveReactionInput =
     { clientMutationId : (OptionalArgument String)
- , subjectId : GithubNoFormat.ScalarCodecs.Id
- , content : GithubNoFormat.Enum.ReactionContent.ReactionContent }
+ , subjectId : (GithubNoFormat.ScalarCodecs.Id)
+ , content : (GithubNoFormat.Enum.ReactionContent.ReactionContent) }
     
 
 {-| Encode a RemoveReactionInput into a value that can be used as an argument.
@@ -1073,7 +1073,7 @@ buildRemoveStarInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, starrableId = required____.starrableId }
 
 type alias RemoveStarInputRequiredFields =
-    { starrableId : GithubNoFormat.ScalarCodecs.Id }
+    { starrableId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias RemoveStarInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1082,7 +1082,7 @@ type alias RemoveStarInputOptionalFields =
 -}
 type alias RemoveStarInput =
     { clientMutationId : (OptionalArgument String)
- , starrableId : GithubNoFormat.ScalarCodecs.Id }
+ , starrableId : (GithubNoFormat.ScalarCodecs.Id) }
     
 
 {-| Encode a RemoveStarInput into a value that can be used as an argument.
@@ -1100,16 +1100,16 @@ buildRepositoryOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias RepositoryOrderRequiredFields =
-    { field : GithubNoFormat.Enum.RepositoryOrderField.RepositoryOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.RepositoryOrderField.RepositoryOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the RepositoryOrder input object.
 -}
 type alias RepositoryOrder =
-    { field : GithubNoFormat.Enum.RepositoryOrderField.RepositoryOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.RepositoryOrderField.RepositoryOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a RepositoryOrder into a value that can be used as an argument.
@@ -1134,11 +1134,11 @@ buildRequestReviewsInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestId = required____.pullRequestId, userIds = optionals____.userIds, teamIds = optionals____.teamIds, union = optionals____.union }
 
 type alias RequestReviewsInputRequiredFields =
-    { pullRequestId : GithubNoFormat.ScalarCodecs.Id }
+    { pullRequestId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias RequestReviewsInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
- , userIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
- , teamIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
+ , userIds : (OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id))))
+ , teamIds : (OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id))))
  , union : (OptionalArgument Bool) }
 
 
@@ -1146,9 +1146,9 @@ type alias RequestReviewsInputOptionalFields =
 -}
 type alias RequestReviewsInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestId : GithubNoFormat.ScalarCodecs.Id
- , userIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
- , teamIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
+ , pullRequestId : (GithubNoFormat.ScalarCodecs.Id)
+ , userIds : (OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id))))
+ , teamIds : (OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id))))
  , union : (OptionalArgument Bool) }
     
 
@@ -1167,16 +1167,16 @@ buildStarOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias StarOrderRequiredFields =
-    { field : GithubNoFormat.Enum.StarOrderField.StarOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.StarOrderField.StarOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the StarOrder input object.
 -}
 type alias StarOrder =
-    { field : GithubNoFormat.Enum.StarOrderField.StarOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.StarOrderField.StarOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a StarOrder into a value that can be used as an argument.
@@ -1201,8 +1201,8 @@ buildSubmitPullRequestReviewInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, event = required____.event, body = optionals____.body }
 
 type alias SubmitPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , event : GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent }
+    { pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , event : (GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent) }
 type alias SubmitPullRequestReviewInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , body : (OptionalArgument String) }
@@ -1212,8 +1212,8 @@ type alias SubmitPullRequestReviewInputOptionalFields =
 -}
 type alias SubmitPullRequestReviewInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , event : GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent
+ , pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , event : (GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent)
  , body : (OptionalArgument String) }
     
 
@@ -1232,16 +1232,16 @@ buildTeamOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias TeamOrderRequiredFields =
-    { field : GithubNoFormat.Enum.TeamOrderField.TeamOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.TeamOrderField.TeamOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the TeamOrder input object.
 -}
 type alias TeamOrder =
-    { field : GithubNoFormat.Enum.TeamOrderField.TeamOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.TeamOrderField.TeamOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a TeamOrder into a value that can be used as an argument.
@@ -1259,16 +1259,16 @@ buildTeamRepositoryOrder required____ =
     { field = required____.field, direction = required____.direction }
 
 type alias TeamRepositoryOrderRequiredFields =
-    { field : GithubNoFormat.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
 
 
 
 {-| Type for the TeamRepositoryOrder input object.
 -}
 type alias TeamRepositoryOrder =
-    { field : GithubNoFormat.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField
- , direction : GithubNoFormat.Enum.OrderDirection.OrderDirection }
+    { field : (GithubNoFormat.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField)
+ , direction : (GithubNoFormat.Enum.OrderDirection.OrderDirection) }
     
 
 {-| Encode a TeamRepositoryOrder into a value that can be used as an argument.
@@ -1293,8 +1293,8 @@ buildUpdateProjectCardInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, projectCardId = required____.projectCardId, note = required____.note }
 
 type alias UpdateProjectCardInputRequiredFields =
-    { projectCardId : GithubNoFormat.ScalarCodecs.Id
- , note : String }
+    { projectCardId : (GithubNoFormat.ScalarCodecs.Id)
+ , note : (String) }
 type alias UpdateProjectCardInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1303,8 +1303,8 @@ type alias UpdateProjectCardInputOptionalFields =
 -}
 type alias UpdateProjectCardInput =
     { clientMutationId : (OptionalArgument String)
- , projectCardId : GithubNoFormat.ScalarCodecs.Id
- , note : String }
+ , projectCardId : (GithubNoFormat.ScalarCodecs.Id)
+ , note : (String) }
     
 
 {-| Encode a UpdateProjectCardInput into a value that can be used as an argument.
@@ -1329,8 +1329,8 @@ buildUpdateProjectColumnInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, projectColumnId = required____.projectColumnId, name = required____.name }
 
 type alias UpdateProjectColumnInputRequiredFields =
-    { projectColumnId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+    { projectColumnId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
 type alias UpdateProjectColumnInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1339,8 +1339,8 @@ type alias UpdateProjectColumnInputOptionalFields =
 -}
 type alias UpdateProjectColumnInput =
     { clientMutationId : (OptionalArgument String)
- , projectColumnId : GithubNoFormat.ScalarCodecs.Id
- , name : String }
+ , projectColumnId : (GithubNoFormat.ScalarCodecs.Id)
+ , name : (String) }
     
 
 {-| Encode a UpdateProjectColumnInput into a value that can be used as an argument.
@@ -1365,7 +1365,7 @@ buildUpdateProjectInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, projectId = required____.projectId, name = optionals____.name, body = optionals____.body, state = optionals____.state, public = optionals____.public }
 
 type alias UpdateProjectInputRequiredFields =
-    { projectId : GithubNoFormat.ScalarCodecs.Id }
+    { projectId : (GithubNoFormat.ScalarCodecs.Id) }
 type alias UpdateProjectInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
  , name : (OptionalArgument String)
@@ -1378,7 +1378,7 @@ type alias UpdateProjectInputOptionalFields =
 -}
 type alias UpdateProjectInput =
     { clientMutationId : (OptionalArgument String)
- , projectId : GithubNoFormat.ScalarCodecs.Id
+ , projectId : (GithubNoFormat.ScalarCodecs.Id)
  , name : (OptionalArgument String)
  , body : (OptionalArgument String)
  , state : (OptionalArgument GithubNoFormat.Enum.ProjectState.ProjectState)
@@ -1407,8 +1407,8 @@ buildUpdatePullRequestReviewCommentInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestReviewCommentId = required____.pullRequestReviewCommentId, body = required____.body }
 
 type alias UpdatePullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewCommentId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+    { pullRequestReviewCommentId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
 type alias UpdatePullRequestReviewCommentInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1417,8 +1417,8 @@ type alias UpdatePullRequestReviewCommentInputOptionalFields =
 -}
 type alias UpdatePullRequestReviewCommentInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestReviewCommentId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+ , pullRequestReviewCommentId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
     
 
 {-| Encode a UpdatePullRequestReviewCommentInput into a value that can be used as an argument.
@@ -1443,8 +1443,8 @@ buildUpdatePullRequestReviewInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, body = required____.body }
 
 type alias UpdatePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+    { pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
 type alias UpdatePullRequestReviewInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1453,8 +1453,8 @@ type alias UpdatePullRequestReviewInputOptionalFields =
 -}
 type alias UpdatePullRequestReviewInput =
     { clientMutationId : (OptionalArgument String)
- , pullRequestReviewId : GithubNoFormat.ScalarCodecs.Id
- , body : String }
+ , pullRequestReviewId : (GithubNoFormat.ScalarCodecs.Id)
+ , body : (String) }
     
 
 {-| Encode a UpdatePullRequestReviewInput into a value that can be used as an argument.
@@ -1479,8 +1479,8 @@ buildUpdateSubscriptionInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, subscribableId = required____.subscribableId, state = required____.state }
 
 type alias UpdateSubscriptionInputRequiredFields =
-    { subscribableId : GithubNoFormat.ScalarCodecs.Id
- , state : GithubNoFormat.Enum.SubscriptionState.SubscriptionState }
+    { subscribableId : (GithubNoFormat.ScalarCodecs.Id)
+ , state : (GithubNoFormat.Enum.SubscriptionState.SubscriptionState) }
 type alias UpdateSubscriptionInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1489,8 +1489,8 @@ type alias UpdateSubscriptionInputOptionalFields =
 -}
 type alias UpdateSubscriptionInput =
     { clientMutationId : (OptionalArgument String)
- , subscribableId : GithubNoFormat.ScalarCodecs.Id
- , state : GithubNoFormat.Enum.SubscriptionState.SubscriptionState }
+ , subscribableId : (GithubNoFormat.ScalarCodecs.Id)
+ , state : (GithubNoFormat.Enum.SubscriptionState.SubscriptionState) }
     
 
 {-| Encode a UpdateSubscriptionInput into a value that can be used as an argument.
@@ -1515,8 +1515,8 @@ buildUpdateTopicsInput required____ fillOptionals____ =
     { clientMutationId = optionals____.clientMutationId, repositoryId = required____.repositoryId, topicNames = required____.topicNames }
 
 type alias UpdateTopicsInputRequiredFields =
-    { repositoryId : GithubNoFormat.ScalarCodecs.Id
- , topicNames : (List String) }
+    { repositoryId : (GithubNoFormat.ScalarCodecs.Id)
+ , topicNames : ((List (String))) }
 type alias UpdateTopicsInputOptionalFields =
     { clientMutationId : (OptionalArgument String) }
 
@@ -1525,8 +1525,8 @@ type alias UpdateTopicsInputOptionalFields =
 -}
 type alias UpdateTopicsInput =
     { clientMutationId : (OptionalArgument String)
- , repositoryId : GithubNoFormat.ScalarCodecs.Id
- , topicNames : (List String) }
+ , repositoryId : (GithubNoFormat.ScalarCodecs.Id)
+ , topicNames : ((List (String))) }
     
 
 {-| Encode a UpdateTopicsInput into a value that can be used as an argument.

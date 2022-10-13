@@ -16,13 +16,13 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PublicKey
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.PublicKey
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The public key string
 -}
-key : SelectionSet String GithubNoFormat.Object.PublicKey
+key : SelectionSet (String) GithubNoFormat.Object.PublicKey
 key =
-      Object.selectionForField "String" "key" [] (Decode.string)
+      Object.selectionForField "(String)" "key" [] (Decode.string)

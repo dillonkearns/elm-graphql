@@ -18,28 +18,28 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| Identifies the recency of the change, from 1 (new) to 10 (old). This is calculated as a 2-quantile and determines the length of distance between the median age of all the changes in the file and the recency of the current range's change.
 -}
-age : SelectionSet Int GithubNoFormat.Object.BlameRange
+age : SelectionSet (Int) GithubNoFormat.Object.BlameRange
 age =
-      Object.selectionForField "Int" "age" [] (Decode.int)
+      Object.selectionForField "(Int)" "age" [] (Decode.int)
 
 
 {-| Identifies the line author
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
- -> SelectionSet decodesTo GithubNoFormat.Object.BlameRange
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.BlameRange
 commit object____ =
       Object.selectionForCompositeField "commit" [] (object____) (Basics.identity)
 
 
 {-| The ending line for the range
 -}
-endingLine : SelectionSet Int GithubNoFormat.Object.BlameRange
+endingLine : SelectionSet (Int) GithubNoFormat.Object.BlameRange
 endingLine =
-      Object.selectionForField "Int" "endingLine" [] (Decode.int)
+      Object.selectionForField "(Int)" "endingLine" [] (Decode.int)
 
 
 {-| The starting line for the range
 -}
-startingLine : SelectionSet Int GithubNoFormat.Object.BlameRange
+startingLine : SelectionSet (Int) GithubNoFormat.Object.BlameRange
 startingLine =
-      Object.selectionForField "Int" "startingLine" [] (Decode.int)
+      Object.selectionForField "(Int)" "startingLine" [] (Decode.int)

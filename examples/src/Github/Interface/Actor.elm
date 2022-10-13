@@ -71,25 +71,25 @@ avatarUrl fillInOptionals____ =
             [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap Basics.identity
     in
-    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The username of the actor.
 -}
 login : SelectionSet String Github.Interface.Actor
 login =
-    Object.selectionForField "String" "login" [] Decode.string
+    Object.selectionForField "(String)" "login" [] Decode.string
 
 
 {-| The HTTP path for this actor.
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Interface.Actor
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this actor.
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Interface.Actor
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

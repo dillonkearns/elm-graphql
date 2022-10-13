@@ -19,9 +19,9 @@ import GithubNoFormat.Enum.IssueState
 import GithubNoFormat.Enum.PullRequestState
 {-| Identifies the label color.
 -}
-color : SelectionSet String GithubNoFormat.Object.Label
+color : SelectionSet (String) GithubNoFormat.Object.Label
 color =
-      Object.selectionForField "String" "color" [] (Decode.string)
+      Object.selectionForField "(String)" "color" [] (Decode.string)
 
 
 {-| A brief description of this label.
@@ -31,25 +31,25 @@ description =
       Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Label
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Label
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Indicates whether or not this is a default label.
 -}
-isDefault : SelectionSet Bool GithubNoFormat.Object.Label
+isDefault : SelectionSet (Bool) GithubNoFormat.Object.Label
 isDefault =
-      Object.selectionForField "Bool" "isDefault" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isDefault" [] (Decode.bool)
 
 
-type alias IssuesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , labels : OptionalArgument (List String)
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder
- , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
+type alias IssuesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , labels : OptionalArgument ((List (String)))
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.IssueState.IssueState))) }
 
 {-| A list of issues associated with this label.
 
@@ -64,7 +64,7 @@ type alias IssuesOptionalArguments = { first : OptionalArgument Int
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Label
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Label
 issues fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -79,20 +79,20 @@ issues fillInOptionals____ object____ =
 
 {-| Identifies the label name.
 -}
-name : SelectionSet String GithubNoFormat.Object.Label
+name : SelectionSet (String) GithubNoFormat.Object.Label
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
-type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
- , labels : OptionalArgument (List String)
- , headRefName : OptionalArgument String
- , baseRefName : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
+type alias PullRequestsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
+ , labels : OptionalArgument ((List (String)))
+ , headRefName : OptionalArgument (String)
+ , baseRefName : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }
 
 {-| A list of pull requests associated with this label.
 
@@ -109,7 +109,7 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Label
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Label
 pullRequests fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -125,6 +125,6 @@ pullRequests fillInOptionals____ object____ =
 {-| The repository associated with this label.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.Label
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Label
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)

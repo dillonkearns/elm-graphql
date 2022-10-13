@@ -26,9 +26,9 @@ actor object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.HeadRefDeletedEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.HeadRefDeletedEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
@@ -41,19 +41,19 @@ headRef object____ =
 
 {-| Identifies the name of the Ref associated with the `head_ref_deleted` event.
 -}
-headRefName : SelectionSet String GithubNoFormat.Object.HeadRefDeletedEvent
+headRefName : SelectionSet (String) GithubNoFormat.Object.HeadRefDeletedEvent
 headRefName =
-      Object.selectionForField "String" "headRefName" [] (Decode.string)
+      Object.selectionForField "(String)" "headRefName" [] (Decode.string)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.HeadRefDeletedEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.HeadRefDeletedEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
- -> SelectionSet decodesTo GithubNoFormat.Object.HeadRefDeletedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.HeadRefDeletedEvent
 pullRequest object____ =
       Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)

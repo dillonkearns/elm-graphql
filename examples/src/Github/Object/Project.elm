@@ -31,14 +31,14 @@ body =
 -}
 bodyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.Project
 bodyHTML =
-    Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "bodyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
 closed : SelectionSet Bool Github.Object.Project
 closed =
-    Object.selectionForField "Bool" "closed" [] Decode.bool
+    Object.selectionForField "(Bool)" "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
@@ -84,7 +84,7 @@ columns fillInOptionals____ object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Project
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who originally created the project.
@@ -106,21 +106,21 @@ databaseId =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Project
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The project's name.
 -}
 name : SelectionSet String Github.Object.Project
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The project's number.
 -}
 number : SelectionSet Int Github.Object.Project
 number =
-    Object.selectionForField "Int" "number" [] Decode.int
+    Object.selectionForField "(Int)" "number" [] Decode.int
 
 
 {-| The project's owner. Currently limited to repositories and organizations.
@@ -168,14 +168,14 @@ pendingCards fillInOptionals____ object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Project
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Whether the project is open or closed.
 -}
 state : SelectionSet Github.Enum.ProjectState.ProjectState Github.Object.Project
 state =
-    Object.selectionForField "Enum.ProjectState.ProjectState" "state" [] Github.Enum.ProjectState.decoder
+    Object.selectionForField "(Enum.ProjectState.ProjectState)" "state" [] Github.Enum.ProjectState.decoder
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -183,18 +183,18 @@ state =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Project
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this project
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Project
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Check if the current viewer can update this object.
 -}
 viewerCanUpdate : SelectionSet Bool Github.Object.Project
 viewerCanUpdate =
-    Object.selectionForField "Bool" "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanUpdate" [] Decode.bool

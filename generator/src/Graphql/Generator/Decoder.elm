@@ -165,19 +165,22 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
 generateType : Context -> TypeReference -> String
 generateType context typeRef =
     generateTypeCommon False "Maybe" context typeRef
+        |> toStringWithParens
 
 
 generateType_ : Bool -> Context -> TypeReference -> String
 generateType_ fromInputObject context typeRef =
     generateTypeCommon fromInputObject "Maybe" context typeRef
+        |> toStringWithParens
 
 
 generateTypeForInputObject : Context -> TypeReference -> String
 generateTypeForInputObject context typeRef =
     generateTypeCommon True "OptionalArgument" context typeRef
+        |> toStringWithParens
 
 
-generateTypeCommon : Bool -> String -> Context -> TypeReference -> String
+generateTypeCommon : Bool -> String -> Context -> TypeReference -> Elm.Annotation.Annotation
 generateTypeCommon fromInputObject nullableString context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
@@ -214,11 +217,10 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
         |> (\typeString ->
                 case isNullable of
                     Type.Nullable ->
-                        toStringWithParens <|
-                            Elm.Annotation.namedWith [] nullableString [ typeString ]
+                        Elm.Annotation.namedWith [] nullableString [ typeString ]
 
                     Type.NonNullable ->
-                        Elm.Annotation.toString typeString
+                        typeString
            )
 
 

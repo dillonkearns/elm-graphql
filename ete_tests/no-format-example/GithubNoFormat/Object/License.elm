@@ -18,15 +18,15 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| The full text of the license
 -}
-body : SelectionSet String GithubNoFormat.Object.License
+body : SelectionSet (String) GithubNoFormat.Object.License
 body =
-      Object.selectionForField "String" "body" [] (Decode.string)
+      Object.selectionForField "(String)" "body" [] (Decode.string)
 
 
 {-| The conditions set by the license
 -}
 conditions : SelectionSet decodesTo GithubNoFormat.Object.LicenseRule
- -> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.License
+ -> SelectionSet ((List (Maybe decodesTo))) GithubNoFormat.Object.License
 conditions object____ =
       Object.selectionForCompositeField "conditions" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 
@@ -40,21 +40,21 @@ description =
 
 {-| Whether the license should be featured
 -}
-featured : SelectionSet Bool GithubNoFormat.Object.License
+featured : SelectionSet (Bool) GithubNoFormat.Object.License
 featured =
-      Object.selectionForField "Bool" "featured" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "featured" [] (Decode.bool)
 
 
 {-| Whether the license should be displayed in license pickers
 -}
-hidden : SelectionSet Bool GithubNoFormat.Object.License
+hidden : SelectionSet (Bool) GithubNoFormat.Object.License
 hidden =
-      Object.selectionForField "Bool" "hidden" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "hidden" [] (Decode.bool)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.License
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.License
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Instructions on how to implement the license
@@ -66,24 +66,24 @@ implementation =
 
 {-| The lowercased SPDX ID of the license
 -}
-key : SelectionSet String GithubNoFormat.Object.License
+key : SelectionSet (String) GithubNoFormat.Object.License
 key =
-      Object.selectionForField "String" "key" [] (Decode.string)
+      Object.selectionForField "(String)" "key" [] (Decode.string)
 
 
 {-| The limitations set by the license
 -}
 limitations : SelectionSet decodesTo GithubNoFormat.Object.LicenseRule
- -> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.License
+ -> SelectionSet ((List (Maybe decodesTo))) GithubNoFormat.Object.License
 limitations object____ =
       Object.selectionForCompositeField "limitations" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 
 
 {-| The license full name specified by <https://spdx.org/licenses>
 -}
-name : SelectionSet String GithubNoFormat.Object.License
+name : SelectionSet (String) GithubNoFormat.Object.License
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| Customary short name if applicable (e.g, GPLv3)
@@ -96,7 +96,7 @@ nickname =
 {-| The permissions set by the license
 -}
 permissions : SelectionSet decodesTo GithubNoFormat.Object.LicenseRule
- -> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.License
+ -> SelectionSet ((List (Maybe decodesTo))) GithubNoFormat.Object.License
 permissions object____ =
       Object.selectionForCompositeField "permissions" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 

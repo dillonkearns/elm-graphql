@@ -71,37 +71,37 @@ author object____ =
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : SelectionSet GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation GithubNoFormat.Interface.Comment
+authorAssociation : SelectionSet (GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation) GithubNoFormat.Interface.Comment
 authorAssociation =
-      Object.selectionForField "Enum.CommentAuthorAssociation.CommentAuthorAssociation" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
+      Object.selectionForField "(Enum.CommentAuthorAssociation.CommentAuthorAssociation)" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
 
 
 {-| The comment body as Markdown.
 -}
-body : SelectionSet String GithubNoFormat.Interface.Comment
+body : SelectionSet (String) GithubNoFormat.Interface.Comment
 body =
-      Object.selectionForField "String" "body" [] (Decode.string)
+      Object.selectionForField "(String)" "body" [] (Decode.string)
 
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Interface.Comment
+bodyHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Interface.Comment
 bodyHTML =
-      Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Interface.Comment
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Interface.Comment
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : SelectionSet Bool GithubNoFormat.Interface.Comment
+createdViaEmail : SelectionSet (Bool) GithubNoFormat.Interface.Comment
 createdViaEmail =
-      Object.selectionForField "Bool" "createdViaEmail" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "createdViaEmail" [] (Decode.bool)
 
 
 {-| The actor who edited the comment.
@@ -112,9 +112,9 @@ editor object____ =
       Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Comment
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.Comment
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The moment the editor made the last edit
@@ -134,15 +134,15 @@ publishedAt =
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Interface.Comment
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Interface.Comment
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias UserContentEditsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of edits to this content.
 
@@ -169,6 +169,6 @@ userContentEdits fillInOptionals____ object____ =
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : SelectionSet Bool GithubNoFormat.Interface.Comment
+viewerDidAuthor : SelectionSet (Bool) GithubNoFormat.Interface.Comment
 viewerDidAuthor =
-      Object.selectionForField "Bool" "viewerDidAuthor" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerDidAuthor" [] (Decode.bool)

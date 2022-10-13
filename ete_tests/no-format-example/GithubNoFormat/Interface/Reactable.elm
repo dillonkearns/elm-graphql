@@ -63,25 +63,25 @@ databaseId =
       Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Reactable
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.Reactable
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
- -> SelectionSet (Maybe ((List decodesTo))) GithubNoFormat.Interface.Reactable
+ -> SelectionSet (Maybe ((List (decodesTo)))) GithubNoFormat.Interface.Reactable
 reactionGroups object____ =
       Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 
 
-type alias ReactionsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+type alias ReactionsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , content : OptionalArgument (GithubNoFormat.Enum.ReactionContent.ReactionContent)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ReactionOrder) }
 
 {-| A list of Reactions left on the Issue.
 
@@ -95,7 +95,7 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
- -> SelectionSet decodesTo GithubNoFormat.Interface.Reactable
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.Reactable
 reactions fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -110,6 +110,6 @@ reactions fillInOptionals____ object____ =
 
 {-| Can user react to this subject
 -}
-viewerCanReact : SelectionSet Bool GithubNoFormat.Interface.Reactable
+viewerCanReact : SelectionSet (Bool) GithubNoFormat.Interface.Reactable
 viewerCanReact =
-      Object.selectionForField "Bool" "viewerCanReact" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanReact" [] (Decode.bool)

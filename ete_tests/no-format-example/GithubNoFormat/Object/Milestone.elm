@@ -20,9 +20,9 @@ import GithubNoFormat.Enum.PullRequestState
 import GithubNoFormat.Enum.MilestoneState
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : SelectionSet Bool GithubNoFormat.Object.Milestone
+closed : SelectionSet (Bool) GithubNoFormat.Object.Milestone
 closed =
-      Object.selectionForField "Bool" "closed" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "closed" [] (Decode.bool)
 
 
 {-| Identifies the date and time when the object was closed.
@@ -34,9 +34,9 @@ closedAt =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Milestone
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Milestone
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the actor who created the milestone.
@@ -61,18 +61,18 @@ dueOn =
       Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "dueOn" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Milestone
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Milestone
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
-type alias IssuesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , labels : OptionalArgument (List String)
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder
- , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
+type alias IssuesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , labels : OptionalArgument ((List (String)))
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.IssueState.IssueState))) }
 
 {-| A list of issues associated with the milestone.
 
@@ -87,7 +87,7 @@ type alias IssuesOptionalArguments = { first : OptionalArgument Int
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Milestone
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Milestone
 issues fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -102,20 +102,20 @@ issues fillInOptionals____ object____ =
 
 {-| Identifies the number of the milestone.
 -}
-number : SelectionSet Int GithubNoFormat.Object.Milestone
+number : SelectionSet (Int) GithubNoFormat.Object.Milestone
 number =
-      Object.selectionForField "Int" "number" [] (Decode.int)
+      Object.selectionForField "(Int)" "number" [] (Decode.int)
 
 
-type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
- , labels : OptionalArgument (List String)
- , headRefName : OptionalArgument String
- , baseRefName : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
+type alias PullRequestsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
+ , labels : OptionalArgument ((List (String)))
+ , headRefName : OptionalArgument (String)
+ , baseRefName : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }
 
 {-| A list of pull requests associated with the milestone.
 
@@ -132,7 +132,7 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Milestone
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Milestone
 pullRequests fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -148,42 +148,42 @@ pullRequests fillInOptionals____ object____ =
 {-| The repository associated with this milestone.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.Milestone
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Milestone
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this milestone
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Milestone
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Milestone
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the state of the milestone.
 -}
-state : SelectionSet GithubNoFormat.Enum.MilestoneState.MilestoneState GithubNoFormat.Object.Milestone
+state : SelectionSet (GithubNoFormat.Enum.MilestoneState.MilestoneState) GithubNoFormat.Object.Milestone
 state =
-      Object.selectionForField "Enum.MilestoneState.MilestoneState" "state" [] (GithubNoFormat.Enum.MilestoneState.decoder)
+      Object.selectionForField "(Enum.MilestoneState.MilestoneState)" "state" [] (GithubNoFormat.Enum.MilestoneState.decoder)
 
 
 {-| Identifies the title of the milestone.
 -}
-title : SelectionSet String GithubNoFormat.Object.Milestone
+title : SelectionSet (String) GithubNoFormat.Object.Milestone
 title =
-      Object.selectionForField "String" "title" [] (Decode.string)
+      Object.selectionForField "(String)" "title" [] (Decode.string)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Milestone
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Milestone
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this milestone
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Milestone
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Milestone
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

@@ -50,12 +50,12 @@ commitRepository object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ReferencedEvent
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.ReferencedEvent
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Reference originated in a different repository.
@@ -63,21 +63,21 @@ id =
 -}
 isCrossReference : SelectionSet Bool Github.Object.ReferencedEvent
 isCrossReference =
-    Object.selectionForField "Bool" "isCrossReference" [] Decode.bool
+    Object.selectionForField "(Bool)" "isCrossReference" [] Decode.bool
 
 
 {-| Reference originated in a different repository.
 -}
 isCrossRepository : SelectionSet Bool Github.Object.ReferencedEvent
 isCrossRepository =
-    Object.selectionForField "Bool" "isCrossRepository" [] Decode.bool
+    Object.selectionForField "(Bool)" "isCrossRepository" [] Decode.bool
 
 
 {-| Checks if the commit message itself references the subject. Can be false in the case of a commit comment reference.
 -}
 isDirectReference : SelectionSet Bool Github.Object.ReferencedEvent
 isDirectReference =
-    Object.selectionForField "Bool" "isDirectReference" [] Decode.bool
+    Object.selectionForField "(Bool)" "isDirectReference" [] Decode.bool
 
 
 {-| Object referenced by event.

@@ -60,4 +60,4 @@ maybeFragments =
 -}
 viewerCanDelete : SelectionSet Bool Github.Interface.Deletable
 viewerCanDelete =
-    Object.selectionForField "Bool" "viewerCanDelete" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanDelete" [] Decode.bool

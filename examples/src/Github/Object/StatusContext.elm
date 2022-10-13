@@ -33,14 +33,14 @@ commit object____ =
 -}
 context : SelectionSet String Github.Object.StatusContext
 context =
-    Object.selectionForField "String" "context" [] Decode.string
+    Object.selectionForField "(String)" "context" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.StatusContext
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who created this status context.
@@ -61,14 +61,14 @@ description =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.StatusContext
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The state of this status context.
 -}
 state : SelectionSet Github.Enum.StatusState.StatusState Github.Object.StatusContext
 state =
-    Object.selectionForField "Enum.StatusState.StatusState" "state" [] Github.Enum.StatusState.decoder
+    Object.selectionForField "(Enum.StatusState.StatusState)" "state" [] Github.Enum.StatusState.decoder
 
 
 {-| The URL for this status context.

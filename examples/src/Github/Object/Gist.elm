@@ -55,7 +55,7 @@ comments fillInOptionals____ object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Gist
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The gist description.
@@ -67,21 +67,21 @@ description =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Gist
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether the gist is public or not.
 -}
 isPublic : SelectionSet Bool Github.Object.Gist
 isPublic =
-    Object.selectionForField "Bool" "isPublic" [] Decode.bool
+    Object.selectionForField "(Bool)" "isPublic" [] Decode.bool
 
 
 {-| The gist name.
 -}
 name : SelectionSet String Github.Object.Gist
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The gist owner.
@@ -139,11 +139,11 @@ stargazers fillInOptionals____ object____ =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Gist
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
 viewerHasStarred : SelectionSet Bool Github.Object.Gist
 viewerHasStarred =
-    Object.selectionForField "Bool" "viewerHasStarred" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerHasStarred" [] Decode.bool

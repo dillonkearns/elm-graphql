@@ -23,37 +23,37 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.DeployKey
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.DeployKey
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The deploy key.
 -}
 key : SelectionSet String Github.Object.DeployKey
 key =
-    Object.selectionForField "String" "key" [] Decode.string
+    Object.selectionForField "(String)" "key" [] Decode.string
 
 
 {-| Whether or not the deploy key is read only.
 -}
 readOnly : SelectionSet Bool Github.Object.DeployKey
 readOnly =
-    Object.selectionForField "Bool" "readOnly" [] Decode.bool
+    Object.selectionForField "(Bool)" "readOnly" [] Decode.bool
 
 
 {-| The deploy key title.
 -}
 title : SelectionSet String Github.Object.DeployKey
 title =
-    Object.selectionForField "String" "title" [] Decode.string
+    Object.selectionForField "(String)" "title" [] Decode.string
 
 
 {-| Whether or not the deploy key has been verified.
 -}
 verified : SelectionSet Bool Github.Object.DeployKey
 verified =
-    Object.selectionForField "Bool" "verified" [] Decode.bool
+    Object.selectionForField "(Bool)" "verified" [] Decode.bool

@@ -24,28 +24,28 @@ import Json.Decode as Decode
 -}
 email : SelectionSet String Github.Object.UnknownSignature
 email =
-    Object.selectionForField "String" "email" [] Decode.string
+    Object.selectionForField "(String)" "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
 isValid : SelectionSet Bool Github.Object.UnknownSignature
 isValid =
-    Object.selectionForField "Bool" "isValid" [] Decode.bool
+    Object.selectionForField "(Bool)" "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
 payload : SelectionSet String Github.Object.UnknownSignature
 payload =
-    Object.selectionForField "String" "payload" [] Decode.string
+    Object.selectionForField "(String)" "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
 signature : SelectionSet String Github.Object.UnknownSignature
 signature =
-    Object.selectionForField "String" "signature" [] Decode.string
+    Object.selectionForField "(String)" "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
@@ -61,4 +61,4 @@ signer object____ =
 -}
 state : SelectionSet Github.Enum.GitSignatureState.GitSignatureState Github.Object.UnknownSignature
 state =
-    Object.selectionForField "Enum.GitSignatureState.GitSignatureState" "state" [] Github.Enum.GitSignatureState.decoder
+    Object.selectionForField "(Enum.GitSignatureState.GitSignatureState)" "state" [] Github.Enum.GitSignatureState.decoder

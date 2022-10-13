@@ -26,16 +26,16 @@ commit object____ =
 
 {-| The name of this status context.
 -}
-context : SelectionSet String GithubNoFormat.Object.StatusContext
+context : SelectionSet (String) GithubNoFormat.Object.StatusContext
 context =
-      Object.selectionForField "String" "context" [] (Decode.string)
+      Object.selectionForField "(String)" "context" [] (Decode.string)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.StatusContext
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.StatusContext
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who created this status context.
@@ -53,16 +53,16 @@ description =
       Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.StatusContext
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.StatusContext
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The state of this status context.
 -}
-state : SelectionSet GithubNoFormat.Enum.StatusState.StatusState GithubNoFormat.Object.StatusContext
+state : SelectionSet (GithubNoFormat.Enum.StatusState.StatusState) GithubNoFormat.Object.StatusContext
 state =
-      Object.selectionForField "Enum.StatusState.StatusState" "state" [] (GithubNoFormat.Enum.StatusState.decoder)
+      Object.selectionForField "(Enum.StatusState.StatusState)" "state" [] (GithubNoFormat.Enum.StatusState.decoder)
 
 
 {-| The URL for this status context.

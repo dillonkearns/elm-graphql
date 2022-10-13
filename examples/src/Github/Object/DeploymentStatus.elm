@@ -24,7 +24,7 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.DeploymentStatus
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -61,7 +61,7 @@ environmentUrl =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.DeploymentStatus
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the log URL of the deployment.
@@ -75,7 +75,7 @@ logUrl =
 -}
 state : SelectionSet Github.Enum.DeploymentStatusState.DeploymentStatusState Github.Object.DeploymentStatus
 state =
-    Object.selectionForField "Enum.DeploymentStatusState.DeploymentStatusState" "state" [] Github.Enum.DeploymentStatusState.decoder
+    Object.selectionForField "(Enum.DeploymentStatusState.DeploymentStatusState)" "state" [] Github.Enum.DeploymentStatusState.decoder
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -83,4 +83,4 @@ state =
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.DeploymentStatus
 updatedAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

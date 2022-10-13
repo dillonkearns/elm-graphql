@@ -35,20 +35,20 @@ nodes object____ =
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
- -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ReactionConnection
 pageInfo object____ =
       Object.selectionForCompositeField "pageInfo" [] (object____) (Basics.identity)
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : SelectionSet Int GithubNoFormat.Object.ReactionConnection
+totalCount : SelectionSet (Int) GithubNoFormat.Object.ReactionConnection
 totalCount =
-      Object.selectionForField "Int" "totalCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "totalCount" [] (Decode.int)
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
-viewerHasReacted : SelectionSet Bool GithubNoFormat.Object.ReactionConnection
+viewerHasReacted : SelectionSet (Bool) GithubNoFormat.Object.ReactionConnection
 viewerHasReacted =
-      Object.selectionForField "Bool" "viewerHasReacted" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerHasReacted" [] (Decode.bool)

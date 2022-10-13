@@ -28,10 +28,10 @@ activeLockReason =
       Object.selectionForField "(Maybe Enum.LockReason.LockReason)" "activeLockReason" [] (GithubNoFormat.Enum.LockReason.decoder |> Decode.nullable)
 
 
-type alias AssigneesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias AssigneesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of Users assigned to this object.
 
@@ -43,7 +43,7 @@ type alias AssigneesOptionalArguments = { first : OptionalArgument Int
 -}
 assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 assignees fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -66,37 +66,37 @@ author object____ =
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : SelectionSet GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation GithubNoFormat.Object.Issue
+authorAssociation : SelectionSet (GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation) GithubNoFormat.Object.Issue
 authorAssociation =
-      Object.selectionForField "Enum.CommentAuthorAssociation.CommentAuthorAssociation" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
+      Object.selectionForField "(Enum.CommentAuthorAssociation.CommentAuthorAssociation)" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
 
 
 {-| Identifies the body of the issue.
 -}
-body : SelectionSet String GithubNoFormat.Object.Issue
+body : SelectionSet (String) GithubNoFormat.Object.Issue
 body =
-      Object.selectionForField "String" "body" [] (Decode.string)
+      Object.selectionForField "(String)" "body" [] (Decode.string)
 
 
 {-| Identifies the body of the issue rendered to HTML.
 -}
-bodyHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.Issue
+bodyHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.Issue
 bodyHTML =
-      Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the body of the issue rendered to text.
 -}
-bodyText : SelectionSet String GithubNoFormat.Object.Issue
+bodyText : SelectionSet (String) GithubNoFormat.Object.Issue
 bodyText =
-      Object.selectionForField "String" "bodyText" [] (Decode.string)
+      Object.selectionForField "(String)" "bodyText" [] (Decode.string)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : SelectionSet Bool GithubNoFormat.Object.Issue
+closed : SelectionSet (Bool) GithubNoFormat.Object.Issue
 closed =
-      Object.selectionForField "Bool" "closed" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "closed" [] (Decode.bool)
 
 
 {-| Identifies the date and time when the object was closed.
@@ -106,10 +106,10 @@ closedAt =
       Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "closedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-type alias CommentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of comments associated with the Issue.
 
@@ -121,7 +121,7 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueCommentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 comments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -136,16 +136,16 @@ comments fillInOptionals____ object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Issue
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Issue
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : SelectionSet Bool GithubNoFormat.Object.Issue
+createdViaEmail : SelectionSet (Bool) GithubNoFormat.Object.Issue
 createdViaEmail =
-      Object.selectionForField "Bool" "createdViaEmail" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "createdViaEmail" [] (Decode.bool)
 
 
 {-| Identifies the primary key from the database.
@@ -164,15 +164,15 @@ editor object____ =
       Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Issue
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Issue
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
-type alias LabelsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias LabelsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of labels associated with the object.
 
@@ -206,9 +206,9 @@ lastEditedAt =
 
 {-| `true` if the object is locked
 -}
-locked : SelectionSet Bool GithubNoFormat.Object.Issue
+locked : SelectionSet (Bool) GithubNoFormat.Object.Issue
 locked =
-      Object.selectionForField "Bool" "locked" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "locked" [] (Decode.bool)
 
 
 {-| Identifies the milestone associated with the issue.
@@ -221,15 +221,15 @@ milestone object____ =
 
 {-| Identifies the issue number.
 -}
-number : SelectionSet Int GithubNoFormat.Object.Issue
+number : SelectionSet (Int) GithubNoFormat.Object.Issue
 number =
-      Object.selectionForField "Int" "number" [] (Decode.int)
+      Object.selectionForField "(Int)" "number" [] (Decode.int)
 
 
-type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ParticipantsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of Users that are participating in the Issue conversation.
 
@@ -241,7 +241,7 @@ type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
 -}
 participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 participants fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -254,10 +254,10 @@ participants fillInOptionals____ object____ =
       Object.selectionForCompositeField "participants" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ProjectCardsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| List of project cards associated with this issue.
 
@@ -269,7 +269,7 @@ type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
 -}
 projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 projectCards fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -292,17 +292,17 @@ publishedAt =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
- -> SelectionSet (Maybe ((List decodesTo))) GithubNoFormat.Object.Issue
+ -> SelectionSet (Maybe ((List (decodesTo)))) GithubNoFormat.Object.Issue
 reactionGroups object____ =
       Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 
 
-type alias ReactionsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+type alias ReactionsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , content : OptionalArgument (GithubNoFormat.Enum.ReactionContent.ReactionContent)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ReactionOrder) }
 
 {-| A list of Reactions left on the Issue.
 
@@ -316,7 +316,7 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 reactions fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -332,30 +332,30 @@ reactions fillInOptionals____ object____ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this issue
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Issue
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Issue
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the state of the issue.
 -}
-state : SelectionSet GithubNoFormat.Enum.IssueState.IssueState GithubNoFormat.Object.Issue
+state : SelectionSet (GithubNoFormat.Enum.IssueState.IssueState) GithubNoFormat.Object.Issue
 state =
-      Object.selectionForField "Enum.IssueState.IssueState" "state" [] (GithubNoFormat.Enum.IssueState.decoder)
+      Object.selectionForField "(Enum.IssueState.IssueState)" "state" [] (GithubNoFormat.Enum.IssueState.decoder)
 
 
-type alias TimelineOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , since : OptionalArgument GithubNoFormat.ScalarCodecs.DateTime }
+type alias TimelineOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , since : OptionalArgument (GithubNoFormat.ScalarCodecs.DateTime) }
 
 {-| A list of events, comments, commits, etc. associated with the issue.
 
@@ -368,7 +368,7 @@ type alias TimelineOptionalArguments = { first : OptionalArgument Int
 -}
 timeline : (TimelineOptionalArguments -> TimelineOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Issue
 timeline fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -383,30 +383,30 @@ timeline fillInOptionals____ object____ =
 
 {-| Identifies the issue title.
 -}
-title : SelectionSet String GithubNoFormat.Object.Issue
+title : SelectionSet (String) GithubNoFormat.Object.Issue
 title =
-      Object.selectionForField "String" "title" [] (Decode.string)
+      Object.selectionForField "(String)" "title" [] (Decode.string)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Issue
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Issue
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this issue
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Issue
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Issue
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias UserContentEditsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of edits to this content.
 
@@ -433,41 +433,41 @@ userContentEdits fillInOptionals____ object____ =
 
 {-| Can user react to this subject
 -}
-viewerCanReact : SelectionSet Bool GithubNoFormat.Object.Issue
+viewerCanReact : SelectionSet (Bool) GithubNoFormat.Object.Issue
 viewerCanReact =
-      Object.selectionForField "Bool" "viewerCanReact" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanReact" [] (Decode.bool)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : SelectionSet Bool GithubNoFormat.Object.Issue
+viewerCanSubscribe : SelectionSet (Bool) GithubNoFormat.Object.Issue
 viewerCanSubscribe =
-      Object.selectionForField "Bool" "viewerCanSubscribe" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanSubscribe" [] (Decode.bool)
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : SelectionSet Bool GithubNoFormat.Object.Issue
+viewerCanUpdate : SelectionSet (Bool) GithubNoFormat.Object.Issue
 viewerCanUpdate =
-      Object.selectionForField "Bool" "viewerCanUpdate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanUpdate" [] (Decode.bool)
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : SelectionSet (List GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) GithubNoFormat.Object.Issue
+viewerCannotUpdateReasons : SelectionSet ((List (GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason))) GithubNoFormat.Object.Issue
 viewerCannotUpdateReasons =
-      Object.selectionForField "(List Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+      Object.selectionForField "((List (Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)))" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : SelectionSet Bool GithubNoFormat.Object.Issue
+viewerDidAuthor : SelectionSet (Bool) GithubNoFormat.Object.Issue
 viewerDidAuthor =
-      Object.selectionForField "Bool" "viewerDidAuthor" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerDidAuthor" [] (Decode.bool)
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : SelectionSet GithubNoFormat.Enum.SubscriptionState.SubscriptionState GithubNoFormat.Object.Issue
+viewerSubscription : SelectionSet (GithubNoFormat.Enum.SubscriptionState.SubscriptionState) GithubNoFormat.Object.Issue
 viewerSubscription =
-      Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)
+      Object.selectionForField "(Enum.SubscriptionState.SubscriptionState)" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)

@@ -23,12 +23,12 @@ import Json.Decode as Decode
 -}
 guid : SelectionSet String Github.Object.ExternalIdentity
 guid =
-    Object.selectionForField "String" "guid" [] Decode.string
+    Object.selectionForField "(String)" "guid" [] Decode.string
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.ExternalIdentity
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Organization invitation for this SCIM-provisioned external identity

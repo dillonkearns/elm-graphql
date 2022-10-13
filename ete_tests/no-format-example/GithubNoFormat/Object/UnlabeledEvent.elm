@@ -26,20 +26,20 @@ actor object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.UnlabeledEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.UnlabeledEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.UnlabeledEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.UnlabeledEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the label associated with the 'unlabeled' event.
 -}
 label : SelectionSet decodesTo GithubNoFormat.Object.Label
- -> SelectionSet decodesTo GithubNoFormat.Object.UnlabeledEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.UnlabeledEvent
 label object____ =
       Object.selectionForCompositeField "label" [] (object____) (Basics.identity)
 
@@ -47,6 +47,6 @@ label object____ =
 {-| Identifies the `Labelable` associated with the event.
 -}
 labelable : SelectionSet decodesTo GithubNoFormat.Interface.Labelable
- -> SelectionSet decodesTo GithubNoFormat.Object.UnlabeledEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.UnlabeledEvent
 labelable object____ =
       Object.selectionForCompositeField "labelable" [] (object____) (Basics.identity)

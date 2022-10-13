@@ -18,9 +18,9 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.DeploymentStatusState
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.DeploymentStatus
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.DeploymentStatus
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -34,7 +34,7 @@ creator object____ =
 {-| Identifies the deployment associated with status.
 -}
 deployment : SelectionSet decodesTo GithubNoFormat.Object.Deployment
- -> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.DeploymentStatus
 deployment object____ =
       Object.selectionForCompositeField "deployment" [] (object____) (Basics.identity)
 
@@ -53,9 +53,9 @@ environmentUrl =
       Object.selectionForField "(Maybe ScalarCodecs.Uri)" "environmentUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.DeploymentStatus
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.DeploymentStatus
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the log URL of the deployment.
@@ -67,14 +67,14 @@ logUrl =
 
 {-| Identifies the current state of the deployment.
 -}
-state : SelectionSet GithubNoFormat.Enum.DeploymentStatusState.DeploymentStatusState GithubNoFormat.Object.DeploymentStatus
+state : SelectionSet (GithubNoFormat.Enum.DeploymentStatusState.DeploymentStatusState) GithubNoFormat.Object.DeploymentStatus
 state =
-      Object.selectionForField "Enum.DeploymentStatusState.DeploymentStatusState" "state" [] (GithubNoFormat.Enum.DeploymentStatusState.decoder)
+      Object.selectionForField "(Enum.DeploymentStatusState.DeploymentStatusState)" "state" [] (GithubNoFormat.Enum.DeploymentStatusState.decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.DeploymentStatus
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.DeploymentStatus
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

@@ -18,9 +18,9 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| The number of pieces of code that matched the search query.
 -}
-codeCount : SelectionSet Int GithubNoFormat.Object.SearchResultItemConnection
+codeCount : SelectionSet (Int) GithubNoFormat.Object.SearchResultItemConnection
 codeCount =
-      Object.selectionForField "Int" "codeCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "codeCount" [] (Decode.int)
 
 
 {-| A list of edges.
@@ -33,9 +33,9 @@ edges object____ =
 
 {-| The number of issues that matched the search query.
 -}
-issueCount : SelectionSet Int GithubNoFormat.Object.SearchResultItemConnection
+issueCount : SelectionSet (Int) GithubNoFormat.Object.SearchResultItemConnection
 issueCount =
-      Object.selectionForField "Int" "issueCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "issueCount" [] (Decode.int)
 
 
 {-| A list of nodes.
@@ -49,27 +49,27 @@ nodes object____ =
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
- -> SelectionSet decodesTo GithubNoFormat.Object.SearchResultItemConnection
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.SearchResultItemConnection
 pageInfo object____ =
       Object.selectionForCompositeField "pageInfo" [] (object____) (Basics.identity)
 
 
 {-| The number of repositories that matched the search query.
 -}
-repositoryCount : SelectionSet Int GithubNoFormat.Object.SearchResultItemConnection
+repositoryCount : SelectionSet (Int) GithubNoFormat.Object.SearchResultItemConnection
 repositoryCount =
-      Object.selectionForField "Int" "repositoryCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "repositoryCount" [] (Decode.int)
 
 
 {-| The number of users that matched the search query.
 -}
-userCount : SelectionSet Int GithubNoFormat.Object.SearchResultItemConnection
+userCount : SelectionSet (Int) GithubNoFormat.Object.SearchResultItemConnection
 userCount =
-      Object.selectionForField "Int" "userCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "userCount" [] (Decode.int)
 
 
 {-| The number of wiki pages that matched the search query.
 -}
-wikiCount : SelectionSet Int GithubNoFormat.Object.SearchResultItemConnection
+wikiCount : SelectionSet (Int) GithubNoFormat.Object.SearchResultItemConnection
 wikiCount =
-      Object.selectionForField "Int" "wikiCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "wikiCount" [] (Decode.int)

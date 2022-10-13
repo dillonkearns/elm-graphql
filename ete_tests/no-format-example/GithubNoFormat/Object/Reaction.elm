@@ -18,16 +18,16 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.ReactionContent
 {-| Identifies the emoji reaction.
 -}
-content : SelectionSet GithubNoFormat.Enum.ReactionContent.ReactionContent GithubNoFormat.Object.Reaction
+content : SelectionSet (GithubNoFormat.Enum.ReactionContent.ReactionContent) GithubNoFormat.Object.Reaction
 content =
-      Object.selectionForField "Enum.ReactionContent.ReactionContent" "content" [] (GithubNoFormat.Enum.ReactionContent.decoder)
+      Object.selectionForField "(Enum.ReactionContent.ReactionContent)" "content" [] (GithubNoFormat.Enum.ReactionContent.decoder)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Reaction
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Reaction
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -38,15 +38,15 @@ databaseId =
       Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Reaction
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Reaction
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The reactable piece of content
 -}
 reactable : SelectionSet decodesTo GithubNoFormat.Interface.Reactable
- -> SelectionSet decodesTo GithubNoFormat.Object.Reaction
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Reaction
 reactable object____ =
       Object.selectionForCompositeField "reactable" [] (object____) (Basics.identity)
 

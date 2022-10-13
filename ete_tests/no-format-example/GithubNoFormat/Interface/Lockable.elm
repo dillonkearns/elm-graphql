@@ -55,6 +55,6 @@ activeLockReason =
 
 {-| `true` if the object is locked
 -}
-locked : SelectionSet Bool GithubNoFormat.Interface.Lockable
+locked : SelectionSet (Bool) GithubNoFormat.Interface.Lockable
 locked =
-      Object.selectionForField "Bool" "locked" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "locked" [] (Decode.bool)

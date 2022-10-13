@@ -30,14 +30,14 @@ companyUrl =
 -}
 configurationResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceListing
 configurationResourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "configurationResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "configurationResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for configuring access to the listing's integration or OAuth app
 -}
 configurationUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceListing
 configurationUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "configurationUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "configurationUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| URL to the listing's documentation.
@@ -58,42 +58,42 @@ extendedDescription =
 -}
 extendedDescriptionHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.MarketplaceListing
 extendedDescriptionHTML =
-    Object.selectionForField "ScalarCodecs.Html" "extendedDescriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "extendedDescriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The listing's introductory description.
 -}
 fullDescription : SelectionSet String Github.Object.MarketplaceListing
 fullDescription =
-    Object.selectionForField "String" "fullDescription" [] Decode.string
+    Object.selectionForField "(String)" "fullDescription" [] Decode.string
 
 
 {-| The listing's introductory description rendered to HTML.
 -}
 fullDescriptionHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.MarketplaceListing
 fullDescriptionHTML =
-    Object.selectionForField "ScalarCodecs.Html" "fullDescriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "fullDescriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Whether this listing has been submitted for review from GitHub for approval to be displayed in the Marketplace.
 -}
 hasApprovalBeenRequested : SelectionSet Bool Github.Object.MarketplaceListing
 hasApprovalBeenRequested =
-    Object.selectionForField "Bool" "hasApprovalBeenRequested" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasApprovalBeenRequested" [] Decode.bool
 
 
 {-| Does this listing have any plans with a free trial?
 -}
 hasPublishedFreeTrialPlans : SelectionSet Bool Github.Object.MarketplaceListing
 hasPublishedFreeTrialPlans =
-    Object.selectionForField "Bool" "hasPublishedFreeTrialPlans" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasPublishedFreeTrialPlans" [] Decode.bool
 
 
 {-| Does this listing have a terms of service link?
 -}
 hasTermsOfService : SelectionSet Bool Github.Object.MarketplaceListing
 hasTermsOfService =
-    Object.selectionForField "Bool" "hasTermsOfService" [] Decode.bool
+    Object.selectionForField "(Bool)" "hasTermsOfService" [] Decode.bool
 
 
 {-| A technical description of how this app works with GitHub.
@@ -107,12 +107,12 @@ howItWorks =
 -}
 howItWorksHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.MarketplaceListing
 howItWorksHTML =
-    Object.selectionForField "ScalarCodecs.Html" "howItWorksHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "howItWorksHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.MarketplaceListing
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| URL to install the product to the viewer's account or organization.
@@ -126,49 +126,49 @@ installationUrl =
 -}
 installedForViewer : SelectionSet Bool Github.Object.MarketplaceListing
 installedForViewer =
-    Object.selectionForField "Bool" "installedForViewer" [] Decode.bool
+    Object.selectionForField "(Bool)" "installedForViewer" [] Decode.bool
 
 
 {-| Whether this listing has been approved for display in the Marketplace.
 -}
 isApproved : SelectionSet Bool Github.Object.MarketplaceListing
 isApproved =
-    Object.selectionForField "Bool" "isApproved" [] Decode.bool
+    Object.selectionForField "(Bool)" "isApproved" [] Decode.bool
 
 
 {-| Whether this listing has been removed from the Marketplace.
 -}
 isDelisted : SelectionSet Bool Github.Object.MarketplaceListing
 isDelisted =
-    Object.selectionForField "Bool" "isDelisted" [] Decode.bool
+    Object.selectionForField "(Bool)" "isDelisted" [] Decode.bool
 
 
 {-| Whether this listing is still an editable draft that has not been submitted for review and is not publicly visible in the Marketplace.
 -}
 isDraft : SelectionSet Bool Github.Object.MarketplaceListing
 isDraft =
-    Object.selectionForField "Bool" "isDraft" [] Decode.bool
+    Object.selectionForField "(Bool)" "isDraft" [] Decode.bool
 
 
 {-| Whether the product this listing represents is available as part of a paid plan.
 -}
 isPaid : SelectionSet Bool Github.Object.MarketplaceListing
 isPaid =
-    Object.selectionForField "Bool" "isPaid" [] Decode.bool
+    Object.selectionForField "(Bool)" "isPaid" [] Decode.bool
 
 
 {-| Whether this listing has been rejected by GitHub for display in the Marketplace.
 -}
 isRejected : SelectionSet Bool Github.Object.MarketplaceListing
 isRejected =
-    Object.selectionForField "Bool" "isRejected" [] Decode.bool
+    Object.selectionForField "(Bool)" "isRejected" [] Decode.bool
 
 
 {-| The hex color code, without the leading '#', for the logo background.
 -}
 logoBackgroundColor : SelectionSet String Github.Object.MarketplaceListing
 logoBackgroundColor =
-    Object.selectionForField "String" "logoBackgroundColor" [] Decode.string
+    Object.selectionForField "(String)" "logoBackgroundColor" [] Decode.string
 
 
 type alias LogoUrlOptionalArguments =
@@ -199,14 +199,14 @@ logoUrl fillInOptionals____ =
 -}
 name : SelectionSet String Github.Object.MarketplaceListing
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| The listing's very short description without a trailing period or ampersands.
 -}
 normalizedShortDescription : SelectionSet String Github.Object.MarketplaceListing
 normalizedShortDescription =
-    Object.selectionForField "String" "normalizedShortDescription" [] Decode.string
+    Object.selectionForField "(String)" "normalizedShortDescription" [] Decode.string
 
 
 {-| URL to the listing's detailed pricing.
@@ -229,21 +229,21 @@ primaryCategory object____ =
 -}
 privacyPolicyUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceListing
 privacyPolicyUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "privacyPolicyUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "privacyPolicyUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP path for the Marketplace listing.
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceListing
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The URLs for the listing's screenshots.
 -}
 screenshotUrls : SelectionSet (List (Maybe String)) Github.Object.MarketplaceListing
 screenshotUrls =
-    Object.selectionForField "(List (Maybe String))" "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
+    Object.selectionForField "((List (Maybe String)))" "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
 
 
 {-| An alternate category that describes the listing.
@@ -259,14 +259,14 @@ secondaryCategory object____ =
 -}
 shortDescription : SelectionSet String Github.Object.MarketplaceListing
 shortDescription =
-    Object.selectionForField "String" "shortDescription" [] Decode.string
+    Object.selectionForField "(String)" "shortDescription" [] Decode.string
 
 
 {-| The short name of the listing used in its URL.
 -}
 slug : SelectionSet String Github.Object.MarketplaceListing
 slug =
-    Object.selectionForField "String" "slug" [] Decode.string
+    Object.selectionForField "(String)" "slug" [] Decode.string
 
 
 {-| URL to the listing's status page.
@@ -287,7 +287,7 @@ supportEmail =
 -}
 supportUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceListing
 supportUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "supportUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "supportUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| URL to the listing's terms of service.
@@ -301,35 +301,35 @@ termsOfServiceUrl =
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceListing
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Can the current viewer add plans for this Marketplace listing.
 -}
 viewerCanAddPlans : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanAddPlans =
-    Object.selectionForField "Bool" "viewerCanAddPlans" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanAddPlans" [] Decode.bool
 
 
 {-| Can the current viewer approve this Marketplace listing.
 -}
 viewerCanApprove : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanApprove =
-    Object.selectionForField "Bool" "viewerCanApprove" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanApprove" [] Decode.bool
 
 
 {-| Can the current viewer delist this Marketplace listing.
 -}
 viewerCanDelist : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanDelist =
-    Object.selectionForField "Bool" "viewerCanDelist" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanDelist" [] Decode.bool
 
 
 {-| Can the current viewer edit this Marketplace listing.
 -}
 viewerCanEdit : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanEdit =
-    Object.selectionForField "Bool" "viewerCanEdit" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanEdit" [] Decode.bool
 
 
 {-| Can the current viewer edit the primary and secondary category of this
@@ -337,14 +337,14 @@ Marketplace listing.
 -}
 viewerCanEditCategories : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanEditCategories =
-    Object.selectionForField "Bool" "viewerCanEditCategories" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanEditCategories" [] Decode.bool
 
 
 {-| Can the current viewer edit the plans for this Marketplace listing.
 -}
 viewerCanEditPlans : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanEditPlans =
-    Object.selectionForField "Bool" "viewerCanEditPlans" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanEditPlans" [] Decode.bool
 
 
 {-| Can the current viewer return this Marketplace listing to draft state
@@ -352,7 +352,7 @@ so it becomes editable again.
 -}
 viewerCanRedraft : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanRedraft =
-    Object.selectionForField "Bool" "viewerCanRedraft" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanRedraft" [] Decode.bool
 
 
 {-| Can the current viewer reject this Marketplace listing by returning it to
@@ -360,7 +360,7 @@ an editable draft state or rejecting it entirely.
 -}
 viewerCanReject : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanReject =
-    Object.selectionForField "Bool" "viewerCanReject" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanReject" [] Decode.bool
 
 
 {-| Can the current viewer request this listing be reviewed for display in
@@ -368,14 +368,14 @@ the Marketplace.
 -}
 viewerCanRequestApproval : SelectionSet Bool Github.Object.MarketplaceListing
 viewerCanRequestApproval =
-    Object.selectionForField "Bool" "viewerCanRequestApproval" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanRequestApproval" [] Decode.bool
 
 
 {-| Indicates whether the current user has an active subscription to this Marketplace listing.
 -}
 viewerHasPurchased : SelectionSet Bool Github.Object.MarketplaceListing
 viewerHasPurchased =
-    Object.selectionForField "Bool" "viewerHasPurchased" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerHasPurchased" [] Decode.bool
 
 
 {-| Indicates if the current user has purchased a subscription to this Marketplace listing
@@ -383,11 +383,11 @@ for all of the organizations the user owns.
 -}
 viewerHasPurchasedForAllOrganizations : SelectionSet Bool Github.Object.MarketplaceListing
 viewerHasPurchasedForAllOrganizations =
-    Object.selectionForField "Bool" "viewerHasPurchasedForAllOrganizations" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerHasPurchasedForAllOrganizations" [] Decode.bool
 
 
 {-| Does the current viewer role allow them to administer this Marketplace listing.
 -}
 viewerIsListingAdmin : SelectionSet Bool Github.Object.MarketplaceListing
 viewerIsListingAdmin =
-    Object.selectionForField "Bool" "viewerIsListingAdmin" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerIsListingAdmin" [] Decode.bool

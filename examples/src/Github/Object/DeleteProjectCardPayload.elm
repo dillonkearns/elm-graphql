@@ -39,4 +39,4 @@ column object____ =
 -}
 deletedCardId : SelectionSet Github.ScalarCodecs.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
-    Object.selectionForField "ScalarCodecs.Id" "deletedCardId" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "deletedCardId" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)

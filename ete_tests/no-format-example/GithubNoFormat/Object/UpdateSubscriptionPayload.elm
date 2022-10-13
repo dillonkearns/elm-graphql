@@ -26,6 +26,6 @@ clientMutationId =
 {-| The input subscribable entity.
 -}
 subscribable : SelectionSet decodesTo GithubNoFormat.Interface.Subscribable
- -> SelectionSet decodesTo GithubNoFormat.Object.UpdateSubscriptionPayload
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.UpdateSubscriptionPayload
 subscribable object____ =
       Object.selectionForCompositeField "subscribable" [] (object____) (Basics.identity)

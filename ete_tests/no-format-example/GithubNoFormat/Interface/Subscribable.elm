@@ -55,20 +55,20 @@ maybeFragments =
  onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
  onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Subscribable
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.Subscribable
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : SelectionSet Bool GithubNoFormat.Interface.Subscribable
+viewerCanSubscribe : SelectionSet (Bool) GithubNoFormat.Interface.Subscribable
 viewerCanSubscribe =
-      Object.selectionForField "Bool" "viewerCanSubscribe" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanSubscribe" [] (Decode.bool)
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : SelectionSet GithubNoFormat.Enum.SubscriptionState.SubscriptionState GithubNoFormat.Interface.Subscribable
+viewerSubscription : SelectionSet (GithubNoFormat.Enum.SubscriptionState.SubscriptionState) GithubNoFormat.Interface.Subscribable
 viewerSubscription =
-      Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)
+      Object.selectionForField "(Enum.SubscriptionState.SubscriptionState)" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)

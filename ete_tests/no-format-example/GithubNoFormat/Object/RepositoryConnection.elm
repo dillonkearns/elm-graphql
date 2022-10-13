@@ -35,20 +35,20 @@ nodes object____ =
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
- -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.RepositoryConnection
 pageInfo object____ =
       Object.selectionForCompositeField "pageInfo" [] (object____) (Basics.identity)
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : SelectionSet Int GithubNoFormat.Object.RepositoryConnection
+totalCount : SelectionSet (Int) GithubNoFormat.Object.RepositoryConnection
 totalCount =
-      Object.selectionForField "Int" "totalCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "totalCount" [] (Decode.int)
 
 
 {-| The total size in kilobytes of all repositories in the connection.
 -}
-totalDiskUsage : SelectionSet Int GithubNoFormat.Object.RepositoryConnection
+totalDiskUsage : SelectionSet (Int) GithubNoFormat.Object.RepositoryConnection
 totalDiskUsage =
-      Object.selectionForField "Int" "totalDiskUsage" [] (Decode.int)
+      Object.selectionForField "(Int)" "totalDiskUsage" [] (Decode.int)

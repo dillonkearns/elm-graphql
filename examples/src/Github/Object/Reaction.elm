@@ -24,14 +24,14 @@ import Json.Decode as Decode
 -}
 content : SelectionSet Github.Enum.ReactionContent.ReactionContent Github.Object.Reaction
 content =
-    Object.selectionForField "Enum.ReactionContent.ReactionContent" "content" [] Github.Enum.ReactionContent.decoder
+    Object.selectionForField "(Enum.ReactionContent.ReactionContent)" "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Reaction
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -44,7 +44,7 @@ databaseId =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Reaction
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The reactable piece of content

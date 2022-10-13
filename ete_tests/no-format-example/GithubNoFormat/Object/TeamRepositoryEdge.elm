@@ -16,19 +16,19 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.RepositoryPermission
-cursor : SelectionSet String GithubNoFormat.Object.TeamRepositoryEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.TeamRepositoryEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryEdge
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.TeamRepositoryEdge
 node object____ =
       Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| The permission level the team has on the repository
 -}
-permission : SelectionSet GithubNoFormat.Enum.RepositoryPermission.RepositoryPermission GithubNoFormat.Object.TeamRepositoryEdge
+permission : SelectionSet (GithubNoFormat.Enum.RepositoryPermission.RepositoryPermission) GithubNoFormat.Object.TeamRepositoryEdge
 permission =
-      Object.selectionForField "Enum.RepositoryPermission.RepositoryPermission" "permission" [] (GithubNoFormat.Enum.RepositoryPermission.decoder)
+      Object.selectionForField "(Enum.RepositoryPermission.RepositoryPermission)" "permission" [] (GithubNoFormat.Enum.RepositoryPermission.decoder)

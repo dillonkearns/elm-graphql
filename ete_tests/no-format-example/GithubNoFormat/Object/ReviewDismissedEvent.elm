@@ -26,9 +26,9 @@ actor object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ReviewDismissedEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ReviewDismissedEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -39,36 +39,36 @@ databaseId =
       Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.ReviewDismissedEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.ReviewDismissedEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the message associated with the 'review_dismissed' event.
 -}
-message : SelectionSet String GithubNoFormat.Object.ReviewDismissedEvent
+message : SelectionSet (String) GithubNoFormat.Object.ReviewDismissedEvent
 message =
-      Object.selectionForField "String" "message" [] (Decode.string)
+      Object.selectionForField "(String)" "message" [] (Decode.string)
 
 
 {-| The message associated with the event, rendered to HTML.
 -}
-messageHtml : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.ReviewDismissedEvent
+messageHtml : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.ReviewDismissedEvent
 messageHtml =
-      Object.selectionForField "ScalarCodecs.Html" "messageHtml" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "messageHtml" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the previous state of the review with the 'review_dismissed' event.
 -}
-previousReviewState : SelectionSet GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState GithubNoFormat.Object.ReviewDismissedEvent
+previousReviewState : SelectionSet (GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState) GithubNoFormat.Object.ReviewDismissedEvent
 previousReviewState =
-      Object.selectionForField "Enum.PullRequestReviewState.PullRequestReviewState" "previousReviewState" [] (GithubNoFormat.Enum.PullRequestReviewState.decoder)
+      Object.selectionForField "(Enum.PullRequestReviewState.PullRequestReviewState)" "previousReviewState" [] (GithubNoFormat.Enum.PullRequestReviewState.decoder)
 
 
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
- -> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissedEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ReviewDismissedEvent
 pullRequest object____ =
       Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
@@ -83,9 +83,9 @@ pullRequestCommit object____ =
 
 {-| The HTTP path for this review dismissed event.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.ReviewDismissedEvent
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.ReviewDismissedEvent
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the review associated with the 'review_dismissed' event.
@@ -98,6 +98,6 @@ review object____ =
 
 {-| The HTTP URL for this review dismissed event.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.ReviewDismissedEvent
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.ReviewDismissedEvent
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

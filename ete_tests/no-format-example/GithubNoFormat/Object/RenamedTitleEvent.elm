@@ -26,33 +26,33 @@ actor object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.RenamedTitleEvent
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.RenamedTitleEvent
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the current title of the issue or pull request.
 -}
-currentTitle : SelectionSet String GithubNoFormat.Object.RenamedTitleEvent
+currentTitle : SelectionSet (String) GithubNoFormat.Object.RenamedTitleEvent
 currentTitle =
-      Object.selectionForField "String" "currentTitle" [] (Decode.string)
+      Object.selectionForField "(String)" "currentTitle" [] (Decode.string)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.RenamedTitleEvent
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.RenamedTitleEvent
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the previous title of the issue or pull request.
 -}
-previousTitle : SelectionSet String GithubNoFormat.Object.RenamedTitleEvent
+previousTitle : SelectionSet (String) GithubNoFormat.Object.RenamedTitleEvent
 previousTitle =
-      Object.selectionForField "String" "previousTitle" [] (Decode.string)
+      Object.selectionForField "(String)" "previousTitle" [] (Decode.string)
 
 
 {-| Subject that was renamed.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Union.RenamedTitleSubject
- -> SelectionSet decodesTo GithubNoFormat.Object.RenamedTitleEvent
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.RenamedTitleEvent
 subject object____ =
       Object.selectionForCompositeField "subject" [] (object____) (Basics.identity)

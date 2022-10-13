@@ -18,39 +18,39 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.DeployKey
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.DeployKey
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.DeployKey
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.DeployKey
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The deploy key.
 -}
-key : SelectionSet String GithubNoFormat.Object.DeployKey
+key : SelectionSet (String) GithubNoFormat.Object.DeployKey
 key =
-      Object.selectionForField "String" "key" [] (Decode.string)
+      Object.selectionForField "(String)" "key" [] (Decode.string)
 
 
 {-| Whether or not the deploy key is read only.
 -}
-readOnly : SelectionSet Bool GithubNoFormat.Object.DeployKey
+readOnly : SelectionSet (Bool) GithubNoFormat.Object.DeployKey
 readOnly =
-      Object.selectionForField "Bool" "readOnly" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "readOnly" [] (Decode.bool)
 
 
 {-| The deploy key title.
 -}
-title : SelectionSet String GithubNoFormat.Object.DeployKey
+title : SelectionSet (String) GithubNoFormat.Object.DeployKey
 title =
-      Object.selectionForField "String" "title" [] (Decode.string)
+      Object.selectionForField "(String)" "title" [] (Decode.string)
 
 
 {-| Whether or not the deploy key has been verified.
 -}
-verified : SelectionSet Bool GithubNoFormat.Object.DeployKey
+verified : SelectionSet (Bool) GithubNoFormat.Object.DeployKey
 verified =
-      Object.selectionForField "Bool" "verified" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "verified" [] (Decode.bool)

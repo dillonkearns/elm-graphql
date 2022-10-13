@@ -18,21 +18,21 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| Is this suggestion based on past commits?
 -}
-isAuthor : SelectionSet Bool GithubNoFormat.Object.SuggestedReviewer
+isAuthor : SelectionSet (Bool) GithubNoFormat.Object.SuggestedReviewer
 isAuthor =
-      Object.selectionForField "Bool" "isAuthor" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isAuthor" [] (Decode.bool)
 
 
 {-| Is this suggestion based on past review comments?
 -}
-isCommenter : SelectionSet Bool GithubNoFormat.Object.SuggestedReviewer
+isCommenter : SelectionSet (Bool) GithubNoFormat.Object.SuggestedReviewer
 isCommenter =
-      Object.selectionForField "Bool" "isCommenter" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isCommenter" [] (Decode.bool)
 
 
 {-| Identifies the user suggested to review the pull request.
 -}
 reviewer : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.SuggestedReviewer
 reviewer object____ =
       Object.selectionForCompositeField "reviewer" [] (object____) (Basics.identity)

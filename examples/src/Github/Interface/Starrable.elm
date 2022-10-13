@@ -49,7 +49,7 @@ maybeFragments =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.Starrable
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 type alias StargazersOptionalArguments =
@@ -90,4 +90,4 @@ stargazers fillInOptionals____ object____ =
 -}
 viewerHasStarred : SelectionSet Bool Github.Interface.Starrable
 viewerHasStarred =
-    Object.selectionForField "Bool" "viewerHasStarred" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerHasStarred" [] Decode.bool

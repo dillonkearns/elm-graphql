@@ -33,7 +33,7 @@ actor object____ =
 -}
 createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ReviewDismissedEvent
 createdAt =
-    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -46,28 +46,28 @@ databaseId =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.ReviewDismissedEvent
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the message associated with the 'review\_dismissed' event.
 -}
 message : SelectionSet String Github.Object.ReviewDismissedEvent
 message =
-    Object.selectionForField "String" "message" [] Decode.string
+    Object.selectionForField "(String)" "message" [] Decode.string
 
 
 {-| The message associated with the event, rendered to HTML.
 -}
 messageHtml : SelectionSet Github.ScalarCodecs.Html Github.Object.ReviewDismissedEvent
 messageHtml =
-    Object.selectionForField "ScalarCodecs.Html" "messageHtml" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Html)" "messageHtml" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the previous state of the review with the 'review\_dismissed' event.
 -}
 previousReviewState : SelectionSet Github.Enum.PullRequestReviewState.PullRequestReviewState Github.Object.ReviewDismissedEvent
 previousReviewState =
-    Object.selectionForField "Enum.PullRequestReviewState.PullRequestReviewState" "previousReviewState" [] Github.Enum.PullRequestReviewState.decoder
+    Object.selectionForField "(Enum.PullRequestReviewState.PullRequestReviewState)" "previousReviewState" [] Github.Enum.PullRequestReviewState.decoder
 
 
 {-| PullRequest referenced by event.
@@ -92,7 +92,7 @@ pullRequestCommit object____ =
 -}
 resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.ReviewDismissedEvent
 resourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the review associated with the 'review\_dismissed' event.
@@ -108,4 +108,4 @@ review object____ =
 -}
 url : SelectionSet Github.ScalarCodecs.Uri Github.Object.ReviewDismissedEvent
 url =
-    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

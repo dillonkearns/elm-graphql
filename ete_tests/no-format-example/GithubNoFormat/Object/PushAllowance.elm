@@ -24,14 +24,14 @@ actor object____ =
       Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PushAllowance
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.PushAllowance
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
 protectedBranch : SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
- -> SelectionSet decodesTo GithubNoFormat.Object.PushAllowance
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PushAllowance
 protectedBranch object____ =
       Object.selectionForCompositeField "protectedBranch" [] (object____) (Basics.identity)

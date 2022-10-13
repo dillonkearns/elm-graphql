@@ -32,15 +32,15 @@ activeLockReason =
 
 {-| The number of additions in this pull request.
 -}
-additions : SelectionSet Int GithubNoFormat.Object.PullRequest
+additions : SelectionSet (Int) GithubNoFormat.Object.PullRequest
 additions =
-      Object.selectionForField "Int" "additions" [] (Decode.int)
+      Object.selectionForField "(Int)" "additions" [] (Decode.int)
 
 
-type alias AssigneesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias AssigneesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of Users assigned to this object.
 
@@ -52,7 +52,7 @@ type alias AssigneesOptionalArguments = { first : OptionalArgument Int
 -}
 assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 assignees fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -75,9 +75,9 @@ author object____ =
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : SelectionSet GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation GithubNoFormat.Object.PullRequest
+authorAssociation : SelectionSet (GithubNoFormat.Enum.CommentAuthorAssociation.CommentAuthorAssociation) GithubNoFormat.Object.PullRequest
 authorAssociation =
-      Object.selectionForField "Enum.CommentAuthorAssociation.CommentAuthorAssociation" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
+      Object.selectionForField "(Enum.CommentAuthorAssociation.CommentAuthorAssociation)" "authorAssociation" [] (GithubNoFormat.Enum.CommentAuthorAssociation.decoder)
 
 
 {-| Identifies the base Ref associated with the pull request.
@@ -90,51 +90,51 @@ baseRef object____ =
 
 {-| Identifies the name of the base Ref associated with the pull request, even if the ref has been deleted.
 -}
-baseRefName : SelectionSet String GithubNoFormat.Object.PullRequest
+baseRefName : SelectionSet (String) GithubNoFormat.Object.PullRequest
 baseRefName =
-      Object.selectionForField "String" "baseRefName" [] (Decode.string)
+      Object.selectionForField "(String)" "baseRefName" [] (Decode.string)
 
 
 {-| Identifies the oid of the base ref associated with the pull request, even if the ref has been deleted.
 -}
-baseRefOid : SelectionSet GithubNoFormat.ScalarCodecs.GitObjectID GithubNoFormat.Object.PullRequest
+baseRefOid : SelectionSet (GithubNoFormat.ScalarCodecs.GitObjectID) GithubNoFormat.Object.PullRequest
 baseRefOid =
-      Object.selectionForField "ScalarCodecs.GitObjectID" "baseRefOid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+      Object.selectionForField "(ScalarCodecs.GitObjectID)" "baseRefOid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| Identifies the body of the pull request.
 -}
-body : SelectionSet String GithubNoFormat.Object.PullRequest
+body : SelectionSet (String) GithubNoFormat.Object.PullRequest
 body =
-      Object.selectionForField "String" "body" [] (Decode.string)
+      Object.selectionForField "(String)" "body" [] (Decode.string)
 
 
 {-| Identifies the body of the pull request rendered to HTML.
 -}
-bodyHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.PullRequest
+bodyHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.PullRequest
 bodyHTML =
-      Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the body of the pull request rendered to text.
 -}
-bodyText : SelectionSet String GithubNoFormat.Object.PullRequest
+bodyText : SelectionSet (String) GithubNoFormat.Object.PullRequest
 bodyText =
-      Object.selectionForField "String" "bodyText" [] (Decode.string)
+      Object.selectionForField "(String)" "bodyText" [] (Decode.string)
 
 
 {-| The number of changed files in this pull request.
 -}
-changedFiles : SelectionSet Int GithubNoFormat.Object.PullRequest
+changedFiles : SelectionSet (Int) GithubNoFormat.Object.PullRequest
 changedFiles =
-      Object.selectionForField "Int" "changedFiles" [] (Decode.int)
+      Object.selectionForField "(Int)" "changedFiles" [] (Decode.int)
 
 
 {-| `true` if the pull request is closed
 -}
-closed : SelectionSet Bool GithubNoFormat.Object.PullRequest
+closed : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 closed =
-      Object.selectionForField "Bool" "closed" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "closed" [] (Decode.bool)
 
 
 {-| Identifies the date and time when the object was closed.
@@ -144,10 +144,10 @@ closedAt =
       Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "closedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-type alias CommentsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommentsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of comments associated with the pull request.
 
@@ -159,7 +159,7 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueCommentConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 comments fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -172,10 +172,10 @@ comments fillInOptionals____ object____ =
       Object.selectionForCompositeField "comments" optionalArgs____ (object____) (Basics.identity)
 
 
-type alias CommitsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias CommitsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of commits present in this pull request's head branch not present in the base branch.
 
@@ -187,7 +187,7 @@ type alias CommitsOptionalArguments = { first : OptionalArgument Int
 -}
 commits : (CommitsOptionalArguments -> CommitsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommitConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 commits fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -202,16 +202,16 @@ commits fillInOptionals____ object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.PullRequest
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.PullRequest
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : SelectionSet Bool GithubNoFormat.Object.PullRequest
+createdViaEmail : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 createdViaEmail =
-      Object.selectionForField "Bool" "createdViaEmail" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "createdViaEmail" [] (Decode.bool)
 
 
 {-| Identifies the primary key from the database.
@@ -224,9 +224,9 @@ databaseId =
 
 {-| The number of deletions in this pull request.
 -}
-deletions : SelectionSet Int GithubNoFormat.Object.PullRequest
+deletions : SelectionSet (Int) GithubNoFormat.Object.PullRequest
 deletions =
-      Object.selectionForField "Int" "deletions" [] (Decode.int)
+      Object.selectionForField "(Int)" "deletions" [] (Decode.int)
 
 
 {-| The actor who edited this pull request's body.
@@ -247,16 +247,16 @@ headRef object____ =
 
 {-| Identifies the name of the head Ref associated with the pull request, even if the ref has been deleted.
 -}
-headRefName : SelectionSet String GithubNoFormat.Object.PullRequest
+headRefName : SelectionSet (String) GithubNoFormat.Object.PullRequest
 headRefName =
-      Object.selectionForField "String" "headRefName" [] (Decode.string)
+      Object.selectionForField "(String)" "headRefName" [] (Decode.string)
 
 
 {-| Identifies the oid of the head ref associated with the pull request, even if the ref has been deleted.
 -}
-headRefOid : SelectionSet GithubNoFormat.ScalarCodecs.GitObjectID GithubNoFormat.Object.PullRequest
+headRefOid : SelectionSet (GithubNoFormat.ScalarCodecs.GitObjectID) GithubNoFormat.Object.PullRequest
 headRefOid =
-      Object.selectionForField "ScalarCodecs.GitObjectID" "headRefOid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+      Object.selectionForField "(ScalarCodecs.GitObjectID)" "headRefOid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The repository associated with this pull request's head Ref.
@@ -275,22 +275,22 @@ headRepositoryOwner object____ =
       Object.selectionForCompositeField "headRepositoryOwner" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequest
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.PullRequest
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The head and base repositories are different.
 -}
-isCrossRepository : SelectionSet Bool GithubNoFormat.Object.PullRequest
+isCrossRepository : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 isCrossRepository =
-      Object.selectionForField "Bool" "isCrossRepository" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isCrossRepository" [] (Decode.bool)
 
 
-type alias LabelsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias LabelsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of labels associated with the object.
 
@@ -324,9 +324,9 @@ lastEditedAt =
 
 {-| `true` if the pull request is locked
 -}
-locked : SelectionSet Bool GithubNoFormat.Object.PullRequest
+locked : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 locked =
-      Object.selectionForField "Bool" "locked" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "locked" [] (Decode.bool)
 
 
 {-| The commit that was created when this pull request was merged.
@@ -339,16 +339,16 @@ mergeCommit object____ =
 
 {-| Whether or not the pull request can be merged based on the existence of merge conflicts.
 -}
-mergeable : SelectionSet GithubNoFormat.Enum.MergeableState.MergeableState GithubNoFormat.Object.PullRequest
+mergeable : SelectionSet (GithubNoFormat.Enum.MergeableState.MergeableState) GithubNoFormat.Object.PullRequest
 mergeable =
-      Object.selectionForField "Enum.MergeableState.MergeableState" "mergeable" [] (GithubNoFormat.Enum.MergeableState.decoder)
+      Object.selectionForField "(Enum.MergeableState.MergeableState)" "mergeable" [] (GithubNoFormat.Enum.MergeableState.decoder)
 
 
 {-| Whether or not the pull request was merged.
 -}
-merged : SelectionSet Bool GithubNoFormat.Object.PullRequest
+merged : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 merged =
-      Object.selectionForField "Bool" "merged" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "merged" [] (Decode.bool)
 
 
 {-| The date and time that the pull request was merged.
@@ -368,15 +368,15 @@ milestone object____ =
 
 {-| Identifies the pull request number.
 -}
-number : SelectionSet Int GithubNoFormat.Object.PullRequest
+number : SelectionSet (Int) GithubNoFormat.Object.PullRequest
 number =
-      Object.selectionForField "Int" "number" [] (Decode.int)
+      Object.selectionForField "(Int)" "number" [] (Decode.int)
 
 
-type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ParticipantsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of Users that are participating in the Pull Request conversation.
 
@@ -388,7 +388,7 @@ type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
 -}
 participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 participants fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -409,10 +409,10 @@ potentialMergeCommit object____ =
       Object.selectionForCompositeField "potentialMergeCommit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ProjectCardsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| List of project cards associated with this pull request.
 
@@ -424,7 +424,7 @@ type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
 -}
 projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 projectCards fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -447,17 +447,17 @@ publishedAt =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
- -> SelectionSet (Maybe ((List decodesTo))) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe ((List (decodesTo)))) GithubNoFormat.Object.PullRequest
 reactionGroups object____ =
       Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 
 
-type alias ReactionsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
- , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+type alias ReactionsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , content : OptionalArgument (GithubNoFormat.Enum.ReactionContent.ReactionContent)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.ReactionOrder) }
 
 {-| A list of Reactions left on the Issue.
 
@@ -471,7 +471,7 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 reactions fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -487,36 +487,36 @@ reactions fillInOptionals____ object____ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequest
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequest
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP path for reverting this pull request.
 -}
-revertResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequest
+revertResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequest
 revertResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "revertResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "revertResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for reverting this pull request.
 -}
-revertUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequest
+revertUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequest
 revertUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "revertUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "revertUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias ReviewRequestsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ReviewRequestsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of review requests associated with the pull request.
 
@@ -541,12 +541,12 @@ reviewRequests fillInOptionals____ object____ =
       Object.selectionForCompositeField "reviewRequests" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias ReviewsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState)
- , author : OptionalArgument String }
+type alias ReviewsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState)))
+ , author : OptionalArgument (String) }
 
 {-| A list of reviews associated with the pull request.
 
@@ -575,24 +575,24 @@ reviews fillInOptionals____ object____ =
 
 {-| Identifies the state of the pull request.
 -}
-state : SelectionSet GithubNoFormat.Enum.PullRequestState.PullRequestState GithubNoFormat.Object.PullRequest
+state : SelectionSet (GithubNoFormat.Enum.PullRequestState.PullRequestState) GithubNoFormat.Object.PullRequest
 state =
-      Object.selectionForField "Enum.PullRequestState.PullRequestState" "state" [] (GithubNoFormat.Enum.PullRequestState.decoder)
+      Object.selectionForField "(Enum.PullRequestState.PullRequestState)" "state" [] (GithubNoFormat.Enum.PullRequestState.decoder)
 
 
 {-| A list of reviewer suggestions based on commit history and past review comments.
 -}
 suggestedReviewers : SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
- -> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.PullRequest
+ -> SelectionSet ((List (Maybe decodesTo))) GithubNoFormat.Object.PullRequest
 suggestedReviewers object____ =
       Object.selectionForCompositeField "suggestedReviewers" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 
 
-type alias TimelineOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , since : OptionalArgument GithubNoFormat.ScalarCodecs.DateTime }
+type alias TimelineOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , since : OptionalArgument (GithubNoFormat.ScalarCodecs.DateTime) }
 
 {-| A list of events, comments, commits, etc. associated with the pull request.
 
@@ -605,7 +605,7 @@ type alias TimelineOptionalArguments = { first : OptionalArgument Int
 -}
 timeline : (TimelineOptionalArguments -> TimelineOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestTimelineConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.PullRequest
 timeline fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -620,30 +620,30 @@ timeline fillInOptionals____ object____ =
 
 {-| Identifies the pull request title.
 -}
-title : SelectionSet String GithubNoFormat.Object.PullRequest
+title : SelectionSet (String) GithubNoFormat.Object.PullRequest
 title =
-      Object.selectionForField "String" "title" [] (Decode.string)
+      Object.selectionForField "(String)" "title" [] (Decode.string)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.PullRequest
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.PullRequest
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this pull request.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.PullRequest
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.PullRequest
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias UserContentEditsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of edits to this content.
 
@@ -670,41 +670,41 @@ userContentEdits fillInOptionals____ object____ =
 
 {-| Can user react to this subject
 -}
-viewerCanReact : SelectionSet Bool GithubNoFormat.Object.PullRequest
+viewerCanReact : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 viewerCanReact =
-      Object.selectionForField "Bool" "viewerCanReact" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanReact" [] (Decode.bool)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : SelectionSet Bool GithubNoFormat.Object.PullRequest
+viewerCanSubscribe : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 viewerCanSubscribe =
-      Object.selectionForField "Bool" "viewerCanSubscribe" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanSubscribe" [] (Decode.bool)
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : SelectionSet Bool GithubNoFormat.Object.PullRequest
+viewerCanUpdate : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 viewerCanUpdate =
-      Object.selectionForField "Bool" "viewerCanUpdate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanUpdate" [] (Decode.bool)
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : SelectionSet (List GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) GithubNoFormat.Object.PullRequest
+viewerCannotUpdateReasons : SelectionSet ((List (GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason))) GithubNoFormat.Object.PullRequest
 viewerCannotUpdateReasons =
-      Object.selectionForField "(List Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+      Object.selectionForField "((List (Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)))" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : SelectionSet Bool GithubNoFormat.Object.PullRequest
+viewerDidAuthor : SelectionSet (Bool) GithubNoFormat.Object.PullRequest
 viewerDidAuthor =
-      Object.selectionForField "Bool" "viewerDidAuthor" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerDidAuthor" [] (Decode.bool)
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : SelectionSet GithubNoFormat.Enum.SubscriptionState.SubscriptionState GithubNoFormat.Object.PullRequest
+viewerSubscription : SelectionSet (GithubNoFormat.Enum.SubscriptionState.SubscriptionState) GithubNoFormat.Object.PullRequest
 viewerSubscription =
-      Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)
+      Object.selectionForField "(Enum.SubscriptionState.SubscriptionState)" "viewerSubscription" [] (GithubNoFormat.Enum.SubscriptionState.decoder)

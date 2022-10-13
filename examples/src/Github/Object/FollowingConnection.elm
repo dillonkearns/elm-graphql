@@ -50,4 +50,4 @@ pageInfo object____ =
 -}
 totalCount : SelectionSet Int Github.Object.FollowingConnection
 totalCount =
-    Object.selectionForField "Int" "totalCount" [] Decode.int
+    Object.selectionForField "(Int)" "totalCount" [] Decode.int

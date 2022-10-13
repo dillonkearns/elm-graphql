@@ -46,16 +46,16 @@ maybeFragments =
       onGist = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
  onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Starrable
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.Starrable
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
-type alias StargazersOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.StarOrder }
+type alias StargazersOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.StarOrder) }
 
 {-| A list of users who have starred this starrable.
 
@@ -68,7 +68,7 @@ type alias StargazersOptionalArguments = { first : OptionalArgument Int
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
- -> SelectionSet decodesTo GithubNoFormat.Interface.Starrable
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.Starrable
 stargazers fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -83,6 +83,6 @@ stargazers fillInOptionals____ object____ =
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
-viewerHasStarred : SelectionSet Bool GithubNoFormat.Interface.Starrable
+viewerHasStarred : SelectionSet (Bool) GithubNoFormat.Interface.Starrable
 viewerHasStarred =
-      Object.selectionForField "Bool" "viewerHasStarred" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerHasStarred" [] (Decode.bool)

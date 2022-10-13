@@ -16,15 +16,15 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.RepositoryPermission
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.RepositoryInvitation
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.RepositoryInvitation
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The user who received the invitation.
 -}
 invitee : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitation
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.RepositoryInvitation
 invitee object____ =
       Object.selectionForCompositeField "invitee" [] (object____) (Basics.identity)
 
@@ -32,16 +32,16 @@ invitee object____ =
 {-| The user who created the invitation.
 -}
 inviter : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitation
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.RepositoryInvitation
 inviter object____ =
       Object.selectionForCompositeField "inviter" [] (object____) (Basics.identity)
 
 
 {-| The permission granted on this repository by this invitation.
 -}
-permission : SelectionSet GithubNoFormat.Enum.RepositoryPermission.RepositoryPermission GithubNoFormat.Object.RepositoryInvitation
+permission : SelectionSet (GithubNoFormat.Enum.RepositoryPermission.RepositoryPermission) GithubNoFormat.Object.RepositoryInvitation
 permission =
-      Object.selectionForField "Enum.RepositoryPermission.RepositoryPermission" "permission" [] (GithubNoFormat.Enum.RepositoryPermission.decoder)
+      Object.selectionForField "(Enum.RepositoryPermission.RepositoryPermission)" "permission" [] (GithubNoFormat.Enum.RepositoryPermission.decoder)
 
 
 {-| The Repository the user is invited to.

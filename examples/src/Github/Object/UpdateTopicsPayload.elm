@@ -30,7 +30,7 @@ clientMutationId =
 -}
 invalidTopicNames : SelectionSet (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
-    Object.selectionForField "(Maybe ((List String)))" "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe ((List (String))))" "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| The updated repository.

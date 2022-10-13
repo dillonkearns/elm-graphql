@@ -22,7 +22,7 @@ import Swapi.Union
 
 increment : SelectionSet Int RootMutation
 increment =
-    Object.selectionForField "Int" "increment" [] Decode.int
+    Object.selectionForField "(Int)" "increment" [] Decode.int
 
 
 type alias SendMessageRequiredArguments =

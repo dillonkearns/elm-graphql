@@ -18,42 +18,42 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| The asset's content-type
 -}
-contentType : SelectionSet String GithubNoFormat.Object.ReleaseAsset
+contentType : SelectionSet (String) GithubNoFormat.Object.ReleaseAsset
 contentType =
-      Object.selectionForField "String" "contentType" [] (Decode.string)
+      Object.selectionForField "(String)" "contentType" [] (Decode.string)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ReleaseAsset
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ReleaseAsset
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The number of times this asset was downloaded
 -}
-downloadCount : SelectionSet Int GithubNoFormat.Object.ReleaseAsset
+downloadCount : SelectionSet (Int) GithubNoFormat.Object.ReleaseAsset
 downloadCount =
-      Object.selectionForField "Int" "downloadCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "downloadCount" [] (Decode.int)
 
 
 {-| Identifies the URL where you can download the release asset via the browser.
 -}
-downloadUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.ReleaseAsset
+downloadUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.ReleaseAsset
 downloadUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "downloadUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "downloadUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.ReleaseAsset
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.ReleaseAsset
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the title of the release asset.
 -}
-name : SelectionSet String GithubNoFormat.Object.ReleaseAsset
+name : SelectionSet (String) GithubNoFormat.Object.ReleaseAsset
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| Release that the asset is associated with
@@ -66,29 +66,29 @@ release object____ =
 
 {-| The size (in bytes) of the asset
 -}
-size : SelectionSet Int GithubNoFormat.Object.ReleaseAsset
+size : SelectionSet (Int) GithubNoFormat.Object.ReleaseAsset
 size =
-      Object.selectionForField "Int" "size" [] (Decode.int)
+      Object.selectionForField "(Int)" "size" [] (Decode.int)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ReleaseAsset
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.ReleaseAsset
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The user that performed the upload
 -}
 uploadedBy : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.ReleaseAsset
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.ReleaseAsset
 uploadedBy object____ =
       Object.selectionForCompositeField "uploadedBy" [] (object____) (Basics.identity)
 
 
 {-| Identifies the URL of the release asset.
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.ReleaseAsset
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.ReleaseAsset
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

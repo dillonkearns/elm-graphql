@@ -23,21 +23,21 @@ import Json.Decode as Decode
 -}
 abbreviatedOid : SelectionSet String Github.Object.Tree
 abbreviatedOid =
-    Object.selectionForField "String" "abbreviatedOid" [] Decode.string
+    Object.selectionForField "(String)" "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
 commitResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Tree
 commitResourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Tree
 commitUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| A list of tree entries.
@@ -51,14 +51,14 @@ entries object____ =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Tree
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The Git object ID
 -}
 oid : SelectionSet Github.ScalarCodecs.GitObjectID Github.Object.Tree
 oid =
-    Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+    Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the Git object belongs to

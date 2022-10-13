@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The edge from the ProjectColumn's card connection.
 -}
 cardEdge : SelectionSet decodesTo GithubNoFormat.Object.ProjectCardEdge
- -> SelectionSet decodesTo GithubNoFormat.Object.AddProjectCardPayload
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.AddProjectCardPayload
 cardEdge object____ =
       Object.selectionForCompositeField "cardEdge" [] (object____) (Basics.identity)
 
@@ -34,6 +34,6 @@ clientMutationId =
 {-| The ProjectColumn
 -}
 projectColumn : SelectionSet decodesTo GithubNoFormat.Object.Project
- -> SelectionSet decodesTo GithubNoFormat.Object.AddProjectCardPayload
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.AddProjectCardPayload
 projectColumn object____ =
       Object.selectionForCompositeField "projectColumn" [] (object____) (Basics.identity)

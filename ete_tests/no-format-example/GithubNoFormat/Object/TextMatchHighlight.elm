@@ -18,20 +18,20 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| The indice in the fragment where the matched text begins.
 -}
-beginIndice : SelectionSet Int GithubNoFormat.Object.TextMatchHighlight
+beginIndice : SelectionSet (Int) GithubNoFormat.Object.TextMatchHighlight
 beginIndice =
-      Object.selectionForField "Int" "beginIndice" [] (Decode.int)
+      Object.selectionForField "(Int)" "beginIndice" [] (Decode.int)
 
 
 {-| The indice in the fragment where the matched text ends.
 -}
-endIndice : SelectionSet Int GithubNoFormat.Object.TextMatchHighlight
+endIndice : SelectionSet (Int) GithubNoFormat.Object.TextMatchHighlight
 endIndice =
-      Object.selectionForField "Int" "endIndice" [] (Decode.int)
+      Object.selectionForField "(Int)" "endIndice" [] (Decode.int)
 
 
 {-| The text matched.
 -}
-text : SelectionSet String GithubNoFormat.Object.TextMatchHighlight
+text : SelectionSet (String) GithubNoFormat.Object.TextMatchHighlight
 text =
-      Object.selectionForField "String" "text" [] (Decode.string)
+      Object.selectionForField "(String)" "text" [] (Decode.string)

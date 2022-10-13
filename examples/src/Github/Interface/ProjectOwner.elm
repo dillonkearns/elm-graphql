@@ -50,7 +50,7 @@ maybeFragments =
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.ProjectOwner
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 type alias ProjectRequiredArguments =
@@ -112,18 +112,18 @@ projects fillInOptionals____ object____ =
 -}
 projectsResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "projectsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing owners projects
 -}
 projectsUrl : SelectionSet Github.ScalarCodecs.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Uri)" "projectsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
 viewerCanCreateProjects : SelectionSet Bool Github.Interface.ProjectOwner
 viewerCanCreateProjects =
-    Object.selectionForField "Bool" "viewerCanCreateProjects" [] Decode.bool
+    Object.selectionForField "(Bool)" "viewerCanCreateProjects" [] Decode.bool

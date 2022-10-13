@@ -25,16 +25,16 @@ body =
 
 {-| The projects description body rendered to HTML.
 -}
-bodyHTML : SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.Project
+bodyHTML : SelectionSet (GithubNoFormat.ScalarCodecs.Html) GithubNoFormat.Object.Project
 bodyHTML =
-      Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Html)" "bodyHTML" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : SelectionSet Bool GithubNoFormat.Object.Project
+closed : SelectionSet (Bool) GithubNoFormat.Object.Project
 closed =
-      Object.selectionForField "Bool" "closed" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "closed" [] (Decode.bool)
 
 
 {-| Identifies the date and time when the object was closed.
@@ -44,10 +44,10 @@ closedAt =
       Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "closedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-type alias ColumnsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ColumnsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| List of columns in the project
 
@@ -59,7 +59,7 @@ type alias ColumnsOptionalArguments = { first : OptionalArgument Int
 -}
 columns : (ColumnsOptionalArguments -> ColumnsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumnConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Project
 columns fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -74,9 +74,9 @@ columns fillInOptionals____ object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Project
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Project
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who originally created the project.
@@ -95,37 +95,37 @@ databaseId =
       Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Project
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Project
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The project's name.
 -}
-name : SelectionSet String GithubNoFormat.Object.Project
+name : SelectionSet (String) GithubNoFormat.Object.Project
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| The project's number.
 -}
-number : SelectionSet Int GithubNoFormat.Object.Project
+number : SelectionSet (Int) GithubNoFormat.Object.Project
 number =
-      Object.selectionForField "Int" "number" [] (Decode.int)
+      Object.selectionForField "(Int)" "number" [] (Decode.int)
 
 
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
- -> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Project
 owner object____ =
       Object.selectionForCompositeField "owner" [] (object____) (Basics.identity)
 
 
-type alias PendingCardsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias PendingCardsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| List of pending cards in this project
 
@@ -137,7 +137,7 @@ type alias PendingCardsOptionalArguments = { first : OptionalArgument Int
 -}
 pendingCards : (PendingCardsOptionalArguments -> PendingCardsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Project
 pendingCards fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -152,35 +152,35 @@ pendingCards fillInOptionals____ object____ =
 
 {-| The HTTP path for this project
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Project
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Project
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Whether the project is open or closed.
 -}
-state : SelectionSet GithubNoFormat.Enum.ProjectState.ProjectState GithubNoFormat.Object.Project
+state : SelectionSet (GithubNoFormat.Enum.ProjectState.ProjectState) GithubNoFormat.Object.Project
 state =
-      Object.selectionForField "Enum.ProjectState.ProjectState" "state" [] (GithubNoFormat.Enum.ProjectState.decoder)
+      Object.selectionForField "(Enum.ProjectState.ProjectState)" "state" [] (GithubNoFormat.Enum.ProjectState.decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Project
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Project
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this project
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Project
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Project
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : SelectionSet Bool GithubNoFormat.Object.Project
+viewerCanUpdate : SelectionSet (Bool) GithubNoFormat.Object.Project
 viewerCanUpdate =
-      Object.selectionForField "Bool" "viewerCanUpdate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanUpdate" [] (Decode.bool)

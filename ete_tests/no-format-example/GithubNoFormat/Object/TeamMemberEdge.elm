@@ -16,33 +16,33 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.TeamMemberRole
-cursor : SelectionSet String GithubNoFormat.Object.TeamMemberEdge
+cursor : SelectionSet (String) GithubNoFormat.Object.TeamMemberEdge
 cursor =
-      Object.selectionForField "String" "cursor" [] (Decode.string)
+      Object.selectionForField "(String)" "cursor" [] (Decode.string)
 
 
 {-| The HTTP path to the organization's member access page.
 -}
-memberAccessResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.TeamMemberEdge
+memberAccessResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.TeamMemberEdge
 memberAccessResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "memberAccessResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "memberAccessResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
-memberAccessUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.TeamMemberEdge
+memberAccessUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.TeamMemberEdge
 memberAccessUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "memberAccessUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "memberAccessUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet decodesTo GithubNoFormat.Object.TeamMemberEdge
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.TeamMemberEdge
 node object____ =
       Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| The role the member has on the team.
 -}
-role : SelectionSet GithubNoFormat.Enum.TeamMemberRole.TeamMemberRole GithubNoFormat.Object.TeamMemberEdge
+role : SelectionSet (GithubNoFormat.Enum.TeamMemberRole.TeamMemberRole) GithubNoFormat.Object.TeamMemberEdge
 role =
-      Object.selectionForField "Enum.TeamMemberRole.TeamMemberRole" "role" [] (GithubNoFormat.Enum.TeamMemberRole.decoder)
+      Object.selectionForField "(Enum.TeamMemberRole.TeamMemberRole)" "role" [] (GithubNoFormat.Enum.TeamMemberRole.decoder)

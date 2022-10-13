@@ -26,9 +26,9 @@ author object____ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Release
+createdAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Release
 createdAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "createdAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the description of the release.
@@ -38,23 +38,23 @@ description =
       Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Release
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Release
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether or not the release is a draft
 -}
-isDraft : SelectionSet Bool GithubNoFormat.Object.Release
+isDraft : SelectionSet (Bool) GithubNoFormat.Object.Release
 isDraft =
-      Object.selectionForField "Bool" "isDraft" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isDraft" [] (Decode.bool)
 
 
 {-| Whether or not the release is a prerelease
 -}
-isPrerelease : SelectionSet Bool GithubNoFormat.Object.Release
+isPrerelease : SelectionSet (Bool) GithubNoFormat.Object.Release
 isPrerelease =
-      Object.selectionForField "Bool" "isPrerelease" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "isPrerelease" [] (Decode.bool)
 
 
 {-| Identifies the title of the release.
@@ -71,11 +71,11 @@ publishedAt =
       Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "publishedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-type alias ReleaseAssetsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , name : OptionalArgument String }
+type alias ReleaseAssetsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , name : OptionalArgument (String) }
 
 {-| List of releases assets which are dependent on this release.
 
@@ -88,7 +88,7 @@ type alias ReleaseAssetsOptionalArguments = { first : OptionalArgument Int
 -}
 releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReleaseAssetConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Release
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Release
 releaseAssets fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -103,9 +103,9 @@ releaseAssets fillInOptionals____ object____ =
 
 {-| The HTTP path for this issue
 -}
-resourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Release
+resourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Release
 resourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "resourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The Git tag the release points to
@@ -119,13 +119,13 @@ tag object____ =
 {-| Identifies the date and time when the object was last updated.
 @deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
-updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.Release
+updatedAt : SelectionSet (GithubNoFormat.ScalarCodecs.DateTime) GithubNoFormat.Object.Release
 updatedAt =
-      Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+      Object.selectionForField "(ScalarCodecs.DateTime)" "updatedAt" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this issue
 -}
-url : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Release
+url : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Release
 url =
-      Object.selectionForField "ScalarCodecs.Uri" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "url" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)

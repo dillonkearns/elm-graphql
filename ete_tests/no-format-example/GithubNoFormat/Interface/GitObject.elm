@@ -54,40 +54,40 @@ maybeFragments =
     }
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : SelectionSet String GithubNoFormat.Interface.GitObject
+abbreviatedOid : SelectionSet (String) GithubNoFormat.Interface.GitObject
 abbreviatedOid =
-      Object.selectionForField "String" "abbreviatedOid" [] (Decode.string)
+      Object.selectionForField "(String)" "abbreviatedOid" [] (Decode.string)
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.GitObject
+commitResourcePath : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.GitObject
 commitResourcePath =
-      Object.selectionForField "ScalarCodecs.Uri" "commitResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "commitResourcePath" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.GitObject
+commitUrl : SelectionSet (GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Interface.GitObject
 commitUrl =
-      Object.selectionForField "ScalarCodecs.Uri" "commitUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Uri)" "commitUrl" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.GitObject
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Interface.GitObject
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The Git object ID
 -}
-oid : SelectionSet GithubNoFormat.ScalarCodecs.GitObjectID GithubNoFormat.Interface.GitObject
+oid : SelectionSet (GithubNoFormat.ScalarCodecs.GitObjectID) GithubNoFormat.Interface.GitObject
 oid =
-      Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+      Object.selectionForField "(ScalarCodecs.GitObjectID)" "oid" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the Git object belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Interface.GitObject
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.GitObject
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)

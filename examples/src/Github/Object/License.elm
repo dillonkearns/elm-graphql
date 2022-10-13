@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 body : SelectionSet String Github.Object.License
 body =
-    Object.selectionForField "String" "body" [] Decode.string
+    Object.selectionForField "(String)" "body" [] Decode.string
 
 
 {-| The conditions set by the license
@@ -46,19 +46,19 @@ description =
 -}
 featured : SelectionSet Bool Github.Object.License
 featured =
-    Object.selectionForField "Bool" "featured" [] Decode.bool
+    Object.selectionForField "(Bool)" "featured" [] Decode.bool
 
 
 {-| Whether the license should be displayed in license pickers
 -}
 hidden : SelectionSet Bool Github.Object.License
 hidden =
-    Object.selectionForField "Bool" "hidden" [] Decode.bool
+    Object.selectionForField "(Bool)" "hidden" [] Decode.bool
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.License
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Instructions on how to implement the license
@@ -72,7 +72,7 @@ implementation =
 -}
 key : SelectionSet String Github.Object.License
 key =
-    Object.selectionForField "String" "key" [] Decode.string
+    Object.selectionForField "(String)" "key" [] Decode.string
 
 
 {-| The limitations set by the license
@@ -88,7 +88,7 @@ limitations object____ =
 -}
 name : SelectionSet String Github.Object.License
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string
 
 
 {-| Customary short name if applicable (e.g, GPLv3)

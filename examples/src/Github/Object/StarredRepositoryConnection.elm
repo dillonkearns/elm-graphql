@@ -50,4 +50,4 @@ pageInfo object____ =
 -}
 totalCount : SelectionSet Int Github.Object.StarredRepositoryConnection
 totalCount =
-    Object.selectionForField "Int" "totalCount" [] Decode.int
+    Object.selectionForField "(Int)" "totalCount" [] Decode.int

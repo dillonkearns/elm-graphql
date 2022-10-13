@@ -16,15 +16,15 @@ import GithubNoFormat.ScalarCodecs
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.PullRequestState
-type alias AssociatedPullRequestsOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String
- , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
- , labels : OptionalArgument (List String)
- , headRefName : OptionalArgument String
- , baseRefName : OptionalArgument String
- , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
+type alias AssociatedPullRequestsOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String)
+ , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
+ , labels : OptionalArgument ((List (String)))
+ , headRefName : OptionalArgument (String)
+ , baseRefName : OptionalArgument (String)
+ , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }
 
 {-| A list of pull requests with this ref as the head ref.
 
@@ -41,7 +41,7 @@ type alias AssociatedPullRequestsOptionalArguments = { first : OptionalArgument 
 -}
 associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.Ref
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Ref
 associatedPullRequests fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -54,29 +54,29 @@ associatedPullRequests fillInOptionals____ object____ =
       Object.selectionForCompositeField "associatedPullRequests" optionalArgs____ (object____) (Basics.identity)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Ref
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.Ref
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The ref name.
 -}
-name : SelectionSet String GithubNoFormat.Object.Ref
+name : SelectionSet (String) GithubNoFormat.Object.Ref
 name =
-      Object.selectionForField "String" "name" [] (Decode.string)
+      Object.selectionForField "(String)" "name" [] (Decode.string)
 
 
 {-| The ref's prefix, such as `refs/heads/` or `refs/tags/`.
 -}
-prefix : SelectionSet String GithubNoFormat.Object.Ref
+prefix : SelectionSet (String) GithubNoFormat.Object.Ref
 prefix =
-      Object.selectionForField "String" "prefix" [] (Decode.string)
+      Object.selectionForField "(String)" "prefix" [] (Decode.string)
 
 
 {-| The repository the ref belongs to.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
- -> SelectionSet decodesTo GithubNoFormat.Object.Ref
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Ref
 repository object____ =
       Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
@@ -84,6 +84,6 @@ repository object____ =
 {-| The object the ref points to.
 -}
 target : SelectionSet decodesTo GithubNoFormat.Interface.GitObject
- -> SelectionSet decodesTo GithubNoFormat.Object.Ref
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.Ref
 target object____ =
       Object.selectionForCompositeField "target" [] (object____) (Basics.identity)

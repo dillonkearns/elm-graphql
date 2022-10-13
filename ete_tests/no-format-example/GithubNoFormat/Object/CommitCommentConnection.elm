@@ -35,13 +35,13 @@ nodes object____ =
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
- -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.CommitCommentConnection
 pageInfo object____ =
       Object.selectionForCompositeField "pageInfo" [] (object____) (Basics.identity)
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : SelectionSet Int GithubNoFormat.Object.CommitCommentConnection
+totalCount : SelectionSet (Int) GithubNoFormat.Object.CommitCommentConnection
 totalCount =
-      Object.selectionForField "Int" "totalCount" [] (Decode.int)
+      Object.selectionForField "(Int)" "totalCount" [] (Decode.int)

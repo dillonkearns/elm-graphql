@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 age : SelectionSet Int Github.Object.BlameRange
 age =
-    Object.selectionForField "Int" "age" [] Decode.int
+    Object.selectionForField "(Int)" "age" [] Decode.int
 
 
 {-| Identifies the line author
@@ -39,11 +39,11 @@ commit object____ =
 -}
 endingLine : SelectionSet Int Github.Object.BlameRange
 endingLine =
-    Object.selectionForField "Int" "endingLine" [] Decode.int
+    Object.selectionForField "(Int)" "endingLine" [] Decode.int
 
 
 {-| The starting line for the range
 -}
 startingLine : SelectionSet Int Github.Object.BlameRange
 startingLine =
-    Object.selectionForField "Int" "startingLine" [] Decode.int
+    Object.selectionForField "(Int)" "startingLine" [] Decode.int

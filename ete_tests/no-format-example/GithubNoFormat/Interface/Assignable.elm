@@ -46,10 +46,10 @@ maybeFragments =
       onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
  onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-type alias AssigneesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias AssigneesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| A list of Users assigned to this object.
 
@@ -61,7 +61,7 @@ type alias AssigneesOptionalArguments = { first : OptionalArgument Int
 -}
 assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
- -> SelectionSet decodesTo GithubNoFormat.Interface.Assignable
+ -> SelectionSet (decodesTo) GithubNoFormat.Interface.Assignable
 assignees fillInOptionals____ object____ =
     let
         filledInOptionals____ =

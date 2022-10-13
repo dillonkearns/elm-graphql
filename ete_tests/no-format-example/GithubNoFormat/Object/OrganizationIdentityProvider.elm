@@ -23,10 +23,10 @@ digestMethod =
       Object.selectionForField "(Maybe ScalarCodecs.Uri)" "digestMethod" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
-type alias ExternalIdentitiesOptionalArguments = { first : OptionalArgument Int
- , after : OptionalArgument String
- , last : OptionalArgument Int
- , before : OptionalArgument String }
+type alias ExternalIdentitiesOptionalArguments = { first : OptionalArgument (Int)
+ , after : OptionalArgument (String)
+ , last : OptionalArgument (Int)
+ , before : OptionalArgument (String) }
 
 {-| External Identities provisioned by this Identity Provider
 
@@ -38,7 +38,7 @@ type alias ExternalIdentitiesOptionalArguments = { first : OptionalArgument Int
 -}
 externalIdentities : (ExternalIdentitiesOptionalArguments -> ExternalIdentitiesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ExternalIdentityConnection
- -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationIdentityProvider
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -51,9 +51,9 @@ externalIdentities fillInOptionals____ object____ =
       Object.selectionForCompositeField "externalIdentities" optionalArgs____ (object____) (Basics.identity)
 
 
-id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.OrganizationIdentityProvider
+id : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.OrganizationIdentityProvider
 id =
-      Object.selectionForField "ScalarCodecs.Id" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "id" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The x509 certificate used by the Identity Provder to sign assertions and responses.

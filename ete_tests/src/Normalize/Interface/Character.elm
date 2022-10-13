@@ -52,7 +52,7 @@ maybeFragments =
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
 appearsIn =
-    Object.selectionForField "(List Enum.Episode_.Episode_)" "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
+    Object.selectionForField "((List (Enum.Episode_.Episode_)))" "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the character, or an empty list if they have none.
@@ -68,11 +68,11 @@ friends object____ =
 -}
 id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Interface.Character
 id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "(ScalarCodecs.Id)" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the character.
 -}
 name : SelectionSet String Normalize.Interface.Character
 name =
-    Object.selectionForField "String" "name" [] Decode.string
+    Object.selectionForField "(String)" "name" [] Decode.string

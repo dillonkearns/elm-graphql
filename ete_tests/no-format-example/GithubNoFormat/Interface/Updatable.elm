@@ -66,6 +66,6 @@ maybeFragments =
     }
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : SelectionSet Bool GithubNoFormat.Interface.Updatable
+viewerCanUpdate : SelectionSet (Bool) GithubNoFormat.Interface.Updatable
 viewerCanUpdate =
-      Object.selectionForField "Bool" "viewerCanUpdate" [] (Decode.bool)
+      Object.selectionForField "(Bool)" "viewerCanUpdate" [] (Decode.bool)

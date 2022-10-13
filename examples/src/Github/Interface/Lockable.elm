@@ -59,4 +59,4 @@ activeLockReason =
 -}
 locked : SelectionSet Bool Github.Interface.Lockable
 locked =
-    Object.selectionForField "Bool" "locked" [] Decode.bool
+    Object.selectionForField "(Bool)" "locked" [] Decode.bool

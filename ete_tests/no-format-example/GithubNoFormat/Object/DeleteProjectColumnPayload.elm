@@ -25,14 +25,14 @@ clientMutationId =
 
 {-| The deleted column ID.
 -}
-deletedColumnId : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.DeleteProjectColumnPayload
+deletedColumnId : SelectionSet (GithubNoFormat.ScalarCodecs.Id) GithubNoFormat.Object.DeleteProjectColumnPayload
 deletedColumnId =
-      Object.selectionForField "ScalarCodecs.Id" "deletedColumnId" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
+      Object.selectionForField "(ScalarCodecs.Id)" "deletedColumnId" [] (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The project the deleted column was in.
 -}
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
- -> SelectionSet decodesTo GithubNoFormat.Object.DeleteProjectColumnPayload
+ -> SelectionSet (decodesTo) GithubNoFormat.Object.DeleteProjectColumnPayload
 project object____ =
       Object.selectionForCompositeField "project" [] (object____) (Basics.identity)

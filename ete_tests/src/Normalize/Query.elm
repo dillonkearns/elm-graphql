@@ -68,7 +68,7 @@ greet :
     GreetRequiredArguments
     -> SelectionSet String RootQuery
 greet requiredArgs____ =
-    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs____.input Normalize.InputObject.encodeGreeting ] Decode.string
+    Object.selectionForField "(String)" "greet" [ Argument.required "input" requiredArgs____.input Normalize.InputObject.encodeGreeting ] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -170,4 +170,4 @@ type_ fillInOptionals____ =
             [ Argument.optional "input" filledInOptionals____.input Normalize.InputObject.encodeReservedWord ]
                 |> List.filterMap Basics.identity
     in
-    Object.selectionForField "String" "type" optionalArgs____ Decode.string
+    Object.selectionForField "(String)" "type" optionalArgs____ Decode.string

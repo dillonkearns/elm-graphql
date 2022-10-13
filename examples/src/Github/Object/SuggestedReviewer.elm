@@ -23,14 +23,14 @@ import Json.Decode as Decode
 -}
 isAuthor : SelectionSet Bool Github.Object.SuggestedReviewer
 isAuthor =
-    Object.selectionForField "Bool" "isAuthor" [] Decode.bool
+    Object.selectionForField "(Bool)" "isAuthor" [] Decode.bool
 
 
 {-| Is this suggestion based on past review comments?
 -}
 isCommenter : SelectionSet Bool Github.Object.SuggestedReviewer
 isCommenter =
-    Object.selectionForField "Bool" "isCommenter" [] Decode.bool
+    Object.selectionForField "(Bool)" "isCommenter" [] Decode.bool
 
 
 {-| Identifies the user suggested to review the pull request.
