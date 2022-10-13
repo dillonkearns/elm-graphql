@@ -1,5 +1,6 @@
 module Graphql.Generator.InputObjectFile.Constructor exposing (generate)
 
+import Elm.Annotation
 import GenerateSyntax
 import Graphql.Generator.AnnotatedArg as AnnotatedArg
 import Graphql.Generator.Context exposing (Context)
@@ -123,7 +124,7 @@ filledOptionalsRecord optionalFields =
 aliasEntry : Context -> Type.Field -> ( String, String )
 aliasEntry context field =
     ( CamelCaseName.normalized field.name
-    , Decoder.generateTypeForInputObjectAsString context field.typeRef
+    , Decoder.generateTypeForInputObject context field.typeRef |> Elm.Annotation.toString
     )
 
 

@@ -1,4 +1,4 @@
-module Graphql.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject, generateTypeForInputObjectAsString)
+module Graphql.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
 
 import Elm.Annotation
 import Elm.ToString
@@ -171,14 +171,6 @@ generateType context typeRef =
 generateType_ : Bool -> Context -> TypeReference -> String
 generateType_ fromInputObject context typeRef =
     generateTypeCommon fromInputObject "Maybe" context typeRef
-        |> toStringWithParens
-
-
-{-| DEPRECATED: use generateTypeForInputObject instead
--}
-generateTypeForInputObjectAsString : Context -> TypeReference -> String
-generateTypeForInputObjectAsString context typeRef =
-    generateTypeForInputObject context typeRef
         |> toStringWithParens
 
 
