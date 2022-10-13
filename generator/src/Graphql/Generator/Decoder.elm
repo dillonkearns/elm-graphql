@@ -206,16 +206,17 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                 Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
 
         Type.InputObjectRef inputObjectName ->
-            if fromInputObject then
-                Elm.Annotation.toString <|
-                    Elm.Annotation.named []
-                        (ClassCaseName.normalized inputObjectName)
+            let
+                namespace : List String
+                namespace =
+                    if fromInputObject then
+                        []
 
-            else
-                Elm.Annotation.toString <|
-                    Elm.Annotation.named
-                        (Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName)
-                        (ClassCaseName.normalized inputObjectName)
+                    else
+                        Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
+            in
+            Elm.Annotation.toString <|
+                Elm.Annotation.named namespace (ClassCaseName.normalized inputObjectName)
     )
         |> (\typeString ->
                 case isNullable of
