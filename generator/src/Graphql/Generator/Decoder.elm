@@ -207,8 +207,9 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
 
         Type.InputObjectRef inputObjectName ->
             if fromInputObject then
-                [ ClassCaseName.normalized inputObjectName ]
-                    |> String.join "."
+                Elm.Annotation.toString <|
+                    Elm.Annotation.named []
+                        (ClassCaseName.normalized inputObjectName)
 
             else
                 (Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
