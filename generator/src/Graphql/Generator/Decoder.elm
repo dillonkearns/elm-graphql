@@ -212,10 +212,10 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                         (ClassCaseName.normalized inputObjectName)
 
             else
-                (Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
-                    ++ [ ClassCaseName.normalized inputObjectName ]
-                )
-                    |> String.join "."
+                Elm.Annotation.toString <|
+                    Elm.Annotation.named
+                        (Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName)
+                        (ClassCaseName.normalized inputObjectName)
     )
         |> (\typeString ->
                 case isNullable of
