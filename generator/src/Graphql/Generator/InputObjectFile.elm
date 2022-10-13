@@ -1,5 +1,6 @@
 module Graphql.Generator.InputObjectFile exposing (generate)
 
+import Elm.Annotation
 import GenerateSyntax
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.Decoder as Decoder
@@ -108,7 +109,7 @@ type alias {0} =
 aliasEntry : Context -> Type.Field -> ( String, String )
 aliasEntry context field =
     ( CamelCaseName.normalized field.name
-    , Decoder.generateTypeForInputObject context field.typeRef
+    , Elm.Annotation.toString <| Decoder.generateTypeForInputObject context field.typeRef
     )
 
 

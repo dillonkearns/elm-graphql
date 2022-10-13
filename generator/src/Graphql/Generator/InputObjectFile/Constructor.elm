@@ -123,7 +123,7 @@ filledOptionalsRecord optionalFields =
 aliasEntry : Context -> Type.Field -> ( String, String )
 aliasEntry context field =
     ( CamelCaseName.normalized field.name
-    , Decoder.generateTypeForInputObject context field.typeRef
+    , Decoder.generateTypeForInputObjectAsString context field.typeRef
     )
 
 
