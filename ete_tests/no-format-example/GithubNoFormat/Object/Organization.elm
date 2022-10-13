@@ -146,7 +146,7 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument (Int
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories this user has pinned to their profile
@@ -196,7 +196,7 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.ProjectOrder)
  , search : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.ProjectState.ProjectState))) }
+ , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
 
 {-| A list of projects under the owner.
 
@@ -244,7 +244,7 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool)
  , isFork : OptionalArgument (Bool) }
 
@@ -326,7 +326,7 @@ type alias TeamsOptionalArguments = { first : OptionalArgument (Int)
  , privacy : OptionalArgument (GithubNoFormat.Enum.TeamPrivacy.TeamPrivacy)
  , role : OptionalArgument (GithubNoFormat.Enum.TeamRole.TeamRole)
  , query : OptionalArgument (String)
- , userLogins : OptionalArgument ((List (String)))
+ , userLogins : OptionalArgument (List String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.TeamOrder)
  , ldapMapped : OptionalArgument (Bool)
  , rootTeamsOnly : OptionalArgument (Bool) }

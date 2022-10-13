@@ -40,7 +40,7 @@ commitUrl =
 {-| A list of tree entries.
 -}
 entries : SelectionSet decodesTo GithubNoFormat.Object.TreeEntry
- -> SelectionSet (Maybe ((List (decodesTo)))) GithubNoFormat.Object.Tree
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.Tree
 entries object____ =
       Object.selectionForCompositeField "entries" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 

@@ -25,23 +25,23 @@ gitHubServicesSha =
 
 {-| IP addresses that users connect to for git operations
 -}
-gitIpAddresses : SelectionSet (Maybe ((List (String)))) GithubNoFormat.Object.GitHubMetadata
+gitIpAddresses : SelectionSet (Maybe (List String)) GithubNoFormat.Object.GitHubMetadata
 gitIpAddresses =
-      Object.selectionForField "(Maybe ((List (String))))" "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+      Object.selectionForField "(Maybe (List String))" "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that service hooks are sent from
 -}
-hookIpAddresses : SelectionSet (Maybe ((List (String)))) GithubNoFormat.Object.GitHubMetadata
+hookIpAddresses : SelectionSet (Maybe (List String)) GithubNoFormat.Object.GitHubMetadata
 hookIpAddresses =
-      Object.selectionForField "(Maybe ((List (String))))" "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+      Object.selectionForField "(Maybe (List String))" "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that the importer connects from
 -}
-importerIpAddresses : SelectionSet (Maybe ((List (String)))) GithubNoFormat.Object.GitHubMetadata
+importerIpAddresses : SelectionSet (Maybe (List String)) GithubNoFormat.Object.GitHubMetadata
 importerIpAddresses =
-      Object.selectionForField "(Maybe ((List (String))))" "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+      Object.selectionForField "(Maybe (List String))" "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| Whether or not users are verified
@@ -53,6 +53,6 @@ isPasswordAuthenticationVerifiable =
 
 {-| IP addresses for GitHub Pages' A records
 -}
-pagesIpAddresses : SelectionSet (Maybe ((List (String)))) GithubNoFormat.Object.GitHubMetadata
+pagesIpAddresses : SelectionSet (Maybe (List String)) GithubNoFormat.Object.GitHubMetadata
 pagesIpAddresses =
-      Object.selectionForField "(Maybe ((List (String))))" "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+      Object.selectionForField "(Maybe (List String))" "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)

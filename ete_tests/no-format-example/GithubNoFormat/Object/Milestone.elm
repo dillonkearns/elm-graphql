@@ -70,9 +70,9 @@ type alias IssuesOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , labels : OptionalArgument ((List (String)))
+ , labels : OptionalArgument (List String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.IssueState.IssueState))) }
+ , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
 
 {-| A list of issues associated with the milestone.
 
@@ -111,8 +111,8 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
- , labels : OptionalArgument ((List (String)))
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
+ , labels : OptionalArgument (List String)
  , headRefName : OptionalArgument (String)
  , baseRefName : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }

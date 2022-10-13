@@ -39,7 +39,7 @@ codeOfConduct requiredArgs____ object____ =
 {-| Look up a code of conduct by its key
 -}
 codesOfConduct : SelectionSet decodesTo GithubNoFormat.Object.CodeOfConduct
- -> SelectionSet (Maybe ((List (Maybe decodesTo)))) RootQuery
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) RootQuery
 codesOfConduct object____ =
       Object.selectionForCompositeField "codesOfConduct" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -61,7 +61,7 @@ license requiredArgs____ object____ =
 {-| Return a list of known open source licenses
 -}
 licenses : SelectionSet decodesTo GithubNoFormat.Object.License
- -> SelectionSet ((List (Maybe decodesTo))) RootQuery
+ -> SelectionSet (List (Maybe decodesTo)) RootQuery
 licenses object____ =
       Object.selectionForCompositeField "licenses" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 
@@ -75,7 +75,7 @@ type alias MarketplaceCategoriesOptionalArguments = { excludeEmpty : OptionalArg
 -}
 marketplaceCategories : (MarketplaceCategoriesOptionalArguments -> MarketplaceCategoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
- -> SelectionSet ((List (decodesTo))) RootQuery
+ -> SelectionSet (List decodesTo) RootQuery
 marketplaceCategories fillInOptionals____ object____ =
     let
         filledInOptionals____ =
@@ -125,7 +125,7 @@ type alias MarketplaceListingsOptionalArguments = { first : OptionalArgument (In
  , adminId : OptionalArgument (GithubNoFormat.ScalarCodecs.Id)
  , organizationId : OptionalArgument (GithubNoFormat.ScalarCodecs.Id)
  , allStates : OptionalArgument (Bool)
- , slugs : OptionalArgument ((List (Maybe String)))
+ , slugs : OptionalArgument (List (Maybe String))
  , primaryCategoryOnly : OptionalArgument (Bool)
  , withFreeTrialsOnly : OptionalArgument (Bool) }
 
@@ -186,7 +186,7 @@ node requiredArgs____ object____ =
       Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs____.id ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)) ] (object____) (Basics.identity >> Decode.nullable)
 
 
-type alias NodesRequiredArguments = { ids : ((List (GithubNoFormat.ScalarCodecs.Id))) }
+type alias NodesRequiredArguments = { ids : (List GithubNoFormat.ScalarCodecs.Id) }
 
 {-| Lookup nodes by a list of IDs.
 
@@ -195,7 +195,7 @@ type alias NodesRequiredArguments = { ids : ((List (GithubNoFormat.ScalarCodecs.
 -}
 nodes : NodesRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Interface.Node
- -> SelectionSet ((List (Maybe decodesTo))) RootQuery
+ -> SelectionSet (List (Maybe decodesTo)) RootQuery
 nodes requiredArgs____ object____ =
       Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs____.ids ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list) ] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 

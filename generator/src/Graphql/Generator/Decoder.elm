@@ -168,10 +168,9 @@ generateType context typeRef =
         |> toStringWithParens
 
 
-generateType_ : Bool -> Context -> TypeReference -> String
+generateType_ : Bool -> Context -> TypeReference -> Elm.Annotation.Annotation
 generateType_ fromInputObject context typeRef =
     generateTypeCommon fromInputObject "Maybe" context typeRef
-        |> toStringWithParens
 
 
 generateTypeForInputObject : Context -> TypeReference -> Elm.Annotation.Annotation
@@ -186,8 +185,9 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
             Scalar.toAnnotation context scalar
 
         Type.List typeRef ->
-            -- TODO remove hacked type from String
-            Elm.Annotation.var ("(List " ++ generateType_ fromInputObject context typeRef ++ ")")
+            Elm.Annotation.namedWith []
+                "List"
+                [ generateType_ fromInputObject context typeRef ]
 
         Type.ObjectRef objectName ->
             Elm.Annotation.var "decodesTo"

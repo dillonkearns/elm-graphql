@@ -52,7 +52,7 @@ maybeFragments =
 -}
 appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
 appearsIn =
-    Object.selectionForField "((List (Enum.Episode.Episode)))" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.

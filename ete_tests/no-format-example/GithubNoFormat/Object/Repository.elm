@@ -175,7 +175,7 @@ type alias DeploymentsOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , environments : OptionalArgument ((List (String))) }
+ , environments : OptionalArgument (List String) }
 
 {-| Deployments associated with the repository
 
@@ -235,7 +235,7 @@ type alias ForksOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool) }
 
 {-| A list of direct forked repositories.
@@ -358,9 +358,9 @@ type alias IssuesOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , labels : OptionalArgument ((List (String)))
+ , labels : OptionalArgument (List String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.IssueState.IssueState))) }
+ , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
 
 {-| A list of issues that have been opened in the repository.
 
@@ -531,7 +531,7 @@ type alias MilestonesOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.MilestoneState.MilestoneState)))
+ , states : OptionalArgument (List GithubNoFormat.Enum.MilestoneState.MilestoneState)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.MilestoneOrder) }
 
 {-| A list of milestones associated with the repository.
@@ -648,7 +648,7 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.ProjectOrder)
  , search : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.ProjectState.ProjectState))) }
+ , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
 
 {-| A list of projects under the owner.
 
@@ -736,8 +736,8 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
- , labels : OptionalArgument ((List (String)))
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
+ , labels : OptionalArgument (List String)
  , headRefName : OptionalArgument (String)
  , baseRefName : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }

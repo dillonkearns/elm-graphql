@@ -41,7 +41,7 @@ context requiredArgs____ object____ =
 {-| The individual status contexts for this commit.
 -}
 contexts : SelectionSet decodesTo GithubNoFormat.Object.StatusContext
- -> SelectionSet ((List (decodesTo))) GithubNoFormat.Object.Status
+ -> SelectionSet (List decodesTo) GithubNoFormat.Object.Status
 contexts object____ =
       Object.selectionForCompositeField "contexts" [] (object____) (Basics.identity >> Decode.list)
 

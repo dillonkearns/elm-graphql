@@ -243,7 +243,7 @@ resourcePath =
 -}
 screenshotUrls : SelectionSet (List (Maybe String)) Github.Object.MarketplaceListing
 screenshotUrls =
-    Object.selectionForField "((List (Maybe String)))" "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
+    Object.selectionForField "(List (Maybe String))" "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
 
 
 {-| An alternate category that describes the listing.

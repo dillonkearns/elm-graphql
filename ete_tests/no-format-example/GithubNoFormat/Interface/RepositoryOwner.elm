@@ -88,7 +88,7 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument (Int
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories this user has pinned to their profile
@@ -124,7 +124,7 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool)
  , isFork : OptionalArgument (Bool) }
 

@@ -447,7 +447,7 @@ publishedAt =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
- -> SelectionSet (Maybe ((List (decodesTo)))) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequest
 reactionGroups object____ =
       Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 
@@ -545,7 +545,7 @@ type alias ReviewsOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState)))
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState)
  , author : OptionalArgument (String) }
 
 {-| A list of reviews associated with the pull request.
@@ -583,7 +583,7 @@ state =
 {-| A list of reviewer suggestions based on commit history and past review comments.
 -}
 suggestedReviewers : SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
- -> SelectionSet ((List (Maybe decodesTo))) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.PullRequest
 suggestedReviewers object____ =
       Object.selectionForCompositeField "suggestedReviewers" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list)
 
@@ -691,9 +691,9 @@ viewerCanUpdate =
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : SelectionSet ((List (GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason))) GithubNoFormat.Object.PullRequest
+viewerCannotUpdateReasons : SelectionSet (List GithubNoFormat.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) GithubNoFormat.Object.PullRequest
 viewerCannotUpdateReasons =
-      Object.selectionForField "((List (Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)))" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+      Object.selectionForField "(List Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)" "viewerCannotUpdateReasons" [] (GithubNoFormat.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.

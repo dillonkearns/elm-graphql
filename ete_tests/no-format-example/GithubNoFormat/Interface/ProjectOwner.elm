@@ -71,7 +71,7 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.ProjectOrder)
  , search : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.ProjectState.ProjectState))) }
+ , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
 
 {-| A list of projects under the owner.
 

@@ -52,7 +52,7 @@ maybeFragments =
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
 appearsIn =
-    Object.selectionForField "((List (Enum.Episode_.Episode_)))" "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
+    Object.selectionForField "(List Enum.Episode_.Episode_)" "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the character, or an empty list if they have none.

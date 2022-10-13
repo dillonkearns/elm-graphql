@@ -73,7 +73,7 @@ type alias ChildTeamsOptionalArguments = { first : OptionalArgument (Int)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.TeamOrder)
- , userLogins : OptionalArgument ((List (String)))
+ , userLogins : OptionalArgument (List String)
  , immediateOnly : OptionalArgument (Bool) }
 
 {-| List of child teams belonging to this team

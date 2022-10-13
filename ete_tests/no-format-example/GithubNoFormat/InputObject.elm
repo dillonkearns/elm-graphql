@@ -244,13 +244,13 @@ type alias AddPullRequestReviewInputOptionalFields =
  , commitOID : OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID
  , body : OptionalArgument String
  , event : OptionalArgument GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent
- , comments : OptionalArgument ((List (Maybe DraftPullRequestReviewComment))) }
+ , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment)) }
 
 
 {-| Type for the AddPullRequestReviewInput input object.
 -}
 type alias AddPullRequestReviewInput =
-    {clientMutationId : OptionalArgument String, pullRequestId : GithubNoFormat.ScalarCodecs.Id, commitOID : OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID, body : OptionalArgument String, event : OptionalArgument GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument ((List (Maybe DraftPullRequestReviewComment)))}
+    {clientMutationId : OptionalArgument String, pullRequestId : GithubNoFormat.ScalarCodecs.Id, commitOID : OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID, body : OptionalArgument String, event : OptionalArgument GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))}
     
 
 {-| Encode a AddPullRequestReviewInput into a value that can be used as an argument.
@@ -343,13 +343,13 @@ buildCommitAuthor fillOptionals____ =
 
 type alias CommitAuthorOptionalFields =
     { id : OptionalArgument GithubNoFormat.ScalarCodecs.Id
- , emails : OptionalArgument ((List (String))) }
+ , emails : OptionalArgument (List String) }
 
 
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
-    {id : OptionalArgument GithubNoFormat.ScalarCodecs.Id, emails : OptionalArgument ((List (String)))}
+    {id : OptionalArgument GithubNoFormat.ScalarCodecs.Id, emails : OptionalArgument (List String)}
     
 
 {-| Encode a CommitAuthor into a value that can be used as an argument.
@@ -1078,15 +1078,15 @@ type alias RequestReviewsInputRequiredFields =
     { pullRequestId : GithubNoFormat.ScalarCodecs.Id }
 type alias RequestReviewsInputOptionalFields =
     { clientMutationId : OptionalArgument String
- , userIds : OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id)))
- , teamIds : OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id)))
+ , userIds : OptionalArgument (List GithubNoFormat.ScalarCodecs.Id)
+ , teamIds : OptionalArgument (List GithubNoFormat.ScalarCodecs.Id)
  , union : OptionalArgument Bool }
 
 
 {-| Type for the RequestReviewsInput input object.
 -}
 type alias RequestReviewsInput =
-    {clientMutationId : OptionalArgument String, pullRequestId : GithubNoFormat.ScalarCodecs.Id, userIds : OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id))), teamIds : OptionalArgument ((List (GithubNoFormat.ScalarCodecs.Id))), union : OptionalArgument Bool}
+    {clientMutationId : OptionalArgument String, pullRequestId : GithubNoFormat.ScalarCodecs.Id, userIds : OptionalArgument (List GithubNoFormat.ScalarCodecs.Id), teamIds : OptionalArgument (List GithubNoFormat.ScalarCodecs.Id), union : OptionalArgument Bool}
     
 
 {-| Encode a RequestReviewsInput into a value that can be used as an argument.
@@ -1432,7 +1432,7 @@ buildUpdateTopicsInput required____ fillOptionals____ =
 
 type alias UpdateTopicsInputRequiredFields =
     { repositoryId : GithubNoFormat.ScalarCodecs.Id
- , topicNames : (List (String)) }
+ , topicNames : List String }
 type alias UpdateTopicsInputOptionalFields =
     { clientMutationId : OptionalArgument String }
 
@@ -1440,7 +1440,7 @@ type alias UpdateTopicsInputOptionalFields =
 {-| Type for the UpdateTopicsInput input object.
 -}
 type alias UpdateTopicsInput =
-    {clientMutationId : OptionalArgument String, repositoryId : GithubNoFormat.ScalarCodecs.Id, topicNames : (List (String))}
+    {clientMutationId : OptionalArgument String, repositoryId : GithubNoFormat.ScalarCodecs.Id, topicNames : List String}
     
 
 {-| Encode a UpdateTopicsInput into a value that can be used as an argument.

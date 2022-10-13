@@ -111,7 +111,7 @@ type alias ContributedRepositoriesOptionalArguments = { first : OptionalArgument
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories that the user recently contributed to.
@@ -380,9 +380,9 @@ type alias IssuesOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , labels : OptionalArgument ((List (String)))
+ , labels : OptionalArgument (List String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.IssueState.IssueState))) }
+ , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
 
 {-| A list of issues assocated with this user.
 
@@ -479,7 +479,7 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument (Int
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories this user has pinned to their profile
@@ -541,8 +541,8 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument (Int)
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
- , labels : OptionalArgument ((List (String)))
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
+ , labels : OptionalArgument (List String)
  , headRefName : OptionalArgument (String)
  , baseRefName : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }
@@ -581,7 +581,7 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool)
  , isFork : OptionalArgument (Bool) }
 
@@ -621,7 +621,7 @@ type alias RepositoriesContributedToOptionalArguments = { first : OptionalArgume
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
  , isLocked : OptionalArgument (Bool)
  , includeUserRepositories : OptionalArgument (Bool)
- , contributionTypes : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryContributionType.RepositoryContributionType))) }
+ , contributionTypes : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryContributionType.RepositoryContributionType)) }
 
 {-| A list of repositories that the user recently contributed to.
 
@@ -739,7 +739,7 @@ type alias WatchingOptionalArguments = { first : OptionalArgument (Int)
  , before : OptionalArgument (String)
  , privacy : OptionalArgument (GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.RepositoryOrder)
- , affiliations : OptionalArgument ((List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation)))
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
  , isLocked : OptionalArgument (Bool) }
 
 {-| A list of repositories the given user is watching.

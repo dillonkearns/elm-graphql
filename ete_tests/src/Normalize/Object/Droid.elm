@@ -24,7 +24,7 @@ import Normalize.Union
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
 appearsIn =
-    Object.selectionForField "((List (Enum.Episode_.Episode_)))" "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
+    Object.selectionForField "(List Enum.Episode_.Episode_)" "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the droid, or an empty list if they have none.

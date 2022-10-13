@@ -234,9 +234,9 @@ resourcePath =
 
 {-| The URLs for the listing's screenshots.
 -}
-screenshotUrls : SelectionSet ((List (Maybe String))) GithubNoFormat.Object.MarketplaceListing
+screenshotUrls : SelectionSet (List (Maybe String)) GithubNoFormat.Object.MarketplaceListing
 screenshotUrls =
-      Object.selectionForField "((List (Maybe String)))" "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
+      Object.selectionForField "(List (Maybe String))" "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
 
 
 {-| An alternate category that describes the listing.

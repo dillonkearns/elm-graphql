@@ -34,6 +34,6 @@ node object____ =
 {-| Text matches on the result found.
 -}
 textMatches : SelectionSet decodesTo GithubNoFormat.Object.TextMatch
- -> SelectionSet (Maybe ((List (Maybe decodesTo)))) GithubNoFormat.Object.SearchResultItemEdge
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.SearchResultItemEdge
 textMatches object____ =
       Object.selectionForCompositeField "textMatches" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)

@@ -20,8 +20,8 @@ type alias AssociatedPullRequestsOptionalArguments = { first : OptionalArgument 
  , after : OptionalArgument (String)
  , last : OptionalArgument (Int)
  , before : OptionalArgument (String)
- , states : OptionalArgument ((List (GithubNoFormat.Enum.PullRequestState.PullRequestState)))
- , labels : OptionalArgument ((List (String)))
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
+ , labels : OptionalArgument (List String)
  , headRefName : OptionalArgument (String)
  , baseRefName : OptionalArgument (String)
  , orderBy : OptionalArgument (GithubNoFormat.InputObject.IssueOrder) }
