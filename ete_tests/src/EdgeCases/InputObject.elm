@@ -38,9 +38,7 @@ type alias ShapeInputOptionalFields =
 {-| Type for the ShapeInput input object.
 -}
 type alias ShapeInput =
-    { kind : OptionalArgument String
-    , geometry : OptionalArgument (List (Maybe (List (Maybe Float))))
-    }
+    { kind : OptionalArgument String, geometry : OptionalArgument (List (Maybe (List (Maybe Float)))) }
 
 
 {-| Encode a ShapeInput into a value that can be used as an argument.

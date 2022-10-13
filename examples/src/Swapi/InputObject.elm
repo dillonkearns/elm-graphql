@@ -44,10 +44,7 @@ type alias GreetingOptionalFields =
 {-| Type for the Greeting input object.
 -}
 type alias Greeting =
-    { language : OptionalArgument Swapi.Enum.Language.Language
-    , name : String
-    , options : OptionalArgument GreetingOptions
-    }
+    { language : OptionalArgument Swapi.Enum.Language.Language, name : String, options : OptionalArgument GreetingOptions }
 
 
 {-| Encode a Greeting into a value that can be used as an argument.

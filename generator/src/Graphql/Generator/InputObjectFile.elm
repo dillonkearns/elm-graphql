@@ -102,14 +102,16 @@ type alias {0} =
     """
     )
         [ ClassCaseName.normalized name
-        , List.map (aliasEntry context) fields |> GenerateSyntax.typeAlias
+        , List.map (aliasEntry context) fields
+            |> Elm.Annotation.record
+            |> Elm.Annotation.toString
         ]
 
 
-aliasEntry : Context -> Type.Field -> ( String, String )
+aliasEntry : Context -> Type.Field -> ( String, Elm.Annotation.Annotation )
 aliasEntry context field =
     ( CamelCaseName.normalized field.name
-    , Elm.Annotation.toString <| Decoder.generateTypeForInputObject context field.typeRef
+    , Decoder.generateTypeForInputObject context field.typeRef
     )
 
 
