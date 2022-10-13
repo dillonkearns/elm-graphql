@@ -185,7 +185,9 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                 Scalar.toAnnotation context scalar
 
         Type.List typeRef ->
-            "(List " ++ generateType_ fromInputObject context typeRef ++ ")"
+            -- TODO remove hacked type from String
+            Elm.Annotation.toString <|
+                Elm.Annotation.var ("(List " ++ generateType_ fromInputObject context typeRef ++ ")")
 
         Type.ObjectRef objectName ->
             Elm.Annotation.toString <|
