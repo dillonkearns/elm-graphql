@@ -123,9 +123,9 @@ repository object____ =
 
 {-| List of required status check contexts that must pass for commits to be accepted to this branch.
 -}
-requiredStatusCheckContexts : SelectionSet (Maybe (List (Maybe String))) GithubNoFormat.Object.ProtectedBranch
+requiredStatusCheckContexts : SelectionSet (Maybe ((List (Maybe String)))) GithubNoFormat.Object.ProtectedBranch
 requiredStatusCheckContexts =
-      Object.selectionForField "(Maybe (List (Maybe String)))" "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
+      Object.selectionForField "(Maybe ((List (Maybe String))))" "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
 
 
 type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgument Int

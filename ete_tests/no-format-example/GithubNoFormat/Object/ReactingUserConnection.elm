@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo GithubNoFormat.Object.ReactingUserEdge
- -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.ReactingUserConnection
+ -> SelectionSet (Maybe ((List (Maybe decodesTo)))) GithubNoFormat.Object.ReactingUserConnection
 edges object____ =
       Object.selectionForCompositeField "edges" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -27,7 +27,7 @@ edges object____ =
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo GithubNoFormat.Object.User
- -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.ReactingUserConnection
+ -> SelectionSet (Maybe ((List (Maybe decodesTo)))) GithubNoFormat.Object.ReactingUserConnection
 nodes object____ =
       Object.selectionForCompositeField "nodes" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 

@@ -30,21 +30,21 @@ gitHubServicesSha =
 -}
 gitIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
-    Object.selectionForField "(Maybe (List String))" "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe ((List String)))" "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that service hooks are sent from
 -}
 hookIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
-    Object.selectionForField "(Maybe (List String))" "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe ((List String)))" "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that the importer connects from
 -}
 importerIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
-    Object.selectionForField "(Maybe (List String))" "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe ((List String)))" "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| Whether or not users are verified
@@ -58,4 +58,4 @@ isPasswordAuthenticationVerifiable =
 -}
 pagesIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
-    Object.selectionForField "(Maybe (List String))" "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe ((List String)))" "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)

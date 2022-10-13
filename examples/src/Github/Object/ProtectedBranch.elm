@@ -134,7 +134,7 @@ repository object____ =
 -}
 requiredStatusCheckContexts : SelectionSet (Maybe (List (Maybe String))) Github.Object.ProtectedBranch
 requiredStatusCheckContexts =
-    Object.selectionForField "(Maybe (List (Maybe String)))" "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe ((List (Maybe String))))" "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
 
 
 type alias ReviewDismissalAllowancesOptionalArguments =

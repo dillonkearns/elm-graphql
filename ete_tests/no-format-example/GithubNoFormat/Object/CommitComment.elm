@@ -121,7 +121,7 @@ publishedAt =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
- -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.CommitComment
+ -> SelectionSet (Maybe ((List decodesTo))) GithubNoFormat.Object.CommitComment
 reactionGroups object____ =
       Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 

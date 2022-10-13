@@ -214,7 +214,11 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
         |> (\typeString ->
                 case isNullable of
                     Type.Nullable ->
-                        interpolate "({0} {1})" [ nullableString, Elm.Annotation.toString typeString ]
+                        "("
+                            ++ (Elm.Annotation.toString <|
+                                    Elm.Annotation.namedWith [] nullableString [ typeString ]
+                               )
+                            ++ ")"
 
                     Type.NonNullable ->
                         Elm.Annotation.toString typeString

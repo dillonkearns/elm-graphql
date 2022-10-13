@@ -39,7 +39,7 @@ codeOfConduct requiredArgs____ object____ =
 {-| Look up a code of conduct by its key
 -}
 codesOfConduct : SelectionSet decodesTo GithubNoFormat.Object.CodeOfConduct
- -> SelectionSet (Maybe (List (Maybe decodesTo))) RootQuery
+ -> SelectionSet (Maybe ((List (Maybe decodesTo)))) RootQuery
 codesOfConduct object____ =
       Object.selectionForCompositeField "codesOfConduct" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 

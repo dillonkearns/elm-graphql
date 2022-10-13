@@ -259,7 +259,7 @@ type alias AddPullRequestReviewInputOptionalFields =
  , commitOID : (OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID)
  , body : (OptionalArgument String)
  , event : (OptionalArgument GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent)
- , comments : (OptionalArgument (List (Maybe DraftPullRequestReviewComment))) }
+ , comments : (OptionalArgument ((List (Maybe DraftPullRequestReviewComment)))) }
 
 
 {-| Type for the AddPullRequestReviewInput input object.
@@ -270,7 +270,7 @@ type alias AddPullRequestReviewInput =
  , commitOID : (OptionalArgument GithubNoFormat.ScalarCodecs.GitObjectID)
  , body : (OptionalArgument String)
  , event : (OptionalArgument GithubNoFormat.Enum.PullRequestReviewEvent.PullRequestReviewEvent)
- , comments : (OptionalArgument (List (Maybe DraftPullRequestReviewComment))) }
+ , comments : (OptionalArgument ((List (Maybe DraftPullRequestReviewComment)))) }
     
 
 {-| Encode a AddPullRequestReviewInput into a value that can be used as an argument.
@@ -366,14 +366,14 @@ buildCommitAuthor fillOptionals____ =
 
 type alias CommitAuthorOptionalFields =
     { id : (OptionalArgument GithubNoFormat.ScalarCodecs.Id)
- , emails : (OptionalArgument (List String)) }
+ , emails : (OptionalArgument ((List String))) }
 
 
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
     { id : (OptionalArgument GithubNoFormat.ScalarCodecs.Id)
- , emails : (OptionalArgument (List String)) }
+ , emails : (OptionalArgument ((List String))) }
     
 
 {-| Encode a CommitAuthor into a value that can be used as an argument.
@@ -1137,8 +1137,8 @@ type alias RequestReviewsInputRequiredFields =
     { pullRequestId : GithubNoFormat.ScalarCodecs.Id }
 type alias RequestReviewsInputOptionalFields =
     { clientMutationId : (OptionalArgument String)
- , userIds : (OptionalArgument (List GithubNoFormat.ScalarCodecs.Id))
- , teamIds : (OptionalArgument (List GithubNoFormat.ScalarCodecs.Id))
+ , userIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
+ , teamIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
  , union : (OptionalArgument Bool) }
 
 
@@ -1147,8 +1147,8 @@ type alias RequestReviewsInputOptionalFields =
 type alias RequestReviewsInput =
     { clientMutationId : (OptionalArgument String)
  , pullRequestId : GithubNoFormat.ScalarCodecs.Id
- , userIds : (OptionalArgument (List GithubNoFormat.ScalarCodecs.Id))
- , teamIds : (OptionalArgument (List GithubNoFormat.ScalarCodecs.Id))
+ , userIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
+ , teamIds : (OptionalArgument ((List GithubNoFormat.ScalarCodecs.Id)))
  , union : (OptionalArgument Bool) }
     
 
