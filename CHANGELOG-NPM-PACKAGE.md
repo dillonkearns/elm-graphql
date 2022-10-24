@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.3.1] - 2022-10-24
+
+### Fixed
+
+- Handle generating possible types to select in interfaces in some cases, see [#608](https://github.com/dillonkearns/elm-graphql/pull/608). Thank you [@th3coop](https://github.com/th3coop) for the fix!
+
 ## [4.3.0] - 2022-09-14
 
 ### Added
