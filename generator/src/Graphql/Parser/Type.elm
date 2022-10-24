@@ -9,7 +9,11 @@ module Graphql.Parser.Type exposing
     , TypeDefinition(..)
     , TypeReference(..)
     , decoder
+    , interfacesImplemented
+    , isInterfaceType
+    , isObjectType
     , parseRef
+    , rawName
     , typeDefinition
     , typeRefDecoder
     )
@@ -72,14 +76,20 @@ inputObjectDecoder =
 
 interfaceDecoder : Decoder TypeDefinition
 interfaceDecoder =
-    Decode.map3 createInterface
+    Decode.map4 createInterface
         (Decode.field "name" Decode.string)
         (fieldDecoder
             |> Decode.andThen parseField
             |> Decode.list
             |> Decode.field "fields"
         )
-        (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list))
+        (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list)
+            |> Decode.map (List.map ClassCaseName.build)
+        )
+        (Decode.field "interfaces" (Decode.maybe (Decode.string |> Decode.field "name" |> Decode.list))
+            |> Decode.map (Maybe.map (List.map ClassCaseName.build))
+            |> Decode.map (Maybe.withDefault [])
+        )
 
 
 unionDecoder : Decoder TypeDefinition
@@ -122,12 +132,16 @@ parseField { name, ofType, args, description } =
 
 objectDecoder : Decoder TypeDefinition
 objectDecoder =
-    Decode.map2 createObject
+    Decode.map3 createObject
         (Decode.field "name" Decode.string)
         (fieldDecoder
             |> Decode.andThen parseField
             |> Decode.list
             |> Decode.field "fields"
+        )
+        (Decode.field "interfaces" (Decode.maybe (Decode.string |> Decode.field "name" |> Decode.list))
+            |> Decode.map (Maybe.map (List.map ClassCaseName.build))
+            |> Decode.map (Maybe.withDefault [])
         )
 
 
@@ -160,14 +174,14 @@ createEnum enumName description enumValues =
     typeDefinition enumName (EnumType enumValues) description
 
 
-createObject : String -> List Field -> TypeDefinition
-createObject objectName fields =
-    typeDefinition objectName (ObjectType fields) Nothing
+createObject : String -> List Field -> List ClassCaseName -> TypeDefinition
+createObject objectName fields interfaces_ =
+    typeDefinition objectName (ObjectType fields interfaces_) Nothing
 
 
-createInterface : String -> List Field -> List String -> TypeDefinition
-createInterface interfaceName fields possibleTypes =
-    typeDefinition interfaceName (InterfaceType fields (List.map ClassCaseName.build possibleTypes)) Nothing
+createInterface : String -> List Field -> List ClassCaseName -> List ClassCaseName -> TypeDefinition
+createInterface interfaceName fields possibleTypes interfaces_ =
+    typeDefinition interfaceName (InterfaceType fields possibleTypes interfaces_) Nothing
 
 
 createInputObject : String -> List Field -> TypeDefinition
@@ -262,14 +276,14 @@ type TypeDefinition
 
 
 typeDefinition : String -> DefinableType -> Maybe String -> TypeDefinition
-typeDefinition name definableType description =
-    TypeDefinition (ClassCaseName.build name) definableType description
+typeDefinition name definableType_ description =
+    TypeDefinition (ClassCaseName.build name) definableType_ description
 
 
 type DefinableType
     = ScalarType
-    | ObjectType (List Field)
-    | InterfaceType (List Field) (List ClassCaseName)
+    | ObjectType (List Field) (List ClassCaseName)
+    | InterfaceType (List Field) (List ClassCaseName) (List ClassCaseName)
     | UnionType (List ClassCaseName)
     | EnumType (List EnumValue)
     | InputObjectType (List Field)
@@ -287,6 +301,47 @@ type ReferrableType
     | InputObjectRef ClassCaseName
     | UnionRef String
     | InterfaceRef String
+
+
+isObjectType : TypeDefinition -> Bool
+isObjectType typeDef =
+    case typeDef of
+        TypeDefinition _ (ObjectType _ _) _ ->
+            True
+
+        _ ->
+            False
+
+
+isInterfaceType : TypeDefinition -> Bool
+isInterfaceType typeDef =
+    case typeDef of
+        TypeDefinition _ (InterfaceType _ _ _) _ ->
+            True
+
+        _ ->
+            False
+
+
+{-| Returns a list of ClassCaseName of the Interfaces that this Type
+implements
+-}
+interfacesImplemented : TypeDefinition -> List ClassCaseName
+interfacesImplemented typeDef =
+    case typeDef of
+        TypeDefinition _ (InterfaceType _ _ i) _ ->
+            i
+
+        TypeDefinition _ (ObjectType _ i) _ ->
+            i
+
+        _ ->
+            []
+
+
+rawName : TypeDefinition -> String
+rawName (TypeDefinition n _ _) =
+    ClassCaseName.raw n
 
 
 expectPresent : Maybe value -> Result String value

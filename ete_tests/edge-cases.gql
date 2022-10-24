@@ -14,4 +14,20 @@ type RootMutationType {
 
 type RootQueryType {
   hello(name: String!): String!
+  characters: [Character!]!
+}
+
+interface Character {
+  name: String!
+}
+
+interface Species implements Character {
+  name: String!
+  numberOfHearts: Int!
+}
+
+type Human implements Character & Species {
+  name: String!
+  numberOfHearts: Int!
+  ogTerrain: Boolean!
 }

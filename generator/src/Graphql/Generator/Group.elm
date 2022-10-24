@@ -1,4 +1,4 @@
-module Graphql.Generator.Group exposing (IntrospectionData, generateFiles, sortedIntrospectionData)
+module Graphql.Generator.Group exposing (IntrospectionData, generateFiles, interfaceImplementorsDict, sortedIntrospectionData)
 
 import Dict exposing (Dict)
 import Graphql.Generator.Context exposing (Context)
@@ -15,7 +15,7 @@ import Graphql.Generator.ScopeDefinitions as ScopeDefinitions
 import Graphql.Generator.Subscription
 import Graphql.Generator.Union
 import Graphql.Generator.VerifyScalarCodecs
-import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 import ModuleName exposing (ModuleName)
 
@@ -38,22 +38,37 @@ sortedIntrospectionData typeDefinitions queryObjectName mutationObjectName subsc
 
 
 typeDefName : TypeDefinition -> String
-typeDefName (TypeDefinition name definableType description) =
+typeDefName (TypeDefinition name _ _) =
     ClassCaseName.normalized name
 
 
-interfacePossibleTypesDict : List TypeDefinition -> Dict String (List ClassCaseName)
-interfacePossibleTypesDict typeDefs =
-    typeDefs
-        |> List.filterMap
-            (\(TypeDefinition typeName definableType description) ->
-                case definableType of
-                    Type.InterfaceType fields possibleTypes ->
-                        Just ( ClassCaseName.raw typeName, possibleTypes )
+interfaceImplementorsDict : List TypeDefinition -> Dict String (List TypeDefinition)
+interfaceImplementorsDict typeDefs =
+    let
+        ( interfaceTypes, objectTypes ) =
+            Tuple.pair typeDefs typeDefs
+                |> Tuple.mapBoth (List.filter Type.isInterfaceType) (List.filter Type.isObjectType)
 
-                    _ ->
-                        Nothing
-            )
+        interfaceImplementations : String -> List TypeDefinition -> List TypeDefinition
+        interfaceImplementations interfaceName objectsAndInterfaces =
+            -- Filter list based on Interfaces or Objects that implement the passed in Interface name
+            List.filter
+                (\objectOrInterface ->
+                    Type.interfacesImplemented objectOrInterface
+                        |> List.map ClassCaseName.raw
+                        |> List.any ((==) interfaceName)
+                )
+                objectsAndInterfaces
+
+        interfaceToPossibleTypes : List ( String, List TypeDefinition )
+        interfaceToPossibleTypes =
+            List.map
+                (\interface ->
+                    ( Type.rawName interface, interfaceImplementations (Type.rawName interface) (List.append interfaceTypes objectTypes) )
+                )
+                interfaceTypes
+    in
+    interfaceToPossibleTypes
         |> Dict.fromList
 
 
@@ -66,7 +81,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
             , mutation = mutationObjectName |> Maybe.map ClassCaseName.build
             , subscription = subscriptionObjectName |> Maybe.map ClassCaseName.build
             , apiSubmodule = options.apiSubmodule
-            , interfaces = interfacePossibleTypesDict typeDefinitions
+            , interfaces = interfaceImplementorsDict typeDefinitions
             , scalarCodecsModule = options.scalarCodecsModule
             }
 
@@ -101,7 +116,7 @@ excludeBuiltIns : List TypeDefinition -> List TypeDefinition
 excludeBuiltIns typeDefinitions =
     typeDefinitions
         |> List.filter
-            (\(Type.TypeDefinition name definableType description) ->
+            (\(TypeDefinition name _ _) ->
                 not (ClassCaseName.isBuiltIn name)
             )
 
@@ -109,7 +124,7 @@ excludeBuiltIns typeDefinitions =
 excludeQuery : Context -> List TypeDefinition -> List TypeDefinition
 excludeQuery { query } typeDefinitions =
     typeDefinitions
-        |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= query)
+        |> List.filter (\(TypeDefinition name _ _) -> name /= query)
 
 
 excludeMutation : Context -> List TypeDefinition -> List TypeDefinition
@@ -117,7 +132,7 @@ excludeMutation { mutation } typeDefinitions =
     case mutation of
         Just mutationObjectName ->
             typeDefinitions
-                |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= mutationObjectName)
+                |> List.filter (\(TypeDefinition name _ _) -> name /= mutationObjectName)
 
         Nothing ->
             typeDefinitions
@@ -128,7 +143,7 @@ excludeSubscription { subscription } typeDefinitions =
     case subscription of
         Just subscriptionObjectName ->
             typeDefinitions
-                |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= subscriptionObjectName)
+                |> List.filter (\(TypeDefinition name _ _) -> name /= subscriptionObjectName)
 
         Nothing ->
             typeDefinitions
@@ -141,13 +156,13 @@ moduleToFileName modulePath =
 
 
 toPair : Context -> TypeDefinition -> Maybe ( List String, String )
-toPair context ((Type.TypeDefinition name definableType description) as definition) =
+toPair context ((TypeDefinition name definableType description) as definition) =
     let
         moduleName =
             ModuleName.generate context definition
     in
     (case definableType of
-        Type.ObjectType fields ->
+        Type.ObjectType fields _ ->
             if name == context.query then
                 Graphql.Generator.Query.generate context moduleName fields
                     |> Just
@@ -171,7 +186,7 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
             Graphql.Generator.Enum.generate name moduleName enumValues description
                 |> Just
 
-        Type.InterfaceType fields possibleTypes ->
+        Type.InterfaceType fields _ _ ->
             Graphql.Generator.Interface.generate context (ClassCaseName.raw name) moduleName fields
                 |> Just
 
@@ -179,7 +194,7 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
             Graphql.Generator.Union.generate context name moduleName possibleTypes
                 |> Just
 
-        Type.InputObjectType fields ->
+        Type.InputObjectType _ ->
             Nothing
     )
         |> Maybe.map (\fileContents -> ( moduleName, fileContents ))

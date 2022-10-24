@@ -6,7 +6,7 @@ import Graphql.Generator.Field as FieldGenerator
 import Graphql.Generator.Imports as Imports
 import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphql.Parser.Type as Type
+import Graphql.Parser.Type as Type exposing (DefinableType(..), TypeDefinition(..))
 import ModuleName
 import String.Interpolate exposing (interpolate)
 
@@ -18,7 +18,7 @@ generate context name moduleName fields =
         ++ (List.map (FieldGenerator.generateForInterface context name) fields |> String.join "\n\n")
 
 
-fragmentHelpers : Context -> List ClassCaseName -> List String -> String
+fragmentHelpers : Context -> List TypeDefinition -> List String -> String
 fragmentHelpers context implementors moduleName =
     interpolate
         """
@@ -54,19 +54,37 @@ maybeFragments =
             |> List.map (aliasFieldForFragment context moduleName)
             |> String.join ",\n "
         , implementors
-            |> List.map (exhaustiveBuildupForFragment context moduleName)
+            |> List.map (\(Type.TypeDefinition classCaseName _ _) -> exhaustiveBuildupForFragment context moduleName classCaseName)
             |> String.join ",\n "
         , implementors
-            |> List.map (maybeFragmentEntry context moduleName)
+            |> List.map (\(Type.TypeDefinition classCaseName _ _) -> maybeFragmentEntry context moduleName classCaseName)
             |> String.join ",\n "
         ]
 
 
-aliasFieldForFragment : Context -> List String -> ClassCaseName -> String
+aliasFieldForFragment : Context -> List String -> TypeDefinition -> String
 aliasFieldForFragment context moduleName interfaceImplementor =
-    interpolate
-        "on{0} : SelectionSet decodesTo {1}"
-        [ ClassCaseName.normalized interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join "." ]
+    let
+        importPath : Maybe ( ClassCaseName, String )
+        importPath =
+            case interfaceImplementor of
+                TypeDefinition m (ObjectType _ _) _ ->
+                    Just ( m, String.join "." <| ModuleName.object context m )
+
+                TypeDefinition m (InterfaceType _ _ _) _ ->
+                    Just ( m, String.join "." <| ModuleName.interface context m )
+
+                _ ->
+                    Nothing
+    in
+    Maybe.map
+        (\( m, path ) ->
+            interpolate
+                "on{0} : SelectionSet decodesTo {1}"
+                [ ClassCaseName.normalized m, path ]
+        )
+        importPath
+        |> Maybe.withDefault ""
 
 
 exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String

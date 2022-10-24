@@ -6,9 +6,9 @@ import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 
 
 generate : Context -> TypeDefinition -> List String
-generate context (Type.TypeDefinition name definableType description) =
+generate context (TypeDefinition name definableType description) =
     case definableType of
-        Type.ObjectType fields ->
+        Type.ObjectType fields interfaces ->
             if name == context.query then
                 query context
 
@@ -27,7 +27,7 @@ generate context (Type.TypeDefinition name definableType description) =
         Type.EnumType enumValues ->
             enum context name
 
-        Type.InterfaceType fields possibleTypes ->
+        Type.InterfaceType fields possibleTypes interfaces ->
             interface context name
 
         Type.UnionType possibleTypes ->

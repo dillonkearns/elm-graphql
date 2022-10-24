@@ -2,6 +2,7 @@ module Graphql.Generator.Context exposing (Context, stub)
 
 import Dict exposing (Dict)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type exposing (TypeDefinition)
 import ModuleName exposing (ModuleName)
 
 
@@ -46,4 +47,4 @@ stub =
 
 
 type alias InterfaceLookup =
-    Dict String (List ClassCaseName)
+    Dict String (List TypeDefinition)

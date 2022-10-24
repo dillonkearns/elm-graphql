@@ -18,10 +18,10 @@ all =
         , test "generates imports for interfaces" <|
             \() ->
                 [ typeDefinition "MyObject"
-                    (ObjectType [])
+                    (ObjectType [] [])
                     Nothing
                 , typeDefinition "MyInterface"
-                    (InterfaceType [] [])
+                    (InterfaceType [] [] [])
                     Nothing
                 ]
                     |> ScopeDefinitions.generate [ "Api" ]
