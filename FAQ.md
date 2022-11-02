@@ -123,7 +123,7 @@ As for the type wrappers, like `type Numeric = Numeric String`, the reason for t
 
 There are two ways to turn your Custom Scalars into the data types you want.
 
-1. Use the Custom Scalar Decoders feature of `dillonkearns/elm-graphql`. Look at [this example and mini-tutorial](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Example07CustomCodecs.elm) to see how and what the resulting code looks like.
+1. Use the Custom Scalar Decoders feature of `dillonkearns/elm-graphql`. Look at [this example and mini-tutorial](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Example07CustomCodecs.elm) to see how and what the resulting code looks like. There is also an [11-minute demo and tutorial video on setting up and using Custom Scalar Codecs](https://incrementalelm.com/scalar-codecs-tutorial/).
 
 2. Or you can unwrap the default scalar wrapper type using [`SelectionSet.map`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-SelectionSet#map). The result looks something like this:
 
