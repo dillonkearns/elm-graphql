@@ -98,6 +98,7 @@ npx @dillonkearns/elm-graphql https://elm-graphql.herokuapp.com --base StarWars 
   [![Scalar Codecs Tutorial](./assets/scalar-codecs-tutorial.png)](https://incrementalelm.com/scalar-codecs-tutorial)
 
 * [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
+* [The Beginners Guide to elm-graphql by Samuel Wood](https://medium.com/@samote.wood/an-intro-to-elm-graphql-cac214cc048)
 * [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
 * [Comprehensive tutorial by the Hasura Team](https://learn.hasura.io/graphql/elm-graphql/introduction)
 
