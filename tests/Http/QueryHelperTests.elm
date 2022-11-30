@@ -39,19 +39,19 @@ all =
         [ test "uses GET when it is short enough" <|
             \() ->
                 document [ Composite "hero" [] [ leaf "name" [] ] ]
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] Nothing
+                    |> QueryHelper.build Nothing "https://elm-graphql.onrender.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Get
-                        , url = "https://elm-graphql.herokuapp.com/api?query=%7Bhero%7Bname%7D%7D"
+                        , url = "https://elm-graphql.onrender.com/api?query=%7Bhero%7Bname%7D%7D"
                         , body = Http.emptyBody
                         }
         , test "uses GET when it is short enough, with operation name" <|
             \() ->
                 document [ Composite "hero" [] [ leaf "name" [] ] ]
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] (Just "OpName")
+                    |> QueryHelper.build Nothing "https://elm-graphql.onrender.com/api" [] (Just "OpName")
                     |> Expect.equal
                         { method = QueryHelper.Get
-                        , url = "https://elm-graphql.herokuapp.com/api?query=query+OpName+%7Bhero%7Bname%7D%7D&operationName=OpName"
+                        , url = "https://elm-graphql.onrender.com/api?query=query+OpName+%7Bhero%7Bname%7D%7D&operationName=OpName"
                         , body = Http.emptyBody
                         }
         , test "uses POST when it is short enough for GET but POST is forced" <|
@@ -61,10 +61,10 @@ all =
                         document [ Composite "hero" [] [ leaf "name" [] ] ]
                 in
                 queryDocument
-                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" [] Nothing
+                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.onrender.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
-                        , url = "https://elm-graphql.herokuapp.com/api"
+                        , url = "https://elm-graphql.onrender.com/api"
                         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
                         }
         , test "uses POST when it too long" <|
@@ -80,10 +80,10 @@ all =
                             ]
                 in
                 queryDocument
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] Nothing
+                    |> QueryHelper.build Nothing "https://elm-graphql.onrender.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
-                        , url = "https://elm-graphql.herokuapp.com/api"
+                        , url = "https://elm-graphql.onrender.com/api"
                         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
                         }
         , test "passes through query params for POST requests" <|
@@ -100,12 +100,12 @@ all =
                 in
                 queryDocument
                     |> QueryHelper.build Nothing
-                        "https://elm-graphql.herokuapp.com/api"
+                        "https://elm-graphql.onrender.com/api"
                         [ ( "send", "it" ) ]
                         Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
-                        , url = "https://elm-graphql.herokuapp.com/api?send=it"
+                        , url = "https://elm-graphql.onrender.com/api?send=it"
                         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
                         }
         , test "uses POST when it too long, with operation name" <|
@@ -121,10 +121,10 @@ all =
                             ]
                 in
                 queryDocument
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] (Just "OpName")
+                    |> QueryHelper.build Nothing "https://elm-graphql.onrender.com/api" [] (Just "OpName")
                     |> Expect.equal
                         { method = QueryHelper.Post
-                        , url = "https://elm-graphql.herokuapp.com/api"
+                        , url = "https://elm-graphql.onrender.com/api"
                         , body =
                             Http.jsonBody <|
                                 Json.Encode.object

@@ -425,7 +425,7 @@ You can use it on its own, or with a library like
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com/"
+            |> Graphql.Http.queryRequest "https://elm-graphql.onrender.com/"
             |> Graphql.Http.withHeader "authorization" "Bearer abcdefgh12345678"
             -- If you're not using remote data, it's just
             -- |> Graphql.Http.send GotResponse

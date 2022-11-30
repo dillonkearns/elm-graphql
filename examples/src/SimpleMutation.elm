@@ -21,7 +21,7 @@ mutation =
 makeRequest : Cmd Msg
 makeRequest =
     mutation
-        |> Graphql.Http.mutationRequest "https://elm-graphql.herokuapp.com"
+        |> Graphql.Http.mutationRequest "https://elm-graphql.onrender.com"
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

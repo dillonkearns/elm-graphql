@@ -55,7 +55,7 @@ sendChatMutation =
 makeRequest : Cmd Msg
 makeRequest =
     sendChatMutation
-        |> Graphql.Http.mutationRequest "https://elm-graphql.herokuapp.com"
+        |> Graphql.Http.mutationRequest "https://elm-graphql.onrender.com"
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

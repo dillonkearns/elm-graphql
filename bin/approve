@@ -15,11 +15,11 @@ elm-graphql --version
 
 cd examples
 elm-graphql --introspection-file github-schema.json --base Github --output src
-elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
+elm-graphql https://elm-graphql.onrender.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
 find src -type f -name '*.elm' -print0 | xargs -0 npx elm make --output /dev/null
 
 cd ../ete_tests
-elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
+elm-graphql https://elm-graphql-normalize.onrender.com/api --base Normalize --output src
 elm-graphql --introspection-file ../examples/github-schema.json --base GithubNoFormat --output no-format-example --skip-elm-format
 elm-graphql --schema-file edge-cases.gql --base EdgeCases --output src
 find no-format-example src -type f -name '*.elm' -print0 | xargs -0 npx elm make --output /dev/null
