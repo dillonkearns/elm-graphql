@@ -1,0 +1,16 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - created_at
+      - id
+      - last_seen
+      - token
+      - username
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: users
+      schema: public
+  type: create_select_permission
