@@ -407,6 +407,33 @@ all =
     firstName
   }
 }"""
+            , test "sibling fields with same name but different type are hashed" <|
+                \() ->
+                    document
+                        [ Composite "topLevel"
+                            []
+                            [ Composite "...on StringValue"
+                                []
+                                [ Leaf { typeString = "String", fieldName = "value" } []
+                                ]
+                            , Composite "...on BoolValue"
+                                []
+                                [ Leaf { typeString = "Bool", fieldName = "value" } []
+                                ]
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal
+                            """query {
+  topLevel {
+    ...on StringValue {
+      value3832528868: value
+    }
+    ...on BoolValue {
+      value3880003826: value
+    }
+  }
+}"""
             , test "duplicate fields are merged and still only hashed as needed" <|
                 \() ->
                     document
