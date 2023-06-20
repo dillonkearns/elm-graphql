@@ -140,60 +140,7 @@ canAllowHashing forceHashing rawFields =
     let
         conflictingTypeFields : Set String
         conflictingTypeFields =
-            fieldTypes
-                |> UnorderedDict.filter
-                    (\fieldType fields ->
-                        fields
-                            |> Set.size
-                            |> (\size -> size > 1)
-                    )
-                |> UnorderedDict.keys
-                |> Set.fromList
-
-        levelBelowNodes : List RawField
-        levelBelowNodes =
-            rawFields
-                |> List.concatMap
-                    (\field ->
-                        case field of
-                            Leaf _ _ ->
-                                []
-
-                            Composite _ _ children ->
-                                children
-                    )
-
-        fieldTypes : UnorderedDict.Dict String (Set String)
-        fieldTypes =
-            levelBelowNodes
-                |> List.filterMap
-                    (\field ->
-                        case field of
-                            Leaf { typeString } _ ->
-                                Just
-                                    ( name field
-                                    , typeString
-                                    )
-
-                            Composite _ _ _ ->
-                                Nothing
-                    )
-                |> List.foldl
-                    (\( fieldName, fieldType ) acc ->
-                        acc
-                            |> UnorderedDict.update fieldName
-                                (\maybeFieldTypes ->
-                                    case maybeFieldTypes of
-                                        Nothing ->
-                                            Just (Set.singleton fieldType)
-
-                                        Just fieldTypes_ ->
-                                            fieldTypes_
-                                                |> Set.insert fieldType
-                                                |> Just
-                                )
-                    )
-                    UnorderedDict.empty
+            findConflictingTypeFields rawFields
 
         fieldCounts : Dict.OrderedDict String Int
         fieldCounts =
@@ -231,6 +178,85 @@ canAllowHashing forceHashing rawFields =
                 , conflictingTypeFields
                 )
             )
+
+
+findConflictingTypeFields : List RawField -> Set String
+findConflictingTypeFields rawFields =
+    let
+        compositeCount : Int
+        compositeCount =
+            rawFields
+                |> List.filterMap
+                    (\field ->
+                        case field of
+                            Composite _ _ _ ->
+                                Just ()
+
+                            Leaf _ _ ->
+                                Nothing
+                    )
+                |> List.length
+    in
+    if compositeCount <= 1 then
+        -- if there are no siblings then there are no type conflicts
+        Set.empty
+
+    else
+        let
+            levelBelowNodes : List RawField
+            levelBelowNodes =
+                rawFields
+                    |> List.concatMap
+                        (\field ->
+                            case field of
+                                Leaf _ _ ->
+                                    []
+
+                                Composite _ _ children ->
+                                    children
+                        )
+
+            fieldTypes : UnorderedDict.Dict String (Set String)
+            fieldTypes =
+                levelBelowNodes
+                    |> List.filterMap
+                        (\field ->
+                            case field of
+                                Leaf { typeString } _ ->
+                                    Just
+                                        ( name field
+                                        , typeString
+                                        )
+
+                                Composite _ _ _ ->
+                                    Nothing
+                        )
+                    |> List.foldl
+                        (\( fieldName, fieldType ) acc ->
+                            acc
+                                |> UnorderedDict.update fieldName
+                                    (\maybeFieldTypes ->
+                                        case maybeFieldTypes of
+                                            Nothing ->
+                                                Just (Set.singleton fieldType)
+
+                                            Just fieldTypes_ ->
+                                                fieldTypes_
+                                                    |> Set.insert fieldType
+                                                    |> Just
+                                    )
+                        )
+                        UnorderedDict.empty
+        in
+        fieldTypes
+            |> UnorderedDict.filter
+                (\fieldType fields ->
+                    fields
+                        |> Set.size
+                        |> (\size -> size > 1)
+                )
+            |> UnorderedDict.keys
+            |> Set.fromList
 
 
 mergedFields : List RawField -> List RawField
