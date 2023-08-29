@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.12] - 2023-08-29
+
+### Fixed
+
+- Fix bug where hashes would sometimes be omitted in cases where they are needed to disambiguate between sibling fields when they have different types for sibling fields with the same name. See [#633](https://github.com/dillonkearns/elm-graphql/pull/633).
+
 ## [5.0.11] - 2022-09-14
 
 ### Fixed
