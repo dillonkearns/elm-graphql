@@ -1,10 +1,12 @@
 module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 
+import Dict as UnorderedDict
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
 import Graphql.RawField exposing (RawField(..), name)
 import OrderedDict as Dict
+import Set exposing (Set)
 
 
 type alias Dict comparable v =
@@ -55,8 +57,8 @@ alias field =
         |> Maybe.map (\aliasHash -> name field ++ String.fromInt aliasHash)
 
 
-serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
-serialize aliasName mIndentationLevel field =
+serialize : Set String -> Maybe String -> Maybe Int -> RawField -> Maybe String
+serialize forceHashing aliasName mIndentationLevel field =
     let
         prefix =
             case aliasName of
@@ -80,7 +82,7 @@ serialize aliasName mIndentationLevel field =
                     (fieldName
                         ++ Argument.serialize args
                         ++ "{"
-                        ++ serializeChildren Nothing children
+                        ++ serializeChildrenHelp forceHashing Nothing children
                     )
                         ++ "}"
                         |> Just
@@ -89,7 +91,7 @@ serialize aliasName mIndentationLevel field =
                     (fieldName
                         ++ Argument.serialize args
                         ++ " {\n"
-                        ++ serializeChildren (Just indentationLevel) children
+                        ++ serializeChildrenHelp forceHashing (Just indentationLevel) children
                     )
                         ++ "\n"
                         ++ Indent.generate indentationLevel
@@ -109,13 +111,18 @@ serialize aliasName mIndentationLevel field =
 
 serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
+    serializeChildrenHelp Set.empty indentationLevel children
+
+
+serializeChildrenHelp : Set String -> Maybe Int -> List RawField -> String
+serializeChildrenHelp forceHashing indentationLevel children =
     children
         |> mergedFields
         |> nonemptyChildren
-        |> canAllowHashing
+        |> canAllowHashing forceHashing
         |> List.map
-            (\( field, maybeAlias ) ->
-                serialize maybeAlias (indentationLevel |> Maybe.map ((+) 1)) field
+            (\( field, maybeAlias, conflictingTypeFields ) ->
+                serialize conflictingTypeFields maybeAlias (indentationLevel |> Maybe.map ((+) 1)) field
             )
         |> List.filterMap identity
         |> String.join
@@ -128,9 +135,14 @@ serializeChildren indentationLevel children =
             )
 
 
-canAllowHashing : List RawField -> List ( RawField, Maybe String )
-canAllowHashing rawFields =
+canAllowHashing : Set String -> List RawField -> List ( RawField, Maybe String, Set String )
+canAllowHashing forceHashing rawFields =
     let
+        conflictingTypeFields : Set String
+        conflictingTypeFields =
+            findConflictingTypeFields rawFields
+
+        fieldCounts : Dict.OrderedDict String Int
         fieldCounts =
             rawFields
                 |> List.map name
@@ -155,13 +167,96 @@ canAllowHashing rawFields =
         |> List.map
             (\field ->
                 ( field
-                , if (fieldCounts |> Dict.get (name field) |> Maybe.withDefault 0) == 0 then
+                , if forceHashing |> Set.member (name field) then
+                    alias field
+
+                  else if (fieldCounts |> Dict.get (name field) |> Maybe.withDefault 0) == 0 then
                     Nothing
 
                   else
                     alias field
+                , conflictingTypeFields
                 )
             )
+
+
+findConflictingTypeFields : List RawField -> Set String
+findConflictingTypeFields rawFields =
+    let
+        compositeCount : Int
+        compositeCount =
+            rawFields
+                |> List.filterMap
+                    (\field ->
+                        case field of
+                            Composite _ _ _ ->
+                                Just ()
+
+                            Leaf _ _ ->
+                                Nothing
+                    )
+                |> List.length
+    in
+    if compositeCount <= 1 then
+        -- if there are no siblings then there are no type conflicts
+        Set.empty
+
+    else
+        let
+            levelBelowNodes : List RawField
+            levelBelowNodes =
+                rawFields
+                    |> List.concatMap
+                        (\field ->
+                            case field of
+                                Leaf _ _ ->
+                                    []
+
+                                Composite _ _ children ->
+                                    children
+                        )
+
+            fieldTypes : UnorderedDict.Dict String (Set String)
+            fieldTypes =
+                levelBelowNodes
+                    |> List.filterMap
+                        (\field ->
+                            case field of
+                                Leaf { typeString } _ ->
+                                    Just
+                                        ( name field
+                                        , typeString
+                                        )
+
+                                Composite _ _ _ ->
+                                    Nothing
+                        )
+                    |> List.foldl
+                        (\( fieldName, fieldType ) acc ->
+                            acc
+                                |> UnorderedDict.update fieldName
+                                    (\maybeFieldTypes ->
+                                        case maybeFieldTypes of
+                                            Nothing ->
+                                                Just (Set.singleton fieldType)
+
+                                            Just fieldTypes_ ->
+                                                fieldTypes_
+                                                    |> Set.insert fieldType
+                                                    |> Just
+                                    )
+                        )
+                        UnorderedDict.empty
+        in
+        fieldTypes
+            |> UnorderedDict.filter
+                (\fieldType fields ->
+                    fields
+                        |> Set.size
+                        |> (\size -> size > 1)
+                )
+            |> UnorderedDict.keys
+            |> Set.fromList
 
 
 mergedFields : List RawField -> List RawField
