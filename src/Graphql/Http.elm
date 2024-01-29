@@ -450,7 +450,7 @@ send resultToMessage ((Request request) as fullRequest) =
            )
 
 
-{-| Exactly like `Graphql.Http.request` except it allows you to use the `String`
+{-| Exactly like `Graphql.Http.send` except it allows you to use the `String`
 passed in as the tracker to [`track`](https://package.elm-lang.org/packages/elm/http/2.0.0/Http#track)
 and [`cancel`](https://package.elm-lang.org/packages/elm/http/2.0.0/Http#cancel)
 requests using the core Elm `Http` package (see
