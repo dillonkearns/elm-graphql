@@ -175,7 +175,7 @@ baseOption =
 
 validateModuleName : String -> Cli.Validate.ValidationResult
 validateModuleName =
-    Cli.Validate.regexWithMessage "I expected an Elm module name" "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
+    Cli.Validate.regexWithMessage "I expected an Elm module name" "^[A-Z][A-Za-z0-9_]*(\\.[A-Z][A-Za-z0-9_]*)*$"
 
 
 type alias Flags =
