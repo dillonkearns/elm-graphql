@@ -6,7 +6,7 @@ module Graphql.Http exposing
     , send, sendWithTracker, toTask
     , mapError, discardParsedErrorData, withSimpleHttpError
     , parseableErrorAsSuccess
-    )
+    , withResponseMapper)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
@@ -61,7 +61,7 @@ There are 3 possible strategies to handle GraphQL errors.
 -}
 
 import Graphql.Document as Document
-import Graphql.Http.GraphqlError as GraphqlError
+import Graphql.Http.GraphqlError as GraphqlError exposing (PossiblyParsedData(..))
 import Graphql.Http.QueryHelper as QueryHelper
 import Graphql.Http.QueryParams as QueryParams
 import Graphql.Operation exposing (RootMutation, RootQuery)
@@ -85,6 +85,7 @@ type Request decodesTo
         , withCredentials : Bool
         , queryParams : List ( String, String )
         , operationName : Maybe String
+        , responseMapper : Maybe (ResponseMapper (DataResult decodesTo))
         }
 
 
@@ -97,6 +98,7 @@ type alias ReadyRequest decodesTo =
     , decoder : Json.Decode.Decoder (DataResult decodesTo)
     }
 
+type alias ResponseMapper decodesTo = (Http.Metadata -> decodesTo -> decodesTo)
 
 {-| Union type to pass in to `queryRequestWithHttpGet`. Only applies to queries.
 Mutations don't accept this configuration option and will always use POST.
@@ -124,6 +126,7 @@ queryRequest baseUrl query =
     , details = Query Nothing query
     , queryParams = []
     , operationName = Nothing
+    , responseMapper = Nothing
     }
         |> Request
 
@@ -155,6 +158,7 @@ queryRequestWithHttpGet baseUrl requestMethod query =
     , details = Query (Just requestMethod) query
     , queryParams = []
     , operationName = Nothing
+    , responseMapper = Nothing
     }
         |> Request
 
@@ -172,6 +176,7 @@ mutationRequest baseUrl mutationSelectionSet =
     , withCredentials = False
     , queryParams = []
     , operationName = Nothing
+    , responseMapper = Nothing
     }
         |> Request
 
@@ -489,15 +494,15 @@ toHttpRequestRecord resultToMessage ((Request request) as fullRequest) =
                 , headers = readyRequest.headers
                 , url = readyRequest.url
                 , body = readyRequest.body
-                , expect = expectJson (convertResult >> resultToMessage) readyRequest.decoder
+                , expect = expectJson (convertResult >> resultToMessage) request.responseMapper readyRequest.decoder
                 , timeout = readyRequest.timeout
                 , tracker = Nothing
                 }
            )
 
 
-expectJson : (Result HttpError decodesTo -> msg) -> Json.Decode.Decoder decodesTo -> Http.Expect msg
-expectJson toMsg decoder =
+expectJson : (Result HttpError decodesTo -> msg) -> Maybe (ResponseMapper decodesTo) -> Json.Decode.Decoder decodesTo -> Http.Expect msg
+expectJson toMsg maybeResponseMapper decoder =
     Http.expectStringResponse toMsg <|
         \response ->
             case response of
@@ -516,14 +521,18 @@ expectJson toMsg decoder =
                 Http.GoodStatus_ metadata body ->
                     case Json.Decode.decodeString decoder body of
                         Ok value ->
-                            Ok value
+                            case maybeResponseMapper of
+                                Just responseMapper ->
+                                    Ok (responseMapper metadata value)
+                                Nothing ->
+                                    Ok value
 
                         Err err ->
                             BadPayload err |> Err
 
 
-jsonResolver : Json.Decode.Decoder decodesTo -> Http.Resolver HttpError decodesTo
-jsonResolver decoder =
+jsonResolver : Maybe (ResponseMapper decodesTo) -> Json.Decode.Decoder decodesTo -> Http.Resolver HttpError decodesTo
+jsonResolver maybeResponseMapper decoder =
     Http.stringResolver <|
         \response ->
             case response of
@@ -542,7 +551,11 @@ jsonResolver decoder =
                 Http.GoodStatus_ metadata body ->
                     case Json.Decode.decodeString decoder body of
                         Ok value ->
-                            Ok value
+                            case maybeResponseMapper of
+                                Just responseMapper ->
+                                    Ok (responseMapper metadata value)
+                                Nothing ->
+                                    Ok value
 
                         Err err ->
                             BadPayload err |> Err
@@ -649,11 +662,11 @@ toTask ((Request request) as fullRequest) =
 
 
 resolver : Request decodesTo -> Http.Resolver HttpError (DataResult decodesTo)
-resolver request =
-    request
+resolver (Request request as fullRequest) =
+    fullRequest
         |> toReadyRequest
         |> .decoder
-        |> jsonResolver
+        |> jsonResolver request.responseMapper
 
 
 failTaskOnHttpSuccessWithErrors : DataResult decodesTo -> Task (Error decodesTo) decodesTo
@@ -664,7 +677,6 @@ failTaskOnHttpSuccessWithErrors successOrError =
 
         Err ( possiblyParsedData, graphqlErrorGraphqlErrorList ) ->
             Task.fail (GraphqlError possiblyParsedData graphqlErrorGraphqlErrorList)
-
 
 decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (DataResult a)
 decoderOrError decoder =
@@ -716,6 +728,34 @@ decodeErrorWithData data =
 withHeader : String -> String -> Request decodesTo -> Request decodesTo
 withHeader key value (Request request) =
     Request { request | headers = Http.header key value :: request.headers }
+
+responseMapperOrError : ResponseMapper decodeTo -> ResponseMapper (DataResult decodeTo)
+responseMapperOrError responseMapper metadata dataResult =
+  case dataResult of
+      Ok decodesTo -> Ok (responseMapper metadata decodesTo)
+      Err (ParsedData decodesTo, errors) -> Err (ParsedData (responseMapper metadata decodesTo), errors)
+      err -> err
+
+{-| Map `Http.Metadata` with query or mutation result
+
+    Useful if you need access to response headers.
+
+    makeRequest : Cmd Msg
+    makeRequest =
+        query
+            |> Graphql.Http.queryRequest "https://api.github.com/graphql"
+            |> Graphql.Http.withResponseMapper (\metadata queryResponse ->
+                { queryResponse | sizeOfResponse =
+                    metadata.headers
+                    |> Dict.get "content-length"
+                    |> Maybe.andThen String.toInt
+                })
+            |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
+
+-}
+withResponseMapper : ResponseMapper decodesTo -> Request decodesTo -> Request decodesTo
+withResponseMapper responseMapper (Request request) =
+    Request { request | responseMapper = Just (responseMapperOrError responseMapper) }
 
 
 {-| Add query params. The values will be Uri encoded.
