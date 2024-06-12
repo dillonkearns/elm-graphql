@@ -1,0 +1,11 @@
+- args:
+    sql: CREATE TABLE "public"."todolist"("id" serial NOT NULL, "user_id" integer
+      NOT NULL, "is_completed" boolean NOT NULL DEFAULT false, "task" text NOT NULL,
+      "created_at" timestamp with time zone NOT NULL DEFAULT now(), "is_public" boolean
+      NOT NULL DEFAULT false, PRIMARY KEY ("id") , FOREIGN KEY ("user_id") REFERENCES
+      "public"."users"("id") ON UPDATE restrict ON DELETE restrict);
+  type: run_sql
+- args:
+    name: todolist
+    schema: public
+  type: add_existing_table_or_view
