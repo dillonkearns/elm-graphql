@@ -178,7 +178,7 @@ canAllowHashing forceHashing rawFields =
 
 findConflictingTypeFields : List RawField -> Set String
 findConflictingTypeFields rawFields =
-    if compositeCount rawFields <= 1 then
+    if not (hasSiblings rawFields) then
         -- if there are no siblings then there are no type conflicts
         Set.empty
 
@@ -240,19 +240,28 @@ findConflictingTypeFields rawFields =
             |> Set.fromList
 
 
-compositeCount : List RawField -> Int
-compositeCount rawFields =
-    List.foldl
-        (\field count ->
+hasSiblings : List RawField -> Bool
+hasSiblings rawFields =
+    hasSiblingsHelp rawFields False
+
+
+hasSiblingsHelp : List RawField -> Bool -> Bool
+hasSiblingsHelp rawFields hasSeenCompositeField =
+    case rawFields of
+        [] ->
+            False
+
+        field :: rest ->
             case field of
                 Composite _ _ _ ->
-                    count + 1
+                    if hasSeenCompositeField then
+                        True
+
+                    else
+                        hasSiblingsHelp rest True
 
                 Leaf _ _ ->
-                    count
-        )
-        0
-        rawFields
+                    hasSiblingsHelp rest True
 
 
 mergedFields : List RawField -> List RawField
