@@ -47,7 +47,7 @@ build forceMethod url queryParams maybeOperationName queryDocument =
                 (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
                 url
     in
-    if forceMethod == Just Post || (String.length urlForGetRequest >= maxLength && forceMethod /= Just Get) then
+    if forceMethod == Just Post || (forceMethod /= Just Get && String.length urlForGetRequest >= maxLength) then
         let
             ( serializedQuery, operationNameParamForPostRequest ) =
                 case maybeOperationName of
