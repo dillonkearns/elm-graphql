@@ -48,28 +48,33 @@ build forceMethod url queryParams maybeOperationName queryDocument =
                 url
     in
     if forceMethod == Just Post || (forceMethod /= Just Get && String.length urlForGetRequest >= maxLength) then
-        let
-            ( serializedQuery, operationNameParamForPostRequest ) =
-                case maybeOperationName of
-                    Just operationName ->
-                        ( Document.serializeQueryWithOperationName operationName queryDocument
-                        , [ ( "operationName", Json.Encode.string operationName ) ]
-                        )
-
-                    Nothing ->
-                        ( Document.serializeQuery queryDocument, [] )
-        in
-        { method = Post
-        , url = QueryParams.urlWithQueryParams queryParams url
-        , body =
-            Http.jsonBody <|
-                Json.Encode.object <|
-                    ( "query", Json.Encode.string serializedQuery )
-                        :: operationNameParamForPostRequest
-        }
+        buildHelp forceMethod url queryParams maybeOperationName queryDocument
 
     else
         { method = Get
         , url = urlForGetRequest
         , body = Http.emptyBody
         }
+
+
+buildHelp : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
+buildHelp forceMethod url queryParams maybeOperationName queryDocument =
+    let
+        ( serializedQuery, operationNameParamForPostRequest ) =
+            case maybeOperationName of
+                Just operationName ->
+                    ( Document.serializeQueryWithOperationName operationName queryDocument
+                    , [ ( "operationName", Json.Encode.string operationName ) ]
+                    )
+
+                Nothing ->
+                    ( Document.serializeQuery queryDocument, [] )
+    in
+    { method = Post
+    , url = QueryParams.urlWithQueryParams queryParams url
+    , body =
+        Http.jsonBody <|
+            Json.Encode.object <|
+                ( "query", Json.Encode.string serializedQuery )
+                    :: operationNameParamForPostRequest
+    }
