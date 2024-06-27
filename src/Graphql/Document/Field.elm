@@ -59,6 +59,7 @@ alias field =
 serialize : Set String -> Maybe String -> Maybe Int -> RawField -> String
 serialize forceHashing aliasName mIndentationLevel field =
     let
+        prefix : String
         prefix =
             case aliasName of
                 Just aliasName_ ->
@@ -73,36 +74,36 @@ serialize forceHashing aliasName mIndentationLevel field =
 
                 Nothing ->
                     ""
+
+        string : String
+        string =
+            case field of
+                Composite fieldName args children ->
+                    case mIndentationLevel of
+                        Nothing ->
+                            (fieldName
+                                ++ Argument.serialize args
+                                ++ "{"
+                                ++ serializeChildrenHelp forceHashing Nothing children
+                            )
+                                ++ "}"
+
+                        Just indentationLevel ->
+                            (fieldName
+                                ++ Argument.serialize args
+                                ++ " {\n"
+                                ++ serializeChildrenHelp forceHashing (Just indentationLevel) children
+                            )
+                                ++ "\n"
+                                ++ Indent.generate indentationLevel
+                                ++ "}"
+
+                Leaf { fieldName } args ->
+                    fieldName ++ Argument.serialize args
     in
-    (case field of
-        Composite fieldName args children ->
-            case mIndentationLevel of
-                Nothing ->
-                    (fieldName
-                        ++ Argument.serialize args
-                        ++ "{"
-                        ++ serializeChildrenHelp forceHashing Nothing children
-                    )
-                        ++ "}"
-
-                Just indentationLevel ->
-                    (fieldName
-                        ++ Argument.serialize args
-                        ++ " {\n"
-                        ++ serializeChildrenHelp forceHashing (Just indentationLevel) children
-                    )
-                        ++ "\n"
-                        ++ Indent.generate indentationLevel
-                        ++ "}"
-
-        Leaf { fieldName } args ->
-            fieldName ++ Argument.serialize args
-    )
-        |> (\string ->
-                Indent.generate (mIndentationLevel |> Maybe.withDefault 0)
-                    ++ prefix
-                    ++ string
-           )
+    Indent.generate (mIndentationLevel |> Maybe.withDefault 0)
+        ++ prefix
+        ++ string
 
 
 serializeChildren : Maybe Int -> List RawField -> String
