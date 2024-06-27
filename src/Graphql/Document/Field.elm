@@ -195,32 +195,25 @@ findConflictingTypeFields rawFields =
                         Composite _ _ children ->
                             children
                 )
-            |> List.filterMap
-                (\field ->
+            |> List.foldl
+                (\field acc ->
                     case field of
                         Leaf { typeString } _ ->
-                            Just
-                                ( name field
-                                , typeString
-                                )
+                            acc
+                                |> UnorderedDict.update (name field)
+                                    (\maybeFieldTypes ->
+                                        case maybeFieldTypes of
+                                            Nothing ->
+                                                Just (Set.singleton typeString)
+
+                                            Just fieldTypes_ ->
+                                                fieldTypes_
+                                                    |> Set.insert typeString
+                                                    |> Just
+                                    )
 
                         Composite _ _ _ ->
-                            Nothing
-                )
-            |> List.foldl
-                (\( fieldName, fieldType ) acc ->
-                    acc
-                        |> UnorderedDict.update fieldName
-                            (\maybeFieldTypes ->
-                                case maybeFieldTypes of
-                                    Nothing ->
-                                        Just (Set.singleton fieldType)
-
-                                    Just fieldTypes_ ->
-                                        fieldTypes_
-                                            |> Set.insert fieldType
-                                            |> Just
-                            )
+                            acc
                 )
                 UnorderedDict.empty
             |> UnorderedDict.filter
