@@ -51,7 +51,7 @@ build forceMethod url queryParams maybeOperationName queryDocument =
                     (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
                     url
         in
-        if forceMethod /= Just Get && String.length urlForGetRequest >= maxLength then
+        if forceMethod == Nothing && String.length urlForGetRequest >= maxLength then
             buildHelp forceMethod url queryParams maybeOperationName queryDocument
 
         else
