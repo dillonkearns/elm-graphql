@@ -26,6 +26,7 @@ import NoUnused.Modules
 import NoUnused.Parameters
 import NoUnused.Patterns
 import NoUnused.Variables
+import Simplify
 import Review.Rule exposing (Rule)
 
 
@@ -56,4 +57,5 @@ config =
     --    |> NoInconsistentAliases.noMissingAliases
     --    |> NoInconsistentAliases.rule
     , NoModuleOnExposedNames.rule
+    , Simplify.rule Simplify.defaults
     ]
