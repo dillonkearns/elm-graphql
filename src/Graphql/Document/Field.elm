@@ -142,11 +142,10 @@ canAllowHashing forceHashing rawFields =
         fieldCounts : Dict.OrderedDict String Int
         fieldCounts =
             rawFields
-                |> List.map name
                 |> List.foldl
-                    (\fld acc ->
+                    (\rawField acc ->
                         acc
-                            |> Dict.update fld
+                            |> Dict.update (name rawField)
                                 (\val ->
                                     Just
                                         (case val of
