@@ -642,8 +642,7 @@ that section of these docs.
 list : List (SelectionSet a scope) -> SelectionSet (List a) scope
 list selections =
     selections
-        |> List.foldl (map2 (::)) emptyList
-        |> map List.reverse
+        |> List.foldr (map2 (::)) emptyList
 
 
 emptyList : SelectionSet (List a) scope
