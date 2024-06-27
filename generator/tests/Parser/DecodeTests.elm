@@ -513,7 +513,7 @@ all =
                     |> Result.map Group.interfaceImplementorsDict
                     |> Expect.equal
                         (Ok
-                            [ typeDefinition "Character"
+                            ([ typeDefinition "Character"
                                 (InterfaceType
                                     [ { name = CamelCaseName.build "id"
                                       , description = Just "The id of the character."
@@ -525,7 +525,7 @@ all =
                                     []
                                 )
                                 Nothing
-                            , typeDefinition "Biological"
+                             , typeDefinition "Biological"
                                 (InterfaceType
                                     [ { name = CamelCaseName.build "id"
                                       , description = Just "The id of the character."
@@ -537,7 +537,7 @@ all =
                                     [ ClassCaseName.build "Character" ]
                                 )
                                 Nothing
-                            , typeDefinition "Human"
+                             , typeDefinition "Human"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "id"
                                       , description = Just "The id of the character."
@@ -548,7 +548,8 @@ all =
                                     [ ClassCaseName.build "Biological", ClassCaseName.build "Character" ]
                                 )
                                 Nothing
-                            ]
-                            |> Result.map Group.interfaceImplementorsDict
+                             ]
+                                |> Group.interfaceImplementorsDict
+                            )
                         )
         ]

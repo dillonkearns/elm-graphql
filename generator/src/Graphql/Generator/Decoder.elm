@@ -31,15 +31,13 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                     let
                         constructor =
                             context.apiSubmodule
-                                ++ [ "Scalar" ]
-                                ++ [ ClassCaseName.normalized customScalarName ]
+                                ++ [ "Scalar", ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
                     [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
                         |> ModuleName.append "codecs"
                     , context.apiSubmodule
-                        ++ [ "Scalar" ]
-                        ++ [ "unwrapCodecs" ]
+                        ++ [ "Scalar", "unwrapCodecs" ]
                         |> String.join "."
                     , ".codec"
                         ++ ClassCaseName.normalized customScalarName

@@ -53,9 +53,9 @@ maybeObject maybeValues =
         |> List.filterMap
             (\( key, value ) ->
                 value
-                    |> Maybe.andThen
+                    |> Maybe.map
                         (\actualValue ->
-                            Just ( key, actualValue )
+                            ( key, actualValue )
                         )
             )
         |> Object

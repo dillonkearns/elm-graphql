@@ -683,8 +683,8 @@ errorDecoder decoder =
         , Json.Decode.field "data" Json.Decode.value
             |> Json.Decode.map GraphqlError.UnparsedData
             |> Json.Decode.andThen decodeErrorWithData
-        , Json.Decode.succeed (GraphqlError.UnparsedData (nullJsonValue ()))
-            |> Json.Decode.andThen decodeErrorWithData
+        , GraphqlError.UnparsedData (nullJsonValue ())
+            |> decodeErrorWithData
         ]
 
 

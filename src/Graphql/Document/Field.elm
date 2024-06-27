@@ -85,7 +85,6 @@ serialize forceHashing aliasName mIndentationLevel field =
                         ++ serializeChildrenHelp forceHashing Nothing children
                     )
                         ++ "}"
-                        |> Just
 
                 Just indentationLevel ->
                     (fieldName
@@ -96,17 +95,16 @@ serialize forceHashing aliasName mIndentationLevel field =
                         ++ "\n"
                         ++ Indent.generate indentationLevel
                         ++ "}"
-                        |> Just
 
         Leaf { fieldName } args ->
-            Just (fieldName ++ Argument.serialize args)
+            fieldName ++ Argument.serialize args
     )
-        |> Maybe.map
-            (\string ->
+        |> (\string ->
                 Indent.generate (mIndentationLevel |> Maybe.withDefault 0)
                     ++ prefix
                     ++ string
-            )
+           )
+        |> Just
 
 
 serializeChildren : Maybe Int -> List RawField -> String
@@ -120,11 +118,10 @@ serializeChildrenHelp forceHashing indentationLevel children =
         |> mergedFields
         |> nonemptyChildren
         |> canAllowHashing forceHashing
-        |> List.map
+        |> List.filterMap
             (\( field, maybeAlias, conflictingTypeFields ) ->
                 serialize conflictingTypeFields maybeAlias (indentationLevel |> Maybe.map ((+) 1)) field
             )
-        |> List.filterMap identity
         |> String.join
             (case indentationLevel of
                 Just _ ->
