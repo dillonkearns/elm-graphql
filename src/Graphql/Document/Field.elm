@@ -216,12 +216,7 @@ findConflictingTypeFields rawFields =
                             acc
                 )
                 UnorderedDict.empty
-            |> UnorderedDict.filter
-                (\fieldType fields ->
-                    fields
-                        |> Set.size
-                        |> (\size -> size > 1)
-                )
+            |> UnorderedDict.filter (\fieldType fields -> Set.size fields > 1)
             |> UnorderedDict.keys
             |> Set.fromList
 
