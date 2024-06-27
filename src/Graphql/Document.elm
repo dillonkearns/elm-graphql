@@ -76,12 +76,16 @@ decoder (SelectionSet fields decoder_) =
     decoder_ |> Decode.field "data"
 
 
+{-| Serialize to something like
+
+    <operationType> {
+      <queries>
+    }
+
+-}
 serialize : String -> List RawField -> String
 serialize operationType queries =
-    interpolate """{0} {
-{1}
-}"""
-        [ operationType, Field.serializeChildren (Just 0) queries ]
+    operationType ++ " {\n" ++ Field.serializeChildren (Just 0) queries ++ "\n}"
 
 
 serializeWithOperationName : String -> String -> List RawField -> String
