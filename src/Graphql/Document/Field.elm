@@ -186,8 +186,8 @@ findConflictingTypeFields rawFields =
 
     else
         let
-            levelBelowNodes : List RawField
-            levelBelowNodes =
+            fieldTypes : UnorderedDict.Dict String (Set String)
+            fieldTypes =
                 rawFields
                     |> List.concatMap
                         (\field ->
@@ -198,10 +198,6 @@ findConflictingTypeFields rawFields =
                                 Composite _ _ children ->
                                     children
                         )
-
-            fieldTypes : UnorderedDict.Dict String (Set String)
-            fieldTypes =
-                levelBelowNodes
                     |> List.filterMap
                         (\field ->
                             case field of
