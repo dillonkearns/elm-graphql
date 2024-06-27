@@ -715,20 +715,21 @@ combineDict ( key, selection ) acc =
 {-| If the map function provided returns an `Ok` `Result`, it will map to that value.
 If it returns an `Err`, the _entire_ response will fail to decode.
 
-    import Time exposing (Posix)
+    -- NOTE: Iso8601 comes from an external dependency in Elm >= 0.19:
+    -- https://package.elm-lang.org/packages/rtfeldman/elm-iso8601-date-strings/latest/
+
+
     import Github.Object
     import Github.Object.Repository
     import Github.Scalar
-    -- NOTE: Iso8601 comes from an external dependency in Elm >= 0.19:
-    -- https://package.elm-lang.org/packages/rtfeldman/elm-iso8601-date-strings/latest/
-    import Iso8601
     import Graphql.SelectionSet as SelectionSet exposing (with)
+    import Iso8601
+    import Time exposing (Posix)
 
     type alias Timestamps =
-    { created : Posix
-    , updated : Posix
-    }
-
+        { created : Posix
+        , updated : Posix
+        }
 
     timestampsSelection : SelectionSet Timestamps Github.Object.Repository
     timestampsSelection =
@@ -736,14 +737,18 @@ If it returns an `Err`, the _entire_ response will fail to decode.
             |> with (Repository.createdAt |> mapToDateTime)
             |> with (Repository.updatedAt |> mapToDateTime)
 
-
     mapToDateTime : Field Github.Scalar.DateTime scope -> Field Posix scope
     mapToDateTime =
         Field.mapOrFail
             (\(Github.Scalar.DateTime value) ->
                 Iso8601.toTime value
-                    |> Result.mapError (\_ -> "Failed to parse "
-                     ++ value ++ " as Iso8601 DateTime.")
+                    |> Result.mapError
+                        (\_ ->
+                            "Failed to parse "
+                                ++ value
+                                ++ " as Iso8601 DateTime."
+                        )
+            )
 
 -}
 mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo scope -> SelectionSet mapsTo scope
