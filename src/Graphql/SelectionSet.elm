@@ -708,7 +708,12 @@ want to use `map2` and other functions in that section of these docs.
 dict : List ( String, SelectionSet a scope ) -> SelectionSet (Dict String a) scope
 dict selections =
     selections
-        |> List.foldl combineDict (empty |> map (\_ -> Dict.empty))
+        |> List.foldl combineDict emptyDict
+
+
+emptyDict : SelectionSet (Dict k v) scope
+emptyDict =
+    SelectionSet [] (Decode.succeed Dict.empty)
 
 
 combineDict : ( String, SelectionSet a scope ) -> SelectionSet (Dict String a) scope -> SelectionSet (Dict String a) scope
