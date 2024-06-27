@@ -28,33 +28,31 @@ fieldIsCircular typeDefs inputObjectName fieldTypeRef =
 
 
 fieldIsCircular_ : List ClassCaseName -> List TypeDefinition -> ClassCaseName -> TypeReference -> Bool
-fieldIsCircular_ visitedNames typeDefs inputObjectName fieldTypeRef =
-    case fieldTypeRef of
-        TypeReference referrableType isNullable ->
-            case referrableType of
-                InputObjectRef inputObjectRefName ->
-                    case lookupInputObject typeDefs inputObjectRefName of
-                        Just ( name, fields ) ->
-                            let
-                                alreadyVisitedThis =
-                                    visitedNames
-                                        |> List.map ClassCaseName.raw
-                                        |> List.Extra.allDifferent
-                            in
-                            not alreadyVisitedThis
-                                || isRecursive inputObjectName fields
-                                || List.any
-                                    (fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs name)
-                                    (fields |> List.map .typeRef)
+fieldIsCircular_ visitedNames typeDefs inputObjectName (TypeReference referrableType isNullable) =
+    case referrableType of
+        InputObjectRef inputObjectRefName ->
+            case lookupInputObject typeDefs inputObjectRefName of
+                Just ( name, fields ) ->
+                    let
+                        alreadyVisitedThis =
+                            visitedNames
+                                |> List.map ClassCaseName.raw
+                                |> List.Extra.allDifferent
+                    in
+                    not alreadyVisitedThis
+                        || isRecursive inputObjectName fields
+                        || List.any
+                            (fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs name)
+                            (fields |> List.map .typeRef)
 
-                        Nothing ->
-                            False
-
-                Type.List listTypeRef ->
-                    fieldIsCircular_ visitedNames typeDefs inputObjectName listTypeRef
-
-                _ ->
+                Nothing ->
                     False
+
+        Type.List listTypeRef ->
+            fieldIsCircular_ visitedNames typeDefs inputObjectName listTypeRef
+
+        _ ->
+            False
 
 
 lookupInputObject : List TypeDefinition -> ClassCaseName -> Maybe ( ClassCaseName, List Field )
@@ -94,10 +92,8 @@ hasRecursiveRef inputObjectName referrableType =
         InputObjectRef referredInputObjectName ->
             inputObjectName == referredInputObjectName
 
-        Type.List listTypeRef ->
-            case listTypeRef of
-                Type.TypeReference listType isNullable ->
-                    hasRecursiveRef inputObjectName listType
+        Type.List (Type.TypeReference listType isNullable) ->
+            hasRecursiveRef inputObjectName listType
 
         Type.Scalar _ ->
             False
