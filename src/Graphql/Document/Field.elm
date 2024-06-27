@@ -185,49 +185,44 @@ findConflictingTypeFields rawFields =
         Set.empty
 
     else
-        let
-            fieldTypes : UnorderedDict.Dict String (Set String)
-            fieldTypes =
-                rawFields
-                    |> List.concatMap
-                        (\field ->
-                            case field of
-                                Leaf _ _ ->
-                                    []
+        rawFields
+            |> List.concatMap
+                (\field ->
+                    case field of
+                        Leaf _ _ ->
+                            []
 
-                                Composite _ _ children ->
-                                    children
-                        )
-                    |> List.filterMap
-                        (\field ->
-                            case field of
-                                Leaf { typeString } _ ->
-                                    Just
-                                        ( name field
-                                        , typeString
-                                        )
+                        Composite _ _ children ->
+                            children
+                )
+            |> List.filterMap
+                (\field ->
+                    case field of
+                        Leaf { typeString } _ ->
+                            Just
+                                ( name field
+                                , typeString
+                                )
 
-                                Composite _ _ _ ->
-                                    Nothing
-                        )
-                    |> List.foldl
-                        (\( fieldName, fieldType ) acc ->
-                            acc
-                                |> UnorderedDict.update fieldName
-                                    (\maybeFieldTypes ->
-                                        case maybeFieldTypes of
-                                            Nothing ->
-                                                Just (Set.singleton fieldType)
+                        Composite _ _ _ ->
+                            Nothing
+                )
+            |> List.foldl
+                (\( fieldName, fieldType ) acc ->
+                    acc
+                        |> UnorderedDict.update fieldName
+                            (\maybeFieldTypes ->
+                                case maybeFieldTypes of
+                                    Nothing ->
+                                        Just (Set.singleton fieldType)
 
-                                            Just fieldTypes_ ->
-                                                fieldTypes_
-                                                    |> Set.insert fieldType
-                                                    |> Just
-                                    )
-                        )
-                        UnorderedDict.empty
-        in
-        fieldTypes
+                                    Just fieldTypes_ ->
+                                        fieldTypes_
+                                            |> Set.insert fieldType
+                                            |> Just
+                            )
+                )
+                UnorderedDict.empty
             |> UnorderedDict.filter
                 (\fieldType fields ->
                     fields
