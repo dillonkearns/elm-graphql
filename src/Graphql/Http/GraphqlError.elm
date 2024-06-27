@@ -51,8 +51,7 @@ decoder =
         (Decode.field "message" Decode.string)
         (Decode.maybe (Decode.field "locations" (Decode.list locationDecoder)))
         (Decode.dict Decode.value
-            |> Decode.map (Dict.remove "message")
-            |> Decode.map (Dict.remove "locations")
+            |> Decode.map (\dict -> dict |> Dict.remove "message" |> Dict.remove "locations")
         )
         |> Decode.list
         |> Decode.field "errors"
