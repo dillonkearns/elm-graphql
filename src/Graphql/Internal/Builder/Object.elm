@@ -105,10 +105,15 @@ exhaustiveFragmentSelection typeSpecificSelections =
             |> Decode.andThen
                 (\typeName ->
                     case
-                        typeSpecificSelections
-                            |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
-                            |> Dict.fromList
-                            |> Dict.get typeName
+                        findMap
+                            (\(FragmentSelectionSet thisTypeName _ decoder) ->
+                                if typeName == thisTypeName then
+                                    Just decoder
+
+                                else
+                                    Nothing
+                            )
+                            typeSpecificSelections
                     of
                         Just decoder ->
                             decoder
@@ -125,3 +130,18 @@ exhaustiveFailureMessage typeSpecificSelections typeName =
     interpolate
         "Unhandled type `{0}` in exhaustive fragment handling. The following types had handlers registered to handle them: [{1}]. This happens if you are parsing either a Union or Interface. Do you need to rerun the `@dillonkearns/elm-graphql` command line tool?"
         [ typeName, typeSpecificSelections |> List.map (\(FragmentSelectionSet fragmentType fields decoder) -> fragmentType) |> String.join ", " ]
+
+
+findMap : (a -> Maybe b) -> List a -> Maybe b
+findMap fn list =
+    case list of
+        [] ->
+            Nothing
+
+        a :: rest ->
+            case fn a of
+                Nothing ->
+                    findMap fn rest
+
+                justB ->
+                    justB
