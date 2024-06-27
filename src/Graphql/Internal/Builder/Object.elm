@@ -104,11 +104,18 @@ exhaustiveFragmentSelection typeSpecificSelections =
             |> Decode.field (Graphql.Document.Field.hashedAliasName Graphql.RawField.typename)
             |> Decode.andThen
                 (\typeName ->
-                    typeSpecificSelections
-                        |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
-                        |> Dict.fromList
-                        |> Dict.get typeName
-                        |> Maybe.withDefault (exhaustiveFailureMessage typeSpecificSelections typeName |> Decode.fail)
+                    case
+                        typeSpecificSelections
+                            |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
+                            |> Dict.fromList
+                            |> Dict.get typeName
+                    of
+                        Just decoder ->
+                            decoder
+
+                        Nothing ->
+                            exhaustiveFailureMessage typeSpecificSelections typeName
+                                |> Decode.fail
                 )
         )
 
