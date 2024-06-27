@@ -56,7 +56,7 @@ alias field =
         |> Maybe.map (\aliasHash -> name field ++ String.fromInt aliasHash)
 
 
-serialize : Set String -> Maybe String -> Maybe Int -> RawField -> Maybe String
+serialize : Set String -> Maybe String -> Maybe Int -> RawField -> String
 serialize forceHashing aliasName mIndentationLevel field =
     let
         prefix =
@@ -103,7 +103,6 @@ serialize forceHashing aliasName mIndentationLevel field =
                     ++ prefix
                     ++ string
            )
-        |> Just
 
 
 serializeChildren : Maybe Int -> List RawField -> String
@@ -117,7 +116,7 @@ serializeChildrenHelp forceHashing indentationLevel children =
         |> mergedFields
         |> nonemptyChildren
         |> canAllowHashing forceHashing
-        |> List.filterMap
+        |> List.map
             (\( field, maybeAlias, conflictingTypeFields ) ->
                 serialize conflictingTypeFields maybeAlias (indentationLevel |> Maybe.map ((+) 1)) field
             )
