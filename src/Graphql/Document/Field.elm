@@ -159,11 +159,16 @@ canAllowHashing forceHashing rawFields =
     rawFields
         |> List.map
             (\field ->
+                let
+                    name_ : String
+                    name_ =
+                        name field
+                in
                 ( field
-                , if forceHashing |> Set.member (name field) then
+                , if forceHashing |> Set.member name_ then
                     alias field
 
-                  else if (fieldCounts |> Dict.get (name field) |> Maybe.withDefault 0) == 0 then
+                  else if (fieldCounts |> Dict.get name_ |> Maybe.withDefault 0) == 0 then
                     Nothing
 
                   else
