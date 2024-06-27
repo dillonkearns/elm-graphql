@@ -29,18 +29,18 @@ fieldIsCircular typeDefs inputObjectName fieldTypeRef =
 
 fieldIsCircular_ : List ClassCaseName -> List TypeDefinition -> ClassCaseName -> TypeReference -> Bool
 fieldIsCircular_ visitedNames typeDefs inputObjectName fieldTypeRef =
-    let
-        alreadyVisitedThis =
-            visitedNames
-                |> List.map ClassCaseName.raw
-                |> List.Extra.allDifferent
-    in
     case fieldTypeRef of
         TypeReference referrableType isNullable ->
             case referrableType of
                 InputObjectRef inputObjectRefName ->
                     case lookupInputObject typeDefs inputObjectRefName of
                         Just ( name, fields ) ->
+                            let
+                                alreadyVisitedThis =
+                                    visitedNames
+                                        |> List.map ClassCaseName.raw
+                                        |> List.Extra.allDifferent
+                            in
                             not alreadyVisitedThis
                                 || isRecursive inputObjectName fields
                                 || List.any
