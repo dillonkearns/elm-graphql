@@ -43,11 +43,7 @@ maybeAliasHash field =
                 Nothing
 
             else
-                arguments
-                    |> Argument.serialize
-                    |> List.singleton
-                    |> List.append [ typeString ]
-                    |> String.concat
+                (typeString ++ Argument.serialize arguments)
                     |> Just
     )
         |> Maybe.map (hashString 0)
