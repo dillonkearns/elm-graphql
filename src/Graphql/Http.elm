@@ -482,18 +482,19 @@ toHttpRequestRecord :
         , tracker : Maybe String
         }
 toHttpRequestRecord resultToMessage tracker ((Request request) as fullRequest) =
-    fullRequest
-        |> toReadyRequest
-        |> (\readyRequest ->
-                { method = readyRequest.method
-                , headers = readyRequest.headers
-                , url = readyRequest.url
-                , body = readyRequest.body
-                , expect = expectJson (convertResult >> resultToMessage) readyRequest.decoder
-                , timeout = readyRequest.timeout
-                , tracker = tracker
-                }
-           )
+    let
+        readyRequest : ReadyRequest decodesTo
+        readyRequest =
+            toReadyRequest fullRequest
+    in
+    { method = readyRequest.method
+    , headers = readyRequest.headers
+    , url = readyRequest.url
+    , body = readyRequest.body
+    , expect = expectJson (convertResult >> resultToMessage) readyRequest.decoder
+    , timeout = readyRequest.timeout
+    , tracker = tracker
+    }
 
 
 expectJson : (Result HttpError decodesTo -> msg) -> Json.Decode.Decoder decodesTo -> Http.Expect msg
@@ -627,23 +628,24 @@ how to build up a Request.
 -}
 toTask : Request decodesTo -> Task (Error decodesTo) decodesTo
 toTask ((Request request) as fullRequest) =
-    fullRequest
-        |> toReadyRequest
-        |> (\readyRequest ->
-                (if request.withCredentials then
-                    Http.riskyTask
+    let
+        readyRequest : ReadyRequest decodesTo
+        readyRequest =
+            toReadyRequest fullRequest
+    in
+    (if request.withCredentials then
+        Http.riskyTask
 
-                 else
-                    Http.task
-                )
-                    { method = readyRequest.method
-                    , headers = readyRequest.headers
-                    , url = readyRequest.url
-                    , body = readyRequest.body
-                    , resolver = resolver fullRequest
-                    , timeout = readyRequest.timeout
-                    }
-           )
+     else
+        Http.task
+    )
+        { method = readyRequest.method
+        , headers = readyRequest.headers
+        , url = readyRequest.url
+        , body = readyRequest.body
+        , resolver = resolver fullRequest
+        , timeout = readyRequest.timeout
+        }
         |> Task.mapError HttpError
         |> Task.andThen failTaskOnHttpSuccessWithErrors
 
