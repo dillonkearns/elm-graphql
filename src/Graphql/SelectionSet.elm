@@ -758,10 +758,9 @@ If it returns an `Err`, the _entire_ response will fail to decode.
 mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo scope -> SelectionSet mapsTo scope
 mapOrFail mapFunction (SelectionSet field decoder) =
     decoder
-        |> Decode.map mapFunction
         |> Decode.andThen
             (\result ->
-                case result of
+                case mapFunction result of
                     Ok value ->
                         Decode.succeed value
 
