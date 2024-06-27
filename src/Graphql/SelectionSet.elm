@@ -756,7 +756,7 @@ If it returns an `Err`, the _entire_ response will fail to decode.
 
 -}
 mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo scope -> SelectionSet mapsTo scope
-mapOrFail mapFunction (SelectionSet field decoder) =
+mapOrFail mapFunction (SelectionSet fields decoder) =
     decoder
         |> Decode.andThen
             (\result ->
@@ -767,7 +767,7 @@ mapOrFail mapFunction (SelectionSet field decoder) =
                     Err errorMessage ->
                         Decode.fail ("Check your code for calls to mapOrFail, your map function returned an `Err` with the message: " ++ errorMessage)
             )
-        |> SelectionSet field
+        |> SelectionSet fields
 
 
 {-| Effectively turns an attribute that is `String` => `String!`, or `User` =>
