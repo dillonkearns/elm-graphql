@@ -18,6 +18,7 @@ import NoImportingEverything
 import NoInconsistentAliases
 import NoMissingTypeAnnotation
 import NoModuleOnExposedNames
+import NoPrematureLetComputation
 import NoUnused.CustomTypeConstructorArgs
 import NoUnused.CustomTypeConstructors
 import NoUnused.Dependencies
@@ -58,4 +59,5 @@ config =
     --    |> NoInconsistentAliases.rule
     , NoModuleOnExposedNames.rule
     , Simplify.rule Simplify.defaults
+    , NoPrematureLetComputation.rule
     ]
