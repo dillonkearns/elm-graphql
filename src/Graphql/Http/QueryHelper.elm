@@ -32,7 +32,7 @@ maxLength =
 build : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
 build forceMethod url queryParams maybeOperationName queryDocument =
     if forceMethod == Just Post then
-        buildHelp forceMethod url queryParams maybeOperationName queryDocument
+        buildHelp url queryParams maybeOperationName queryDocument
 
     else
         let
@@ -52,7 +52,7 @@ build forceMethod url queryParams maybeOperationName queryDocument =
                     url
         in
         if forceMethod == Nothing && String.length urlForGetRequest >= maxLength then
-            buildHelp forceMethod url queryParams maybeOperationName queryDocument
+            buildHelp url queryParams maybeOperationName queryDocument
 
         else
             { method = Get
@@ -61,8 +61,8 @@ build forceMethod url queryParams maybeOperationName queryDocument =
             }
 
 
-buildHelp : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
-buildHelp forceMethod url queryParams maybeOperationName queryDocument =
+buildHelp : String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
+buildHelp url queryParams maybeOperationName queryDocument =
     let
         ( serializedQuery, operationNameParamForPostRequest ) =
             case maybeOperationName of
