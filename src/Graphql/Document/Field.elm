@@ -217,8 +217,7 @@ findConflictingTypeFields rawFields =
                 )
                 UnorderedDict.empty
             |> UnorderedDict.filter (\fieldType fields -> Set.size fields > 1)
-            |> UnorderedDict.keys
-            |> Set.fromList
+            |> UnorderedDict.foldl (\fieldType _ set -> Set.insert fieldType set) Set.empty
 
 
 hasSiblings : List RawField -> Bool
