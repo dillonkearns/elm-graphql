@@ -13,7 +13,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.RawField exposing (RawField)
 import Graphql.SelectionSet exposing (SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
-import String.Interpolate exposing (interpolate)
 
 
 {-| Serialize a query selection set into a string for a GraphQL endpoint.
@@ -88,9 +87,13 @@ serialize operationType queries =
     operationType ++ " {\n" ++ Field.serializeChildren (Just 0) queries ++ "\n}"
 
 
+{-| Serialize to something like
+
+    <operationType> <operationName> {
+      <queries>
+    }
+
+-}
 serializeWithOperationName : String -> String -> List RawField -> String
 serializeWithOperationName operationType operationName queries =
-    interpolate """{0} {1} {
-{2}
-}"""
-        [ operationType, operationName, Field.serializeChildren (Just 0) queries ]
+    operationType ++ " " ++ operationName ++ " {\n" ++ Field.serializeChildren (Just 0) queries ++ "\n}"
