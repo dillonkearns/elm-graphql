@@ -642,8 +642,13 @@ that section of these docs.
 list : List (SelectionSet a scope) -> SelectionSet (List a) scope
 list selections =
     selections
-        |> List.foldl (map2 (::)) (empty |> map (\_ -> []))
+        |> List.foldl (map2 (::)) emptyList
         |> map List.reverse
+
+
+emptyList : SelectionSet (List a) scope
+emptyList =
+    SelectionSet [] (Decode.succeed [])
 
 
 {-| Fold over each of the values in a list of `SelectionSet`s.
