@@ -21,7 +21,7 @@ generate letBindings =
                 |> List.map toLetString
                 |> String.join "\n\n"
     in
-    if letBindings == [] then
+    if List.isEmpty letBindings then
         ""
 
     else
