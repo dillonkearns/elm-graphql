@@ -833,9 +833,17 @@ nonNullElementsOrFail (SelectionSet fields decoder) =
 
 combineMaybeList : List (Maybe a) -> Maybe (List a)
 combineMaybeList listOfMaybes =
-    let
-        step maybeElement accumulator =
-            maybeElement
-                |> Maybe.andThen (\element -> Maybe.map ((::) element) accumulator)
-    in
-    List.foldr step (Just []) listOfMaybes
+    combineMaybeListHelp listOfMaybes []
+
+
+combineMaybeListHelp : List (Maybe a) -> List a -> Maybe (List a)
+combineMaybeListHelp listOfMaybes acc =
+    case listOfMaybes of
+        [] ->
+            Just (List.reverse acc)
+
+        Nothing :: _ ->
+            Nothing
+
+        (Just a) :: rest ->
+            combineMaybeListHelp rest (a :: acc)
