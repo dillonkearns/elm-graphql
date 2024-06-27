@@ -31,33 +31,34 @@ maxLength =
 
 build : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
 build forceMethod url queryParams maybeOperationName queryDocument =
-    let
-        ( serializedQueryForGetRequest, operationNameParamForGetRequest ) =
-            case maybeOperationName of
-                Just operationName ->
-                    ( Document.serializeQueryForUrlWithOperationName operationName queryDocument
-                    , [ ( "operationName", operationName ) ]
-                    )
-
-                Nothing ->
-                    ( Document.serializeQueryForUrl queryDocument, [] )
-
-        urlForGetRequest =
-            QueryParams.urlWithQueryParams
-                (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
-                url
-    in
     if forceMethod == Just Post then
         buildHelp forceMethod url queryParams maybeOperationName queryDocument
 
-    else if forceMethod /= Just Get && String.length urlForGetRequest >= maxLength then
-        buildHelp forceMethod url queryParams maybeOperationName queryDocument
-
     else
-        { method = Get
-        , url = urlForGetRequest
-        , body = Http.emptyBody
-        }
+        let
+            ( serializedQueryForGetRequest, operationNameParamForGetRequest ) =
+                case maybeOperationName of
+                    Just operationName ->
+                        ( Document.serializeQueryForUrlWithOperationName operationName queryDocument
+                        , [ ( "operationName", operationName ) ]
+                        )
+
+                    Nothing ->
+                        ( Document.serializeQueryForUrl queryDocument, [] )
+
+            urlForGetRequest =
+                QueryParams.urlWithQueryParams
+                    (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
+                    url
+        in
+        if forceMethod /= Just Get && String.length urlForGetRequest >= maxLength then
+            buildHelp forceMethod url queryParams maybeOperationName queryDocument
+
+        else
+            { method = Get
+            , url = urlForGetRequest
+            , body = Http.emptyBody
+            }
 
 
 buildHelp : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
