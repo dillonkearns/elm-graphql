@@ -441,7 +441,7 @@ any data that made it through in the response.
 send : (Result (Error decodesTo) decodesTo -> msg) -> Request decodesTo -> Cmd msg
 send resultToMessage ((Request request) as fullRequest) =
     fullRequest
-        |> toHttpRequestRecord resultToMessage
+        |> toHttpRequestRecord resultToMessage Nothing
         |> (if request.withCredentials then
                 Http.riskyRequest
 
@@ -459,8 +459,7 @@ requests using the core Elm `Http` package (see
 sendWithTracker : String -> (Result (Error decodesTo) decodesTo -> msg) -> Request decodesTo -> Cmd msg
 sendWithTracker tracker resultToMessage ((Request request) as fullRequest) =
     fullRequest
-        |> toHttpRequestRecord resultToMessage
-        |> (\requestRecord -> { requestRecord | tracker = Just tracker })
+        |> toHttpRequestRecord resultToMessage (Just tracker)
         |> (if request.withCredentials then
                 Http.riskyRequest
 
@@ -471,6 +470,7 @@ sendWithTracker tracker resultToMessage ((Request request) as fullRequest) =
 
 toHttpRequestRecord :
     (Result (Error decodesTo) decodesTo -> msg)
+    -> Maybe String
     -> Request decodesTo
     ->
         { method : String
@@ -481,7 +481,7 @@ toHttpRequestRecord :
         , timeout : Maybe Float
         , tracker : Maybe String
         }
-toHttpRequestRecord resultToMessage ((Request request) as fullRequest) =
+toHttpRequestRecord resultToMessage tracker ((Request request) as fullRequest) =
     fullRequest
         |> toReadyRequest
         |> (\readyRequest ->
@@ -491,7 +491,7 @@ toHttpRequestRecord resultToMessage ((Request request) as fullRequest) =
                 , body = readyRequest.body
                 , expect = expectJson (convertResult >> resultToMessage) readyRequest.decoder
                 , timeout = readyRequest.timeout
-                , tracker = Nothing
+                , tracker = tracker
                 }
            )
 
