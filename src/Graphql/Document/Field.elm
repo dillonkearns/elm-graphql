@@ -81,19 +81,17 @@ serialize forceHashing aliasName mIndentationLevel field =
                 Composite fieldName args children ->
                     case mIndentationLevel of
                         Nothing ->
-                            (fieldName
+                            fieldName
                                 ++ Argument.serialize args
                                 ++ "{"
                                 ++ serializeChildrenHelp forceHashing Nothing children
-                            )
                                 ++ "}"
 
                         Just indentationLevel ->
-                            (fieldName
+                            fieldName
                                 ++ Argument.serialize args
                                 ++ " {\n"
                                 ++ serializeChildrenHelp forceHashing (Just indentationLevel) children
-                            )
                                 ++ "\n"
                                 ++ Indent.generate indentationLevel
                                 ++ "}"
