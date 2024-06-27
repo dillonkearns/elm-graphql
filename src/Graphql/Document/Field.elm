@@ -15,9 +15,12 @@ type alias Dict comparable v =
 
 hashedAliasName : RawField -> String
 hashedAliasName field =
-    field
-        |> alias
-        |> Maybe.withDefault (name field)
+    case alias field of
+        Just aliasName ->
+            aliasName
+
+        Nothing ->
+            name field
 
 
 maybeAliasHash : RawField -> Maybe Int
