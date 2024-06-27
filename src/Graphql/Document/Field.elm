@@ -181,17 +181,17 @@ findConflictingTypeFields rawFields =
     let
         compositeCount : Int
         compositeCount =
-            rawFields
-                |> List.filterMap
-                    (\field ->
-                        case field of
-                            Composite _ _ _ ->
-                                Just ()
+            List.foldl
+                (\field count ->
+                    case field of
+                        Composite _ _ _ ->
+                            count + 1
 
-                            Leaf _ _ ->
-                                Nothing
-                    )
-                |> List.length
+                        Leaf _ _ ->
+                            count
+                )
+                0
+                rawFields
     in
     if compositeCount <= 1 then
         -- if there are no siblings then there are no type conflicts
