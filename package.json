@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "cross-spawn": "^5.0.1",
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "graphql-request": "^3.4.0"
   },
   "bin": {
