@@ -46,7 +46,7 @@ interfaceImplementorsDict : List TypeDefinition -> Dict String (List TypeDefinit
 interfaceImplementorsDict typeDefs =
     let
         ( interfaceTypes, objectTypes ) =
-            Tuple.pair typeDefs typeDefs
+            ( typeDefs, typeDefs )
                 |> Tuple.mapBoth (List.filter Type.isInterfaceType) (List.filter Type.isObjectType)
 
         interfaceImplementations : String -> List TypeDefinition -> List TypeDefinition
@@ -56,7 +56,7 @@ interfaceImplementorsDict typeDefs =
                 (\objectOrInterface ->
                     Type.interfacesImplemented objectOrInterface
                         |> List.map ClassCaseName.raw
-                        |> List.any ((==) interfaceName)
+                        |> List.member interfaceName
                 )
                 objectsAndInterfaces
 

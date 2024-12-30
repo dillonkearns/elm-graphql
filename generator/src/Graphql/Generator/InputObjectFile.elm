@@ -32,10 +32,6 @@ generateFileContents context typeDefinitions =
         typesToGenerate =
             typeDefinitions
                 |> List.filterMap (isInputObject typeDefinitions)
-
-        fields =
-            typesToGenerate
-                |> List.concatMap .fields
     in
     if typesToGenerate == [] then
         interpolate
@@ -59,7 +55,9 @@ placeholder =
 {2}
 """
             [ moduleName context |> String.join "."
-            , generateImports context fields
+            , typesToGenerate
+                |> List.concatMap .fields
+                |> generateImports context
             , typesToGenerate
                 |> List.map (generateEncoderAndAlias context)
                 |> String.join "\n\n\n"

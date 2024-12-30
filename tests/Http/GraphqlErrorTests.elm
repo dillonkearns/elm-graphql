@@ -31,7 +31,7 @@ all =
                         (Ok
                             [ { message = "Something went wrong while executing your query. Please include `94FE:5EA5:458434C:62871CD:5A44024B` when reporting this issue."
                               , locations = Nothing
-                              , details = Dict.fromList []
+                              , details = Dict.empty
                               }
                             ]
                         )
@@ -47,7 +47,7 @@ all =
                         (Ok
                             [ { message = "Something went wrong while executing your query. Please include `94FE:5EA5:458434C:62871CD:5A44024B` when reporting this issue."
                               , locations = Nothing
-                              , details = Dict.fromList []
+                              , details = Dict.empty
                               }
                             ]
                         )

@@ -23,10 +23,10 @@ queryPair ( key, value ) =
 
 
 queryEscape : String -> String
-queryEscape =
-    Url.percentEncode >> replace "%20" "+"
+queryEscape string =
+    string |> Url.percentEncode |> replace "%20" "+"
 
 
 replace : String -> String -> String -> String
-replace old new =
-    String.split old >> String.join new
+replace old new string =
+    string |> String.split old |> String.join new

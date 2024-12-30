@@ -15,13 +15,8 @@ generate letBindings =
                 """        {0} =
             {1}"""
                 [ name, value ]
-
-        letString =
-            letBindings
-                |> List.map toLetString
-                |> String.join "\n\n"
     in
-    if letBindings == [] then
+    if List.isEmpty letBindings then
         ""
 
     else
@@ -30,4 +25,7 @@ generate letBindings =
     let
 {0}
     in"""
-            [ letString ]
+            [ letBindings
+                |> List.map toLetString
+                |> String.join "\n\n"
+            ]

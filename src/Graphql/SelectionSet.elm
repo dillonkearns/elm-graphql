@@ -642,8 +642,12 @@ that section of these docs.
 list : List (SelectionSet a scope) -> SelectionSet (List a) scope
 list selections =
     selections
-        |> List.foldl (map2 (::)) (empty |> map (\_ -> []))
-        |> map List.reverse
+        |> List.foldr (map2 (::)) emptyList
+
+
+emptyList : SelectionSet (List a) scope
+emptyList =
+    SelectionSet [] (Decode.succeed [])
 
 
 {-| Fold over each of the values in a list of `SelectionSet`s.
@@ -704,7 +708,12 @@ want to use `map2` and other functions in that section of these docs.
 dict : List ( String, SelectionSet a scope ) -> SelectionSet (Dict String a) scope
 dict selections =
     selections
-        |> List.foldl combineDict (empty |> map (\_ -> Dict.empty))
+        |> List.foldl combineDict emptyDict
+
+
+emptyDict : SelectionSet (Dict k v) scope
+emptyDict =
+    SelectionSet [] (Decode.succeed Dict.empty)
 
 
 combineDict : ( String, SelectionSet a scope ) -> SelectionSet (Dict String a) scope -> SelectionSet (Dict String a) scope
@@ -752,19 +761,18 @@ If it returns an `Err`, the _entire_ response will fail to decode.
 
 -}
 mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo scope -> SelectionSet mapsTo scope
-mapOrFail mapFunction (SelectionSet field decoder) =
+mapOrFail mapFunction (SelectionSet fields decoder) =
     decoder
-        |> Decode.map mapFunction
         |> Decode.andThen
             (\result ->
-                case result of
+                case mapFunction result of
                     Ok value ->
                         Decode.succeed value
 
                     Err errorMessage ->
                         Decode.fail ("Check your code for calls to mapOrFail, your map function returned an `Err` with the message: " ++ errorMessage)
             )
-        |> SelectionSet field
+        |> SelectionSet fields
 
 
 {-| Effectively turns an attribute that is `String` => `String!`, or `User` =>
@@ -830,9 +838,17 @@ nonNullElementsOrFail (SelectionSet fields decoder) =
 
 combineMaybeList : List (Maybe a) -> Maybe (List a)
 combineMaybeList listOfMaybes =
-    let
-        step maybeElement accumulator =
-            maybeElement
-                |> Maybe.andThen (\element -> Maybe.map ((::) element) accumulator)
-    in
-    List.foldr step (Just []) listOfMaybes
+    combineMaybeListHelp listOfMaybes []
+
+
+combineMaybeListHelp : List (Maybe a) -> List a -> Maybe (List a)
+combineMaybeListHelp listOfMaybes acc =
+    case listOfMaybes of
+        [] ->
+            Just (List.reverse acc)
+
+        Nothing :: _ ->
+            Nothing
+
+        (Just a) :: rest ->
+            combineMaybeListHelp rest (a :: acc)

@@ -31,45 +31,54 @@ maxLength =
 
 build : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
 build forceMethod url queryParams maybeOperationName queryDocument =
-    let
-        ( serializedQueryForGetRequest, operationNameParamForGetRequest ) =
-            case maybeOperationName of
-                Just operationName ->
-                    ( Document.serializeQueryForUrlWithOperationName operationName queryDocument
-                    , [ ( "operationName", operationName ) ]
-                    )
+    if forceMethod == Just Post then
+        buildHelp url queryParams maybeOperationName queryDocument
 
-                Nothing ->
-                    ( Document.serializeQueryForUrl queryDocument, [] )
-
-        urlForGetRequest =
-            QueryParams.urlWithQueryParams
-                (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
-                url
-    in
-    if forceMethod == Just Post || (String.length urlForGetRequest >= maxLength && forceMethod /= Just Get) then
+    else
         let
-            ( serializedQuery, operationNameParamForPostRequest ) =
+            ( serializedQueryForGetRequest, operationNameParamForGetRequest ) =
                 case maybeOperationName of
                     Just operationName ->
-                        ( Document.serializeQueryWithOperationName operationName queryDocument
-                        , [ ( "operationName", Json.Encode.string operationName ) ]
+                        ( Document.serializeQueryForUrlWithOperationName operationName queryDocument
+                        , [ ( "operationName", operationName ) ]
                         )
 
                     Nothing ->
-                        ( Document.serializeQuery queryDocument, [] )
-        in
-        { method = Post
-        , url = QueryParams.urlWithQueryParams queryParams url
-        , body =
-            Http.jsonBody <|
-                Json.Encode.object <|
-                    ( "query", Json.Encode.string serializedQuery )
-                        :: operationNameParamForPostRequest
-        }
+                        ( Document.serializeQueryForUrl queryDocument, [] )
 
-    else
-        { method = Get
-        , url = urlForGetRequest
-        , body = Http.emptyBody
-        }
+            urlForGetRequest =
+                QueryParams.urlWithQueryParams
+                    (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
+                    url
+        in
+        if forceMethod == Nothing && String.length urlForGetRequest >= maxLength then
+            buildHelp url queryParams maybeOperationName queryDocument
+
+        else
+            { method = Get
+            , url = urlForGetRequest
+            , body = Http.emptyBody
+            }
+
+
+buildHelp : String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
+buildHelp url queryParams maybeOperationName queryDocument =
+    let
+        ( serializedQuery, operationNameParamForPostRequest ) =
+            case maybeOperationName of
+                Just operationName ->
+                    ( Document.serializeQueryWithOperationName operationName queryDocument
+                    , [ ( "operationName", Json.Encode.string operationName ) ]
+                    )
+
+                Nothing ->
+                    ( Document.serializeQuery queryDocument, [] )
+    in
+    { method = Post
+    , url = QueryParams.urlWithQueryParams queryParams url
+    , body =
+        Http.jsonBody <|
+            Json.Encode.object <|
+                ( "query", Json.Encode.string serializedQuery )
+                    :: operationNameParamForPostRequest
+    }
