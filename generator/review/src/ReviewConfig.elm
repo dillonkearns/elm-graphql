@@ -39,7 +39,6 @@ config =
         |> Review.Rule.ignoreErrorsForFiles ["src/Main.elm"]
     , NoUnused.Dependencies.rule
     , NoUnused.CustomTypeConstructorArgs.rule
-
     --, NoUnused.Variables.rule
     -- , NoUnused.CustomTypeConstructors.rule []
     --, NoUnused.Parameters.rule
