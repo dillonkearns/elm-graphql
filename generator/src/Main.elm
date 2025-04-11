@@ -137,28 +137,38 @@ run2 msg =
         |> BackendTask.andThen
             (\introspectionJson ->
                 let
-                    ( baseModule, scalarCodecsModule, skipElmFormat ) =
+                    record : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool, outputPath : String }
+                    record =
                         case msg of
                             FromUrl options ->
-                                ( options.base, options.scalarCodecsModule, options.skipElmFormat )
+                                { apiSubmodule = options.base
+                                , scalarCodecsModule = options.scalarCodecsModule
+                                , skipElmFormat = options.skipElmFormat
+                                , outputPath = options.outputPath
+                                }
 
                             FromIntrospectionFile options ->
-                                ( options.base, options.scalarCodecsModule, options.skipElmFormat )
+                                { apiSubmodule = options.base
+                                , scalarCodecsModule = options.scalarCodecsModule
+                                , skipElmFormat = options.skipElmFormat
+                                , outputPath = options.outputPath
+                                }
 
                             FromSchemaFile options ->
-                                ( options.base, options.scalarCodecsModule, options.skipElmFormat )
+                                { apiSubmodule = options.base
+                                , scalarCodecsModule = options.scalarCodecsModule
+                                , skipElmFormat = options.skipElmFormat
+                                , outputPath = options.outputPath
+                                }
                 in
                 run3
-                    { apiSubmodule = baseModule
-                    , scalarCodecsModule = scalarCodecsModule
-                    , skipElmFormat = skipElmFormat
-                    }
+                    record
                     introspectionJson
             )
 
 
-run3 : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool } -> Json.Encode.Value -> BackendTask FatalError ()
-run3 { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
+run3 : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool, outputPath : String } -> Json.Encode.Value -> BackendTask FatalError ()
+run3 { apiSubmodule, scalarCodecsModule, skipElmFormat, outputPath } introspectionQueryJson =
     let
         decoder : Decoder (Dict String String)
         decoder =
@@ -178,7 +188,7 @@ run3 { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson 
                 [ ( "generatedFile", Json.Encode.dict identity Json.Encode.string fields )
                 , ( "skipElmFormat", Json.Encode.bool skipElmFormat )
                 , ( "baseModule", Json.Encode.list Json.Encode.string apiSubmodule )
-                , ( "outputPath", Json.Encode.string "./" {- TODO -} )
+                , ( "outputPath", Json.Encode.string outputPath )
                 , ( "customDecodersModule", scalarCodecsModule |> Maybe.map ModuleName.toString |> Maybe.withDefault "" |> Json.Encode.string )
                 ]
                 |> generatedFiles
