@@ -20,29 +20,6 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-{-| Which movies they appear in.
--}
-appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Object.Droid
-appearsIn =
-    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
-
-
-{-| Url to a profile picture for the character.
--}
-avatarUrl : SelectionSet String Swapi.Object.Droid
-avatarUrl =
-    Object.selectionForField "String" "avatarUrl" [] Decode.string
-
-
-{-| The friends of the droid, or an empty list if they have none.
--}
-friends :
-    SelectionSet decodesTo Swapi.Interface.Character
-    -> SelectionSet (List decodesTo) Swapi.Object.Droid
-friends object____ =
-    Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
-
-
 {-| The ID of the droid.
 -}
 id : SelectionSet CustomScalarCodecs.Id Swapi.Object.Droid
@@ -55,6 +32,29 @@ id =
 name : SelectionSet String Swapi.Object.Droid
 name =
     Object.selectionForField "String" "name" [] Decode.string
+
+
+{-| Which movies they appear in.
+-}
+appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Object.Droid
+appearsIn =
+    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+
+
+{-| The friends of the droid, or an empty list if they have none.
+-}
+friends :
+    SelectionSet decodesTo Swapi.Interface.Character
+    -> SelectionSet (List decodesTo) Swapi.Object.Droid
+friends object____ =
+    Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
+
+
+{-| Url to a profile picture for the character.
+-}
+avatarUrl : SelectionSet String Swapi.Object.Droid
+avatarUrl =
+    Object.selectionForField "String" "avatarUrl" [] Decode.string
 
 
 {-| The primary function of the droid.

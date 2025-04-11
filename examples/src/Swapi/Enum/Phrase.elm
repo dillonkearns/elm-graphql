@@ -9,32 +9,32 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Phrases for StarChat
 
+  - Faith - Originally said by Vader.
+  - Try - Originally said by Yoda.
+  - Help - Originally said by Leia.
   - BadFeeling - Originally said by Han Solo
   - Droids - Originally said by Obi-Wan
-  - Faith - Originally said by Vader.
   - Father - Originally said by Vader.
-  - Help - Originally said by Leia.
   - TheForce - Originally said by Obi-Wan.
   - Traitor - Originally said by Vader
   - Trap - Originally said by Admiral Ackbar
-  - Try - Originally said by Yoda.
 
 -}
 type Phrase
-    = BadFeeling
-    | Droids
-    | Faith
-    | Father
+    = Faith
+    | Try
     | Help
+    | BadFeeling
+    | Droids
+    | Father
     | TheForce
     | Traitor
     | Trap
-    | Try
 
 
 list : List Phrase
 list =
-    [ BadFeeling, Droids, Faith, Father, Help, TheForce, Traitor, Trap, Try ]
+    [ Faith, Try, Help, BadFeeling, Droids, Father, TheForce, Traitor, Trap ]
 
 
 decoder : Decoder Phrase
@@ -43,20 +43,23 @@ decoder =
         |> Decode.andThen
             (\string ->
                 case string of
+                    "FAITH" ->
+                        Decode.succeed Faith
+
+                    "TRY" ->
+                        Decode.succeed Try
+
+                    "HELP" ->
+                        Decode.succeed Help
+
                     "BAD_FEELING" ->
                         Decode.succeed BadFeeling
 
                     "DROIDS" ->
                         Decode.succeed Droids
 
-                    "FAITH" ->
-                        Decode.succeed Faith
-
                     "FATHER" ->
                         Decode.succeed Father
-
-                    "HELP" ->
-                        Decode.succeed Help
 
                     "THE_FORCE" ->
                         Decode.succeed TheForce
@@ -66,9 +69,6 @@ decoder =
 
                     "TRAP" ->
                         Decode.succeed Trap
-
-                    "TRY" ->
-                        Decode.succeed Try
 
                     _ ->
                         Decode.fail ("Invalid Phrase type, " ++ string ++ " try re-running the @dillonkearns/elm-graphql CLI ")
@@ -80,20 +80,23 @@ decoder =
 toString : Phrase -> String
 toString enum____ =
     case enum____ of
+        Faith ->
+            "FAITH"
+
+        Try ->
+            "TRY"
+
+        Help ->
+            "HELP"
+
         BadFeeling ->
             "BAD_FEELING"
 
         Droids ->
             "DROIDS"
 
-        Faith ->
-            "FAITH"
-
         Father ->
             "FATHER"
-
-        Help ->
-            "HELP"
 
         TheForce ->
             "THE_FORCE"
@@ -103,9 +106,6 @@ toString enum____ =
 
         Trap ->
             "TRAP"
-
-        Try ->
-            "TRY"
 
 
 {-| Convert from a String representation to an elm representation enum.
@@ -122,20 +122,23 @@ This can be useful for generating Strings to use for <select> menus to check whi
 fromString : String -> Maybe Phrase
 fromString enumString____ =
     case enumString____ of
+        "FAITH" ->
+            Just Faith
+
+        "TRY" ->
+            Just Try
+
+        "HELP" ->
+            Just Help
+
         "BAD_FEELING" ->
             Just BadFeeling
 
         "DROIDS" ->
             Just Droids
 
-        "FAITH" ->
-            Just Faith
-
         "FATHER" ->
             Just Father
-
-        "HELP" ->
-            Just Help
 
         "THE_FORCE" ->
             Just TheForce
@@ -145,9 +148,6 @@ fromString enumString____ =
 
         "TRAP" ->
             Just Trap
-
-        "TRY" ->
-            Just Try
 
         _ ->
             Nothing

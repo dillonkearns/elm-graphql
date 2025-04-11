@@ -20,6 +20,20 @@ import Normalize.ScalarCodecs
 import Normalize.Union
 
 
+{-| The ID of the droid.
+-}
+id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Object.Droid
+id =
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
+
+
+{-| The name of the droid.
+-}
+name : SelectionSet String Normalize.Object.Droid
+name =
+    Object.selectionForField "String" "name" [] Decode.string
+
+
 {-| Which movies they appear in.
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
@@ -34,20 +48,6 @@ friends :
     -> SelectionSet (List decodesTo) Normalize.Object.Droid
 friends object____ =
     Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
-
-
-{-| The ID of the droid.
--}
-id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Object.Droid
-id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
-
-
-{-| The name of the droid.
--}
-name : SelectionSet String Normalize.Object.Droid
-name =
-    Object.selectionForField "String" "name" [] Decode.string
 
 
 {-| The primary function of the droid.

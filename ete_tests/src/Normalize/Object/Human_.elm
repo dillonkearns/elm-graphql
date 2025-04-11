@@ -20,6 +20,20 @@ import Normalize.ScalarCodecs
 import Normalize.Union
 
 
+{-| The ID of the human.
+-}
+id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Object.Human_
+id =
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
+
+
+{-| The name of the human.
+-}
+name : SelectionSet String Normalize.Object.Human_
+name =
+    Object.selectionForField "String" "name" [] Decode.string
+
+
 {-| Which movies they appear in.
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Human_
@@ -41,17 +55,3 @@ friends object____ =
 homePlanet : SelectionSet (Maybe String) Normalize.Object.Human_
 homePlanet =
     Object.selectionForField "(Maybe String)" "homePlanet" [] (Decode.string |> Decode.nullable)
-
-
-{-| The ID of the human.
--}
-id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Object.Human_
-id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
-
-
-{-| The name of the human.
--}
-name : SelectionSet String Normalize.Object.Human_
-name =
-    Object.selectionForField "String" "name" [] Decode.string

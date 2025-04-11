@@ -9,20 +9,20 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| One of the films in the Star Wars Trilogy
 
-  - Empire - Released in 1980.
   - Jedi\_ - Released in 1983.
+  - Empire - Released in 1980.
   - Newhope\_ - Released in 1977.
 
 -}
 type Episode_
-    = Empire
-    | Jedi_
+    = Jedi_
+    | Empire
     | Newhope_
 
 
 list : List Episode_
 list =
-    [ Empire, Jedi_, Newhope_ ]
+    [ Jedi_, Empire, Newhope_ ]
 
 
 decoder : Decoder Episode_
@@ -31,11 +31,11 @@ decoder =
         |> Decode.andThen
             (\string ->
                 case string of
-                    "empire" ->
-                        Decode.succeed Empire
-
                     "jedi_" ->
                         Decode.succeed Jedi_
+
+                    "empire" ->
+                        Decode.succeed Empire
 
                     "_newhope" ->
                         Decode.succeed Newhope_
@@ -50,11 +50,11 @@ decoder =
 toString : Episode_ -> String
 toString enum____ =
     case enum____ of
-        Empire ->
-            "empire"
-
         Jedi_ ->
             "jedi_"
+
+        Empire ->
+            "empire"
 
         Newhope_ ->
             "_newhope"
@@ -74,11 +74,11 @@ This can be useful for generating Strings to use for <select> menus to check whi
 fromString : String -> Maybe Episode_
 fromString enumString____ =
     case enumString____ of
-        "empire" ->
-            Just Empire
-
         "jedi_" ->
             Just Jedi_
+
+        "empire" ->
+            Just Empire
 
         "_newhope" ->
             Just Newhope_

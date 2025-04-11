@@ -9,20 +9,20 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-|
 
-  - En - English
-  - Es - Spanish
   - No - Norwegian
+  - Es - Spanish
+  - En - English
 
 -}
 type Language
-    = En
+    = No
     | Es
-    | No
+    | En
 
 
 list : List Language
 list =
-    [ En, Es, No ]
+    [ No, Es, En ]
 
 
 decoder : Decoder Language
@@ -31,14 +31,14 @@ decoder =
         |> Decode.andThen
             (\string ->
                 case string of
-                    "EN" ->
-                        Decode.succeed En
+                    "NO" ->
+                        Decode.succeed No
 
                     "ES" ->
                         Decode.succeed Es
 
-                    "NO" ->
-                        Decode.succeed No
+                    "EN" ->
+                        Decode.succeed En
 
                     _ ->
                         Decode.fail ("Invalid Language type, " ++ string ++ " try re-running the @dillonkearns/elm-graphql CLI ")
@@ -50,14 +50,14 @@ decoder =
 toString : Language -> String
 toString enum____ =
     case enum____ of
-        En ->
-            "EN"
+        No ->
+            "NO"
 
         Es ->
             "ES"
 
-        No ->
-            "NO"
+        En ->
+            "EN"
 
 
 {-| Convert from a String representation to an elm representation enum.
@@ -74,14 +74,14 @@ This can be useful for generating Strings to use for <select> menus to check whi
 fromString : String -> Maybe Language
 fromString enumString____ =
     case enumString____ of
-        "EN" ->
-            Just En
+        "NO" ->
+            Just No
 
         "ES" ->
             Just Es
 
-        "NO" ->
-            Just No
+        "EN" ->
+            Just En
 
         _ ->
             Nothing

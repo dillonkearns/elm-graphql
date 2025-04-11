@@ -26,9 +26,9 @@ buildGreeting required____ fillOptionals____ =
     let
         optionals____ =
             fillOptionals____
-                { language = Absent, options = Absent }
+                { options = Absent, language = Absent }
     in
-    { language = optionals____.language, name = required____.name, options = optionals____.options }
+    { name = required____.name, options = optionals____.options, language = optionals____.language }
 
 
 type alias GreetingRequiredFields =
@@ -36,17 +36,17 @@ type alias GreetingRequiredFields =
 
 
 type alias GreetingOptionalFields =
-    { language : OptionalArgument Swapi.Enum.Language.Language
-    , options : OptionalArgument GreetingOptions
+    { options : OptionalArgument GreetingOptions
+    , language : OptionalArgument Swapi.Enum.Language.Language
     }
 
 
 {-| Type for the Greeting input object.
 -}
 type alias Greeting =
-    { language : OptionalArgument Swapi.Enum.Language.Language
-    , name : String
+    { name : String
     , options : OptionalArgument GreetingOptions
+    , language : OptionalArgument Swapi.Enum.Language.Language
     }
 
 
@@ -55,7 +55,7 @@ type alias Greeting =
 encodeGreeting : Greeting -> Value
 encodeGreeting input____ =
     Encode.maybeObject
-        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input____.language ), ( "name", Encode.string input____.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input____.options ) ]
+        [ ( "name", Encode.string input____.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input____.options ), ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input____.language ) ]
 
 
 buildGreetingOptions :
