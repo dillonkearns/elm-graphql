@@ -14,8 +14,6 @@ module.exports = function(env) {
     plugins:
       MODE === "development"
         ? [
-            // Suggested for hot-loading
-            new webpack.NamedModulesPlugin(),
             // Prevents compilation errors causing the hot loader to lose state
             new webpack.NoEmitOnErrorsPlugin()
           ]
@@ -25,7 +23,10 @@ module.exports = function(env) {
         {
           test: /\.html$/,
           exclude: /node_modules/,
-          loader: "file-loader?name=[name].[ext]"
+          type: 'asset/resource',
+          generator: {
+            filename: '[name].[ext]'
+          }
         },
         {
           test: [/\.elm$/],
@@ -44,9 +45,12 @@ module.exports = function(env) {
     resolve: {
       extensions: [".js", ".elm"]
     },
-    serve: {
-      inline: true,
-      stats: "errors-only"
+    devServer: {
+      static: {
+        directory: path.join(__dirname, "dist"),
+      },
+      hot: true,
+      compress: true
     }
   };
 };

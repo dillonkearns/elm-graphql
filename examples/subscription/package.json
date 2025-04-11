@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-serve --open",
-    "build": "webpack -p && cp index.html dist"
+    "start": "webpack serve --open",
+    "build": "webpack --mode production && cp index.html dist"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +17,8 @@
     "phoenix": "^1.5.7"
   },
   "devDependencies": {
-    "webpack": "^4.23.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-serve": "^2.0.2"
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
