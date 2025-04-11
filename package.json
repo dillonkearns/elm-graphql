@@ -6,7 +6,7 @@
     "bin/elm-graphql"
   ],
   "scripts": {
-    "build": "elm-pages bundle-script --output bundle.js",
+    "build": "elm-pages bundle-script --output dist/bundle.js generator/src/Main.elm",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "./bin/approve && elm-test && (cd generator && elm-test)",
