@@ -39,12 +39,16 @@ export function warnAndExitIfContainsNonGenerated({
 export function generateOrExitIntrospectionFileFromSchema(
   schemaFilePath: string
 ) : {} | undefined {
+  console.log("schemaFilePath", schemaFilePath);
   if (fs.existsSync(schemaFilePath)) {
     const schemaData = fs.readFileSync(schemaFilePath, "utf-8");
+    console.log("schemaData", schemaData);
 
-    return JSON.parse(JSON.stringify(
-      introspectionFromSchema(buildSchema(schemaData.toString()))
-    ));
+    return JSON.parse(
+      JSON.stringify(
+        introspectionFromSchema(buildSchema(schemaData.toString()))
+      )
+    );
   } else {
     console.log("Schema file not found");
     process.exit(1);

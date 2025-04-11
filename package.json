@@ -6,7 +6,7 @@
     "bin/elm-graphql"
   ],
   "scripts": {
-    "build": "parcel build generator/src/elm-graphql.ts --out-file bundle.js --target node --bundle-node-modules --no-source-maps --no-minify",
+    "build": "elm-pages bundle-script --output bundle.js",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "./bin/approve && elm-test && (cd generator && elm-test)",
@@ -29,21 +29,21 @@
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
     "@types/glob": "^8.1.0",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.14.0",
     "elm-hot": "^1.1.6",
     "elm-hot-loader": "0.5.4",
     "elm-live": "4.0.2",
-    "elm-review": "^2.12.0",
+    "elm-pages": "^3.0.22",
+    "elm-review": "^2.13.2",
     "elm-test": "^0.19.1-revision6",
     "elm-tooling": "^1.15.1",
     "graphql": "^16.10.0",
     "node-elm-compiler": "^5.0.6",
-    "parcel-bundler": "^1.12.5",
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "cross-spawn": "^7.0.6",
-    "glob": "^11.0.0",
+    "glob": "^11.0.1",
     "graphql-request": "^7.1.2"
   },
   "bin": {

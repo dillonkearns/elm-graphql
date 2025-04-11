@@ -1,30 +1,166 @@
-module Main exposing (main)
+module Main exposing (run)
 
+import BackendTask exposing (BackendTask, allowFatal)
+import BackendTask.Custom
 import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
 import Cli.Program as Program
 import Cli.Validate
-import Dict
+import Dict exposing (Dict)
+import FatalError exposing (FatalError)
 import Graphql.Parser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import ModuleName exposing (ModuleName(..))
-import Ports
+import Pages.Script as Script exposing (Script)
 import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-type Msg
-    = GenerateFiles Json.Encode.Value
+run : Script
+run =
+    Script.withCliOptions program run2
 
 
-type alias Model =
-    ()
+introspectSchemaFromUrl : a -> BackendTask FatalError Json.Encode.Value
+introspectSchemaFromUrl _ =
+    BackendTask.Custom.run "introspectSchemaFromUrl"
+        Json.Encode.null
+        Decode.value
+        |> allowFatal
 
 
-run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool } -> Json.Encode.Value -> Cmd msg
-run { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
+
+--Debug.todo ""
+
+
+introspectSchemaFromFile :
+    { introspectionFilePath : String
+    , outputPath : String
+    , baseModule : List String
+    , customDecodersModule : Maybe String
+    }
+    -> BackendTask FatalError Json.Encode.Value
+introspectSchemaFromFile options =
+    {-
+       {
+           introspectionFilePath: string;
+           outputPath: string;
+           baseModule: string[];
+           customDecodersModule: string | null;
+         }
+    -}
+    BackendTask.Custom.run "introspectSchemaFromFile"
+        (Json.Encode.object
+            [ ( "introspectionFilePath", Json.Encode.string options.introspectionFilePath )
+            , ( "outputPath", Json.Encode.string options.outputPath )
+            , ( "baseModule", options.baseModule |> Json.Encode.list Json.Encode.string )
+            , ( "customDecodersModule", options.customDecodersModule |> Maybe.map Json.Encode.string |> Maybe.withDefault Json.Encode.null )
+            ]
+        )
+        Decode.value
+        |> allowFatal
+
+
+schemaFromFile :
+    { schemaFilePath : String
+    , outputPath : String
+    , baseModule : List String
+    , customDecodersModule : Maybe String
+    }
+    -> BackendTask FatalError Json.Encode.Value
+schemaFromFile options =
+    BackendTask.Custom.run "schemaFromFile"
+        (Json.Encode.object
+            [ ( "schemaFilePath", Json.Encode.string options.schemaFilePath )
+            , ( "outputPath", Json.Encode.string options.outputPath )
+            , ( "baseModule", options.baseModule |> Json.Encode.list Json.Encode.string )
+            , ( "customDecodersModule", options.customDecodersModule |> Maybe.map Json.Encode.string |> Maybe.withDefault Json.Encode.null )
+            ]
+        )
+        Decode.value
+        |> allowFatal
+
+
+generatedFiles : Json.Encode.Value -> BackendTask FatalError ()
+generatedFiles json =
+    BackendTask.Custom.run "generatedFiles"
+        json
+        (Decode.succeed ())
+        |> allowFatal
+
+
+run2 : CliOptions -> BackendTask FatalError ()
+run2 msg =
+    (case msg of
+        FromUrl options ->
+            introspectSchemaFromUrl
+                { graphqlUrl = options.url
+                , excludeDeprecated = options.excludeDeprecated
+                , outputPath = options.outputPath
+                , baseModule = options.base
+                , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
+                , customDecodersModule =
+                    if options.skipValidation then
+                        Nothing
+
+                    else
+                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                }
+
+        FromIntrospectionFile options ->
+            introspectSchemaFromFile
+                { introspectionFilePath = options.file
+                , outputPath = options.outputPath
+                , baseModule = options.base
+                , customDecodersModule =
+                    if options.skipValidation then
+                        Nothing
+
+                    else
+                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                }
+
+        FromSchemaFile options ->
+            schemaFromFile
+                { schemaFilePath = options.file
+                , outputPath = options.outputPath
+                , baseModule = options.base
+                , customDecodersModule =
+                    if options.skipValidation then
+                        Nothing
+
+                    else
+                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                }
+    )
+        |> BackendTask.andThen
+            (\introspectionJson ->
+                let
+                    ( baseModule, scalarCodecsModule, skipElmFormat ) =
+                        case msg of
+                            FromUrl options ->
+                                ( options.base, options.scalarCodecsModule, options.skipElmFormat )
+
+                            FromIntrospectionFile options ->
+                                ( options.base, options.scalarCodecsModule, options.skipElmFormat )
+
+                            FromSchemaFile options ->
+                                ( options.base, options.scalarCodecsModule, options.skipElmFormat )
+                in
+                run3
+                    { apiSubmodule = baseModule
+                    , scalarCodecsModule = scalarCodecsModule
+                    , skipElmFormat = skipElmFormat
+                    }
+                    introspectionJson
+            )
+
+
+run3 : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool } -> Json.Encode.Value -> BackendTask FatalError ()
+run3 { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
     let
+        decoder : Decoder (Dict String String)
         decoder =
             Graphql.Parser.decoder
                 { apiSubmodule = apiSubmodule
@@ -33,14 +169,24 @@ run { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
     in
     case Decode.decodeValue decoder introspectionQueryJson of
         Ok fields ->
+            {-
+               outputPath: string,
+               baseModule: string[],
+               customDecodersModule: string | null
+            -}
             Json.Encode.object
                 [ ( "generatedFile", Json.Encode.dict identity Json.Encode.string fields )
                 , ( "skipElmFormat", Json.Encode.bool skipElmFormat )
+                , ( "baseModule", Json.Encode.list Json.Encode.string apiSubmodule )
+                , ( "outputPath", Json.Encode.string "./" {- TODO -} )
+                , ( "customDecodersModule", scalarCodecsModule |> Maybe.map ModuleName.toString |> Maybe.withDefault "" |> Json.Encode.string )
                 ]
-                |> Ports.generatedFiles
+                |> generatedFiles
 
         Err error ->
-            """I couldn't understand the JSON for this schema. Here are some reasons this could fail:
+            { title = "Invalid introspection schema"
+            , body =
+                """I couldn't understand the JSON for this schema. Here are some reasons this could fail:
 
 - You may have provided a part of the introspection schema that is incomplete or invalid. Be sure you got it using the correct introspection query, or consider using another option like `elm-graphql --schema-file` if you want to use SDL syntax instead of JSON.
 - Perhaps the schema is invalid (even well-established tools sometimes generate incorrect values)
@@ -48,9 +194,16 @@ run { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
 
 
 
-"""
-                ++ Decode.errorToString error
-                |> Ports.printAndExitFailure
+            """ ++ Decode.errorToString error
+            }
+                |> printAndExitFailure
+
+
+printAndExitFailure :
+    { title : String, body : String }
+    -> BackendTask FatalError ()
+printAndExitFailure error =
+    BackendTask.fail (FatalError.build error)
 
 
 type CliOptions
@@ -176,96 +329,3 @@ baseOption =
 validateModuleName : String -> Cli.Validate.ValidationResult
 validateModuleName =
     Cli.Validate.regexWithMessage "I expected an Elm module name" "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
-
-
-type alias Flags =
-    Program.FlagsIncludingArgv {}
-
-
-init : Flags -> CliOptions -> ( Model, Cmd msg )
-init flags msg =
-    case msg of
-        FromUrl options ->
-            ( ()
-            , Ports.introspectSchemaFromUrl
-                { graphqlUrl = options.url
-                , excludeDeprecated = options.excludeDeprecated
-                , outputPath = options.outputPath
-                , baseModule = options.base
-                , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
-                , customDecodersModule =
-                    if options.skipValidation then
-                        Nothing
-
-                    else
-                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
-                }
-            )
-
-        FromIntrospectionFile options ->
-            ( ()
-            , Ports.introspectSchemaFromFile
-                { introspectionFilePath = options.file
-                , outputPath = options.outputPath
-                , baseModule = options.base
-                , customDecodersModule =
-                    if options.skipValidation then
-                        Nothing
-
-                    else
-                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
-                }
-            )
-
-        FromSchemaFile options ->
-            ( ()
-            , Ports.schemaFromFile
-                { schemaFilePath = options.file
-                , outputPath = options.outputPath
-                , baseModule = options.base
-                , customDecodersModule =
-                    if options.skipValidation then
-                        Nothing
-
-                    else
-                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
-                }
-            )
-
-
-update : CliOptions -> Msg -> Model -> ( Model, Cmd Msg )
-update cliOptions msg model =
-    case msg of
-        GenerateFiles introspectionJson ->
-            let
-                ( baseModule, scalarCodecsModule, skipElmFormat ) =
-                    case cliOptions of
-                        FromUrl options ->
-                            ( options.base, options.scalarCodecsModule, options.skipElmFormat )
-
-                        FromIntrospectionFile options ->
-                            ( options.base, options.scalarCodecsModule, options.skipElmFormat )
-
-                        FromSchemaFile options ->
-                            ( options.base, options.scalarCodecsModule, options.skipElmFormat )
-            in
-            ( ()
-            , run
-                { apiSubmodule = baseModule
-                , scalarCodecsModule = scalarCodecsModule
-                , skipElmFormat = skipElmFormat
-                }
-                introspectionJson
-            )
-
-
-main : Program.StatefulProgram Model Msg CliOptions {}
-main =
-    Program.stateful
-        { printAndExitFailure = Ports.printAndExitFailure
-        , printAndExitSuccess = Ports.printAndExitSuccess
-        , init = init
-        , subscriptions = \_ -> Ports.generateFiles GenerateFiles
-        , update = update
-        , config = program
-        }
