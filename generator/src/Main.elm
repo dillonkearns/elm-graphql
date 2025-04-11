@@ -215,7 +215,7 @@ type alias UrlArgs =
     , base : List String
     , outputPath : String
     , excludeDeprecated : Bool
-    , headers : Dict.Dict String String
+    , headers : Dict String String
     , scalarCodecsModule : Maybe ModuleName
     , skipElmFormat : Bool
     , skipValidation : Bool
@@ -232,7 +232,7 @@ type alias FileArgs =
     }
 
 
-parseHeaders : List String -> Result String (Dict.Dict String String)
+parseHeaders : List String -> Result String (Dict String String)
 parseHeaders headers =
     headers
         |> List.map parseHeader
