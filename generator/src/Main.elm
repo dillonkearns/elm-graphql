@@ -30,10 +30,6 @@ introspectSchemaFromUrl _ =
         |> allowFatal
 
 
-
---Debug.todo ""
-
-
 introspectSchemaFromFile :
     { introspectionFilePath : String
     , outputPath : String
@@ -42,14 +38,6 @@ introspectSchemaFromFile :
     }
     -> BackendTask FatalError Json.Encode.Value
 introspectSchemaFromFile options =
-    {-
-       {
-           introspectionFilePath: string;
-           outputPath: string;
-           baseModule: string[];
-           customDecodersModule: string | null;
-         }
-    -}
     BackendTask.Custom.run "introspectSchemaFromFile"
         (Json.Encode.object
             [ ( "introspectionFilePath", Json.Encode.string options.introspectionFilePath )
