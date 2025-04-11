@@ -10,7 +10,7 @@ import Test exposing (..)
 
 all : Test
 all =
-    describe "typekind decoder"
+    describe "type reference decoder and parser"
         [ test "decodes" <|
             \_ ->
                 """
