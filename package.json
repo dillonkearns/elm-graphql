@@ -1,6 +1,7 @@
 {
   "name": "@dillonkearns/elm-graphql",
   "version": "4.3.1",
+  "type": "module",
   "files": [
     "dist/bundle.js",
     "bin/elm-graphql"

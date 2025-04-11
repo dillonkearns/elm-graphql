@@ -1,3 +1,15 @@
 #!/usr/bin/env node
 
-require('../dist/bundle.js')
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import * as path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Use dynamic import for the bundle
+import(path.join(__dirname, '../dist/bundle.js'))
+  .catch(e => {
+    console.error('Error loading bundle:', e);
+    process.exit(1);
+  });
