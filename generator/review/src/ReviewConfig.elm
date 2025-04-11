@@ -32,13 +32,15 @@ import Review.Rule exposing (Rule)
 config : List Rule
 config =
     [ NoUnused.Modules.rule
-    -- src/Main.elm is an elm-pages script, so elm-review can't detect that it Main.run is an Elm app entrypoint
-        |> Review.Rule.ignoreErrorsForFiles ["src/Main.elm"]
+        -- src/Main.elm is an elm-pages script, so elm-review can't detect that it Main.run is an Elm app entrypoint
+        |> Review.Rule.ignoreErrorsForFiles [ "src/Main.elm" ]
+
     -- src/Main.elm is an elm-pages script, so elm-review can't detect that it Main.run is an Elm app entrypoint
     , NoUnused.Exports.rule
-        |> Review.Rule.ignoreErrorsForFiles ["src/Main.elm"]
+        |> Review.Rule.ignoreErrorsForFiles [ "src/Main.elm" ]
     , NoUnused.Dependencies.rule
     , NoUnused.CustomTypeConstructorArgs.rule
+
     --, NoUnused.Variables.rule
     -- , NoUnused.CustomTypeConstructors.rule []
     --, NoUnused.Parameters.rule
