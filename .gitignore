@@ -5,6 +5,7 @@ documentation.json
 docs.json
 */elm.js
 *elm-graphql-metadata.json
+generator/.elm-pages/
 
 # elm-package generated files
 elm-stuff
