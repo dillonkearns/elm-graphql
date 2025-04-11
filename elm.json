@@ -26,6 +26,6 @@
         "lukewestby/elm-string-interpolate": "1.0.4 <= v < 2.0.0"
     },
     "test-dependencies": {
-        "elm-explorations/test": "1.0.0 <= v < 2.0.0"
+        "elm-explorations/test": "2.0.0 <= v < 3.0.0"
     }
 }
