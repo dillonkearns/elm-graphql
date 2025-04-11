@@ -7,6 +7,7 @@
     "bin/elm-graphql"
   ],
   "scripts": {
+    "prebuild": "node generator/src/generate-versions.js",
     "build": "elm-pages bundle-script --output dist/bundle.js generator/src/Main.elm",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",

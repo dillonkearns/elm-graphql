@@ -1,0 +1,4 @@
+// This file is auto-generated during build
+// Do not modify manually
+export const npmPackageVersion = "%%NPM_VERSION%%";
+export const elmPackageVersion = "%%ELM_VERSION%%";

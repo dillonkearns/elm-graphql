@@ -10,12 +10,8 @@ import {
   warnAndExitIfContainsNonGenerated,
   generateOrExitIntrospectionFileFromSchema,
 } from "./src/cli/generated-code-handler";
-// const npmPackageVersion = require("../../package.json").version;
-// const elmPackageVersion = require("../../elm.json").version;
-// const npmPackageVersion = fs.readFileSync("../../package.json").toString();
-// const elmPackageVersion = fs.readFileSync("../../elm.json").toString();
-const npmPackageVersion = "TODO";
-const elmPackageVersion = "TODO";
+// Import versions from the generated file
+import { npmPackageVersion, elmPackageVersion } from "./src/versions.js";
 
 // const elmPackageVersion = require("../../elm.json").version;
 
