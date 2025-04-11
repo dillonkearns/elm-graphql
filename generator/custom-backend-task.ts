@@ -55,10 +55,27 @@ export async function introspectSchemaFromFile({
   customDecodersModule: string | null;
 }) {
   warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
-  const introspectionFileJson = JSON.parse(
-    fs.readFileSync(introspectionFilePath).toString()
-  );
-  return introspectionFileJson.data || introspectionFileJson;
+  try {
+    const introspectionFileJson = JSON.parse(
+      fs.readFileSync(introspectionFilePath).toString()
+    );
+    
+    // If it has a data.__schema structure, return the data property
+    if (introspectionFileJson.data && introspectionFileJson.data.__schema) {
+      return introspectionFileJson.data;
+    }
+    
+    // If it has a __schema property directly, return the whole object
+    if (introspectionFileJson.__schema) {
+      return introspectionFileJson;
+    }
+    
+    // Otherwise return the whole JSON, whatever it is
+    return introspectionFileJson;
+  } catch (e) {
+    console.error("Failed to parse introspection file as JSON", e);
+    process.exit(1);
+  }
 }
 
 export async function introspectSchemaFromUrl({
