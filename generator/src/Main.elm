@@ -22,10 +22,26 @@ run =
     Script.withCliOptions program run2
 
 
-introspectSchemaFromUrl : a -> BackendTask FatalError Json.Encode.Value
-introspectSchemaFromUrl _ =
+introspectSchemaFromUrl : 
+    { graphqlUrl : String
+    , excludeDeprecated : Bool
+    , outputPath : String
+    , baseModule : List String
+    , headers : Json.Encode.Value
+    , customDecodersModule : Maybe String
+    } 
+    -> BackendTask FatalError Json.Encode.Value
+introspectSchemaFromUrl options =
     BackendTask.Custom.run "introspectSchemaFromUrl"
-        Json.Encode.null
+        (Json.Encode.object
+            [ ( "graphqlUrl", Json.Encode.string options.graphqlUrl )
+            , ( "excludeDeprecated", Json.Encode.bool options.excludeDeprecated )
+            , ( "outputPath", Json.Encode.string options.outputPath )
+            , ( "baseModule", options.baseModule |> Json.Encode.list Json.Encode.string )
+            , ( "headers", options.headers )
+            , ( "customDecodersModule", options.customDecodersModule |> Maybe.map Json.Encode.string |> Maybe.withDefault Json.Encode.null )
+            ]
+        )
         Decode.value
         |> allowFatal
 
