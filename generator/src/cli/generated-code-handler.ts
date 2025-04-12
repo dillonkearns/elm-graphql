@@ -39,7 +39,6 @@ export function warnAndExitIfContainsNonGenerated({
 export function generateOrExitIntrospectionFileFromSchema(
   schemaFilePath: string
 ) : {} | undefined {
-  console.log("schemaFilePath", schemaFilePath);
   if (fs.existsSync(schemaFilePath)) {
     const schemaData = fs.readFileSync(schemaFilePath, "utf-8");
     
@@ -57,10 +56,8 @@ export function generateOrExitIntrospectionFileFromSchema(
         return jsonData;
       }
       
-      console.log("JSON parsed but no schema structure found, trying as SDL");
     } catch (e) {
       // JSON parsing failed, try as SDL
-      console.log("Not valid JSON, trying as GraphQL SDL");
     }
     
     // If we get here, either it wasn't valid JSON or the JSON didn't have schema data
