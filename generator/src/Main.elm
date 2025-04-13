@@ -19,17 +19,17 @@ import String.Interpolate exposing (interpolate)
 
 run : Script
 run =
-    Script.withCliOptions program run2
+    Script.withCliOptions program (run2 >> BackendTask.quiet)
 
 
-introspectSchemaFromUrl : 
+introspectSchemaFromUrl :
     { graphqlUrl : String
     , excludeDeprecated : Bool
     , outputPath : String
     , baseModule : List String
     , headers : Json.Encode.Value
     , customDecodersModule : Maybe String
-    } 
+    }
     -> BackendTask FatalError Json.Encode.Value
 introspectSchemaFromUrl options =
     BackendTask.Custom.run "introspectSchemaFromUrl"
