@@ -7,8 +7,7 @@
     "bin/elm-graphql"
   ],
   "scripts": {
-    "prebuild": "node generator/src/generate-versions.js",
-    "build": "elm-pages bundle-script --output dist/bundle.js generator/src/Main.elm",
+    "build": "node generator/src/build.js",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "./bin/approve && elm-test-rs && (cd generator && elm-test-rs)",
@@ -31,12 +30,12 @@
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
     "@types/glob": "^8.1.0",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "elm-hot": "^1.1.6",
     "elm-hot-loader": "0.5.4",
     "elm-live": "4.0.2",
     "elm-optimize-level-2": "^0.3.5",
-    "elm-pages": "^3.0.22",
+    "elm-pages": "^3.0.23",
     "elm-review": "^2.13.2",
     "elm-test": "^0.19.1-revision6",
     "elm-tooling": "^1.15.1",
