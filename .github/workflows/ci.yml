@@ -12,15 +12,15 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js 15
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 15
+          node-version: 20
       # Re-use node_modules between runs until package-lock.json changes.
       - name: Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
@@ -29,7 +29,7 @@ jobs:
       # review/elm.json changes. The Elm compiler saves downloaded Elm packages
       # to ~/.elm, and elm-tooling saves downloaded tool executables there.
       - name: Cache ~/.elm
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.elm
           key: elm-${{ hashFiles('elm.json', 'elm-tooling.json', 'generator/elm.json', 'review/elm.json') }}

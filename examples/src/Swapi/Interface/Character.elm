@@ -48,29 +48,6 @@ maybeFragments =
     }
 
 
-{-| Which movies they appear in.
--}
-appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
-appearsIn =
-    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
-
-
-{-| Url to a profile picture for the character.
--}
-avatarUrl : SelectionSet String Swapi.Interface.Character
-avatarUrl =
-    Object.selectionForField "String" "avatarUrl" [] Decode.string
-
-
-{-| The friends of the character, or an empty list if they have none.
--}
-friends :
-    SelectionSet decodesTo Swapi.Interface.Character
-    -> SelectionSet (List decodesTo) Swapi.Interface.Character
-friends object____ =
-    Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
-
-
 {-| The ID of the character.
 -}
 id : SelectionSet CustomScalarCodecs.Id Swapi.Interface.Character
@@ -83,3 +60,26 @@ id =
 name : SelectionSet String Swapi.Interface.Character
 name =
     Object.selectionForField "String" "name" [] Decode.string
+
+
+{-| Which movies they appear in.
+-}
+appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
+appearsIn =
+    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+
+
+{-| The friends of the character, or an empty list if they have none.
+-}
+friends :
+    SelectionSet decodesTo Swapi.Interface.Character
+    -> SelectionSet (List decodesTo) Swapi.Interface.Character
+friends object____ =
+    Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
+
+
+{-| Url to a profile picture for the character.
+-}
+avatarUrl : SelectionSet String Swapi.Interface.Character
+avatarUrl =
+    Object.selectionForField "String" "avatarUrl" [] Decode.string

@@ -26,8 +26,8 @@ increment =
 
 
 type alias SendMessageRequiredArguments =
-    { characterId : CustomScalarCodecs.Id
-    , phrase : Swapi.Enum.Phrase.Phrase
+    { phrase : Swapi.Enum.Phrase.Phrase
+    , characterId : CustomScalarCodecs.Id
     }
 
 
@@ -36,4 +36,4 @@ sendMessage :
     -> SelectionSet decodesTo Swapi.Object.ChatMessage
     -> SelectionSet (Maybe decodesTo) RootMutation
 sendMessage requiredArgs____ object____ =
-    Object.selectionForCompositeField "sendMessage" [ Argument.required "characterId" requiredArgs____.characterId (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId), Argument.required "phrase" requiredArgs____.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object____ (Basics.identity >> Decode.nullable)
+    Object.selectionForCompositeField "sendMessage" [ Argument.required "phrase" requiredArgs____.phrase (Encode.enum Swapi.Enum.Phrase.toString), Argument.required "characterId" requiredArgs____.characterId (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object____ (Basics.identity >> Decode.nullable)

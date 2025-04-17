@@ -1,6 +1,7 @@
 {
     "tools": {
         "elm": "0.19.1",
-        "elm-format": "0.8.3"
+        "elm-format": "0.8.3",
+        "elm-test-rs": "3.0.0"
     }
 }

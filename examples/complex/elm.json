@@ -22,7 +22,7 @@
             "lukewestby/elm-string-interpolate": "1.0.4",
             "mdgriffith/elm-ui": "1.1.0",
             "rtfeldman/elm-iso8601-date-strings": "1.1.2",
-            "ryannhg/date-format": "2.1.0"
+            "ryan-haskell/date-format": "1.0.0"
         },
         "indirect": {
             "elm/bytes": "1.0.7",

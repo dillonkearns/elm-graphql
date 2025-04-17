@@ -20,6 +20,28 @@ import Swapi.Scalar
 import Swapi.Union
 
 
+now : SelectionSet CustomScalarCodecs.PosixTime RootQuery
+now =
+    Object.selectionForField "CustomScalarCodecs.PosixTime" "now" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecPosixTime |> .decoder)
+
+
+type alias HumanRequiredArguments =
+    { id : CustomScalarCodecs.Id }
+
+
+{-|
+
+  - id - ID of the human.
+
+-}
+human :
+    HumanRequiredArguments
+    -> SelectionSet decodesTo Swapi.Object.Human
+    -> SelectionSet (Maybe decodesTo) RootQuery
+human requiredArgs____ object____ =
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object____ (Basics.identity >> Decode.nullable)
+
+
 type alias DroidRequiredArguments =
     { id : CustomScalarCodecs.Id }
 
@@ -35,29 +57,6 @@ droid :
     -> SelectionSet (Maybe decodesTo) RootQuery
 droid requiredArgs____ object____ =
     Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs____.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object____ (Basics.identity >> Decode.nullable)
-
-
-{-| Getting this field will result in an error.
--}
-forcedError : SelectionSet (Maybe String) RootQuery
-forcedError =
-    Object.selectionForField "(Maybe String)" "forcedError" [] (Decode.string |> Decode.nullable)
-
-
-type alias GreetRequiredArguments =
-    { input : Swapi.InputObject.Greeting }
-
-
-greet :
-    GreetRequiredArguments
-    -> SelectionSet String RootQuery
-greet requiredArgs____ =
-    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs____.input Swapi.InputObject.encodeGreeting ] Decode.string
-
-
-hello : SelectionSet String RootQuery
-hello =
-    Object.selectionForField "String" "hello" [] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -110,28 +109,29 @@ heroUnion fillInOptionals____ object____ =
     Object.selectionForCompositeField "heroUnion" optionalArgs____ object____ Basics.identity
 
 
-type alias HumanRequiredArguments =
-    { id : CustomScalarCodecs.Id }
+type alias GreetRequiredArguments =
+    { input : Swapi.InputObject.Greeting }
 
 
-{-|
-
-  - id - ID of the human.
-
--}
-human :
-    HumanRequiredArguments
-    -> SelectionSet decodesTo Swapi.Object.Human
-    -> SelectionSet (Maybe decodesTo) RootQuery
-human requiredArgs____ object____ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object____ (Basics.identity >> Decode.nullable)
-
-
-now : SelectionSet CustomScalarCodecs.PosixTime RootQuery
-now =
-    Object.selectionForField "CustomScalarCodecs.PosixTime" "now" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecPosixTime |> .decoder)
+greet :
+    GreetRequiredArguments
+    -> SelectionSet String RootQuery
+greet requiredArgs____ =
+    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs____.input Swapi.InputObject.encodeGreeting ] Decode.string
 
 
 today : SelectionSet String RootQuery
 today =
     Object.selectionForField "String" "today" [] Decode.string
+
+
+hello : SelectionSet String RootQuery
+hello =
+    Object.selectionForField "String" "hello" [] Decode.string
+
+
+{-| Getting this field will result in an error.
+-}
+forcedError : SelectionSet (Maybe String) RootQuery
+forcedError =
+    Object.selectionForField "(Maybe String)" "forcedError" [] (Decode.string |> Decode.nullable)

@@ -28,7 +28,7 @@ leaf fieldName arguments =
 
 all : Test
 all =
-    describe "document"
+    describe "document serialization"
         [ test "single leaf" <|
             \() ->
                 document [ leaf "avatar" [] ]

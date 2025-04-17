@@ -41,10 +41,36 @@ export function generateOrExitIntrospectionFileFromSchema(
 ) : {} | undefined {
   if (fs.existsSync(schemaFilePath)) {
     const schemaData = fs.readFileSync(schemaFilePath, "utf-8");
-
-    return JSON.parse(JSON.stringify(
-      introspectionFromSchema(buildSchema(schemaData.toString()))
-    ));
+    
+    try {
+      // Try parsing as JSON first
+      const jsonData = JSON.parse(schemaData);
+      
+      // If it has a data.__schema structure, return the data property
+      if (jsonData.data && jsonData.data.__schema) {
+        return jsonData.data;
+      }
+      
+      // If it has a __schema property directly, return the whole object
+      if (jsonData.__schema) {
+        return jsonData;
+      }
+      
+    } catch (e) {
+      // JSON parsing failed, try as SDL
+    }
+    
+    // If we get here, either it wasn't valid JSON or the JSON didn't have schema data
+    try {
+      return JSON.parse(
+        JSON.stringify(
+          introspectionFromSchema(buildSchema(schemaData.toString()))
+        )
+      );
+    } catch (sdlError) {
+      console.error("Failed to parse schema file as either JSON or SDL", sdlError);
+      process.exit(1);
+    }
   } else {
     console.log("Schema file not found");
     process.exit(1);

@@ -48,6 +48,20 @@ maybeFragments =
     }
 
 
+{-| The ID of the character.
+-}
+id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Interface.Character
+id =
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
+
+
+{-| The name of the character.
+-}
+name : SelectionSet String Normalize.Interface.Character
+name =
+    Object.selectionForField "String" "name" [] Decode.string
+
+
 {-| Which movies they appear in.
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
@@ -62,17 +76,3 @@ friends :
     -> SelectionSet (List decodesTo) Normalize.Interface.Character
 friends object____ =
     Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
-
-
-{-| The ID of the character.
--}
-id : SelectionSet Normalize.ScalarCodecs.Id Normalize.Interface.Character
-id =
-    Object.selectionForField "ScalarCodecs.Id" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
-
-
-{-| The name of the character.
--}
-name : SelectionSet String Normalize.Interface.Character
-name =
-    Object.selectionForField "String" "name" [] Decode.string
