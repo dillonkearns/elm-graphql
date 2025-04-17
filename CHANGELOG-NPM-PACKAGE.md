@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.3.2-beta.0] - 2025-04-17
+
+### Changed
+
+- Migrate the CLI from a TypeScript/Parcel bundle to an elm-pages script. See [#641](https://github.com/dillonkearns/elm-graphql/pull/641).
+
 ## [4.3.1] - 2022-10-24
 
 ### Fixed
