@@ -1,0 +1,10 @@
+- args:
+    sql: CREATE TABLE "public"."users"("id" serial NOT NULL, "username" text NOT NULL,
+      "password" text NOT NULL, "token" text , "created_at" timestamp with time zone
+      NOT NULL DEFAULT now(), "last_seen" timestamp with time zone NOT NULL DEFAULT
+      now(), PRIMARY KEY ("id") );
+  type: run_sql
+- args:
+    name: users
+    schema: public
+  type: add_existing_table_or_view
