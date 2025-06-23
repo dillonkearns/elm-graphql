@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.3.2] - 2025-06-23
+
+### Changed
+
+- Beta release promoted to stable. Internal changes to use elm-pages to create the CLI tool now.
+
 ## [4.3.2-beta.0] - 2025-04-17
 
 ### Changed
