@@ -91,9 +91,7 @@ buildShapeInputOneOf fillOptionals____ =
             fillOptionals____
                 { base = Absent, regular = Absent }
     in
-    { base = optionals____.base
-    , regular = optionals____.regular
-    }
+    { base = optionals____.base, regular = optionals____.regular }
 
 
 type alias ShapeInputOneOfOptionalFields =
@@ -104,9 +102,10 @@ type alias ShapeInputOneOfOptionalFields =
 
 {-| Type for the ShapeInputOneOf input object.
 -}
-type ShapeInputOneOf
-    = Base ShapeInput
-    | Regular RegularShapeInput
+type alias ShapeInputOneOf =
+    { base : OptionalArgument ShapeInput
+    , regular : OptionalArgument RegularShapeInput
+    }
 
 
 {-| Encode a ShapeInputOneOf into a value that can be used as an argument.
@@ -114,6 +113,4 @@ type ShapeInputOneOf
 encodeShapeInputOneOf : ShapeInputOneOf -> Value
 encodeShapeInputOneOf input____ =
     Encode.maybeObject
-        [ ( "base", encodeShapeInput |> Encode.optional input____.base )
-        , ( "regular", encodeRegularShapeInput |> Encode.optional input____.regular )
-        ]
+        [ ( "base", encodeShapeInput |> Encode.optional input____.base ), ( "regular", encodeRegularShapeInput |> Encode.optional input____.regular ) ]
