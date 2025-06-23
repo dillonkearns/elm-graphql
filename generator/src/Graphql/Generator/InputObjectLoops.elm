@@ -13,7 +13,7 @@ any typeDefs =
 hasLoop : List TypeDefinition -> TypeDefinition -> Bool
 hasLoop typeDefs (TypeDefinition name definableType description) =
     case definableType of
-        InputObjectType fields ->
+        InputObjectType { fields } ->
             fields
                 |> List.map .typeRef
                 |> List.any (fieldIsCircular typeDefs name)
@@ -62,7 +62,7 @@ lookupInputObject typeDefs inputObjectName =
     List.filterMap
         (\(TypeDefinition name definableType description) ->
             case definableType of
-                InputObjectType fields ->
+                InputObjectType { fields } ->
                     if name == inputObjectName then
                         Just ( name, fields )
 

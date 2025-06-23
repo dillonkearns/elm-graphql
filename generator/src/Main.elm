@@ -29,6 +29,7 @@ introspectSchemaFromUrl :
     , baseModule : List String
     , headers : Json.Encode.Value
     , customDecodersModule : Maybe String
+    , isOneOfEnabled : Bool
     }
     -> BackendTask FatalError Json.Encode.Value
 introspectSchemaFromUrl options =
@@ -40,6 +41,7 @@ introspectSchemaFromUrl options =
             , ( "baseModule", options.baseModule |> Json.Encode.list Json.Encode.string )
             , ( "headers", options.headers )
             , ( "customDecodersModule", options.customDecodersModule |> Maybe.map Json.Encode.string |> Maybe.withDefault Json.Encode.null )
+            , ( "isOneOfEnabled", options.isOneOfEnabled |> Json.Encode.bool )
             ]
         )
         Decode.value
@@ -51,6 +53,7 @@ introspectSchemaFromFile :
     , outputPath : String
     , baseModule : List String
     , customDecodersModule : Maybe String
+    , isOneOfEnabled : Bool
     }
     -> BackendTask FatalError Json.Encode.Value
 introspectSchemaFromFile options =
@@ -60,6 +63,7 @@ introspectSchemaFromFile options =
             , ( "outputPath", Json.Encode.string options.outputPath )
             , ( "baseModule", options.baseModule |> Json.Encode.list Json.Encode.string )
             , ( "customDecodersModule", options.customDecodersModule |> Maybe.map Json.Encode.string |> Maybe.withDefault Json.Encode.null )
+            , ( "isOneOfEnabled", options.isOneOfEnabled |> Json.Encode.bool )
             ]
         )
         Decode.value
@@ -88,9 +92,7 @@ schemaFromFile options =
 
 generatedFiles : Json.Encode.Value -> BackendTask FatalError ()
 generatedFiles json =
-    BackendTask.Custom.run "generatedFiles"
-        json
-        (Decode.succeed ())
+    BackendTask.Custom.run "generatedFiles" json (Decode.succeed ())
         |> allowFatal
 
 
@@ -110,6 +112,7 @@ run2 msg =
 
                     else
                         options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , isOneOfEnabled = options.isOneOfEnabled
                 }
 
         FromIntrospectionFile options ->
@@ -123,6 +126,7 @@ run2 msg =
 
                     else
                         options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , isOneOfEnabled = options.isOneOfEnabled
                 }
 
         FromSchemaFile options ->
@@ -141,7 +145,12 @@ run2 msg =
         |> BackendTask.andThen
             (\introspectionJson ->
                 let
-                    record : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool, outputPath : String }
+                    record :
+                        { apiSubmodule : List String
+                        , scalarCodecsModule : Maybe ModuleName
+                        , skipElmFormat : Bool
+                        , outputPath : String
+                        }
                     record =
                         case msg of
                             FromUrl options ->
@@ -235,6 +244,7 @@ type alias UrlArgs =
     , scalarCodecsModule : Maybe ModuleName
     , skipElmFormat : Bool
     , skipValidation : Bool
+    , isOneOfEnabled : Bool
     }
 
 
@@ -245,6 +255,7 @@ type alias FileArgs =
     , scalarCodecsModule : Maybe ModuleName
     , skipElmFormat : Bool
     , skipValidation : Bool
+    , isOneOfEnabled : Bool
     }
 
 
@@ -284,6 +295,7 @@ program =
                 |> with scalarCodecsOption
                 |> with skipElmFormatOption
                 |> with skipScalarCodecValidationOption
+                |> with isOneOfEnabledOption
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -295,6 +307,7 @@ program =
                 |> with scalarCodecsOption
                 |> with skipElmFormatOption
                 |> with skipScalarCodecValidationOption
+                |> with isOneOfEnabledOption
                 |> OptionsParser.map FromIntrospectionFile
             )
         |> Program.add
@@ -305,6 +318,7 @@ program =
                 |> with scalarCodecsOption
                 |> with skipElmFormatOption
                 |> with skipScalarCodecValidationOption
+                |> with isOneOfEnabledOption
                 |> OptionsParser.map FromSchemaFile
             )
 
@@ -325,6 +339,11 @@ skipElmFormatOption =
 skipScalarCodecValidationOption : Option.Option Bool Bool Option.BeginningOption
 skipScalarCodecValidationOption =
     Option.flag "skip-validation"
+
+
+isOneOfEnabledOption : Option.Option Bool Bool Option.BeginningOption
+isOneOfEnabledOption =
+    Option.flag "enabled-one-of"
 
 
 outputPathOption : Option.Option (Maybe String) String Option.BeginningOption

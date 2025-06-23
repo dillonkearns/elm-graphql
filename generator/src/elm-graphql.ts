@@ -101,7 +101,8 @@ app.ports.introspectSchemaFromUrl.subscribe(
     outputPath,
     baseModule,
     headers,
-    customDecodersModule
+    customDecodersModule,
+    isOneOfEnabled
   }: {
     graphqlUrl: string;
     excludeDeprecated: boolean;
@@ -109,6 +110,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     baseModule: string[];
     headers: {};
     customDecodersModule: string | null;
+    isOneOfEnabled: boolean;
   }) => {
     warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
 
@@ -117,7 +119,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
       mode: "cors",
       headers: headers
     })
-      .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
+      .request(introspectionQuery(isOneOfEnabled), { includeDeprecated: !excludeDeprecated })
       .then(data => {
         onDataAvailable(data, outputPath, baseModule, customDecodersModule);
       })

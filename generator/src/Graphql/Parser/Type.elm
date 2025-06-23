@@ -65,13 +65,24 @@ scalarDecoder =
 
 inputObjectDecoder : Decoder TypeDefinition
 inputObjectDecoder =
-    Decode.map2 createInputObject
+    Decode.map3 createInputObject
         (Decode.field "name" Decode.string)
         (inputField
             |> Decode.andThen parseField
             |> Decode.list
             |> Decode.field "inputFields"
         )
+        isOneOfDecoder
+
+
+isOneOfDecoder : Decoder Bool
+isOneOfDecoder =
+    Decode.oneOf
+        [ Decode.field "isOneOf" Decode.bool
+
+        -- This catches missing or "isOneOf" = "null"
+        , Decode.succeed False
+        ]
 
 
 interfaceDecoder : Decoder TypeDefinition
@@ -184,9 +195,9 @@ createInterface interfaceName fields possibleTypes interfaces_ =
     typeDefinition interfaceName (InterfaceType fields possibleTypes interfaces_) Nothing
 
 
-createInputObject : String -> List Field -> TypeDefinition
-createInputObject inputObjectName fields =
-    typeDefinition inputObjectName (InputObjectType fields) Nothing
+createInputObject : String -> List Field -> Bool -> TypeDefinition
+createInputObject inputObjectName fields isOneOf =
+    typeDefinition inputObjectName (InputObjectType { fields = fields, isOneOf = isOneOf }) Nothing
 
 
 createUnion : String -> List String -> TypeDefinition
@@ -286,7 +297,7 @@ type DefinableType
     | InterfaceType (List Field) (List ClassCaseName) (List ClassCaseName)
     | UnionType (List ClassCaseName)
     | EnumType (List EnumValue)
-    | InputObjectType (List Field)
+    | InputObjectType { fields : List Field, isOneOf : Bool }
 
 
 type TypeReference

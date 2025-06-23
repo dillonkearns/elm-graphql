@@ -1,4 +1,5 @@
-export const introspectionQuery = `query IntrospectionQuery($includeDeprecated: Boolean!) {
+export function introspectionQuery(isOneOfEnabled:boolean)  {
+    return `query IntrospectionQuery($includeDeprecated: Boolean!) {
     __schema {
       queryType {
         name
@@ -19,6 +20,7 @@ export const introspectionQuery = `query IntrospectionQuery($includeDeprecated: 
     kind
     name
     description
+    ${isOneOfEnabled ?  'isOneOf' : ''}
     fields(includeDeprecated: $includeDeprecated) {
       name
       description
@@ -87,3 +89,4 @@ export const introspectionQuery = `query IntrospectionQuery($includeDeprecated: 
       }
     }
   }`
+}

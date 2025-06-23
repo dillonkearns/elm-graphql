@@ -36,3 +36,22 @@ createPunchListItem fillInOptionals____ =
                 |> List.filterMap Basics.identity
     in
     Object.selectionForField "String" "createPunchListItem" optionalArgs____ Decode.string
+
+
+type alias CreatePunchListItemOneOfOptionalArguments =
+    { shapes : OptionalArgument (List (Maybe EdgeCases.InputObject.ShapeInputOneOf)) }
+
+
+createPunchListItemOneOf :
+    (CreatePunchListItemOneOfOptionalArguments -> CreatePunchListItemOneOfOptionalArguments)
+    -> SelectionSet String RootMutation
+createPunchListItemOneOf fillInOptionals____ =
+    let
+        filledInOptionals____ =
+            fillInOptionals____ { shapes = Absent }
+
+        optionalArgs____ =
+            [ Argument.optional "shapes" filledInOptionals____.shapes (EdgeCases.InputObject.encodeShapeInputOneOf |> Encode.maybe |> Encode.list) ]
+                |> List.filterMap Basics.identity
+    in
+    Object.selectionForField "String" "createPunchListItemOneOf" optionalArgs____ Decode.string

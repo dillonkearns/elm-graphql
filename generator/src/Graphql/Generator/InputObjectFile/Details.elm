@@ -9,4 +9,5 @@ type alias InputObjectDetails =
     , fields : List Type.Field
     , name : ClassCaseName
     , hasLoop : Bool
+    , isOneOf : Bool
     }

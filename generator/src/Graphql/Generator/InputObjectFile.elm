@@ -187,12 +187,13 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 isInputObject : List TypeDefinition -> TypeDefinition -> Maybe InputObjectDetails
 isInputObject typeDefs ((TypeDefinition name definableType description) as typeDef) =
     case definableType of
-        Type.InputObjectType fields ->
+        Type.InputObjectType { fields, isOneOf } ->
             Just
                 { name = name
                 , definableType = definableType
                 , fields = fields
                 , hasLoop = typeDef |> InputObjectLoops.hasLoop typeDefs
+                , isOneOf = isOneOf
                 }
 
         _ ->

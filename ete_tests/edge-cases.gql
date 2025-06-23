@@ -8,8 +8,22 @@ input ShapeInput {
   geometry: [[Float]]
 }
 
+input ShapeInputOneOf @oneOf {
+  base: ShapeInput
+  regular: RegularShapeInput
+}
+
+input RegularShapeInput {
+  kind: RegularShapeInputKind
+}
+
+enum RegularShapeInputKind {
+  TRIANGLE, CIRCLE, SQUARE
+}
+
 type RootMutationType {
   createPunchListItem(shapes: [ShapeInput]): String!
+  createPunchListItemOneOf(shapes: [ShapeInputOneOf]): String!
 }
 
 type RootQueryType {

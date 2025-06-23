@@ -76,6 +76,7 @@ export async function introspectSchemaFromUrl({
   baseModule,
   headers,
   customDecodersModule,
+  isOneOfEnabled
 }: {
   graphqlUrl: string;
   excludeDeprecated: boolean;
@@ -83,6 +84,7 @@ export async function introspectSchemaFromUrl({
   baseModule: string[];
   headers: {};
   customDecodersModule: string | null;
+  isOneOfEnabled: boolean;
 }) {
   warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
 
@@ -90,7 +92,7 @@ export async function introspectSchemaFromUrl({
   return await new GraphQLClient(graphqlUrl, {
     mode: "cors",
     headers: headers,
-  }).request(introspectionQuery, { includeDeprecated: !excludeDeprecated });
+  }).request(introspectionQuery(isOneOfEnabled), { includeDeprecated: !excludeDeprecated });
 }
 
 function makeEmptyDirectories(

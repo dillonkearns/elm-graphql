@@ -4,6 +4,7 @@
 
 module EdgeCases.InputObject exposing (..)
 
+import EdgeCases.Enum.RegularShapeInputKind
 import EdgeCases.Interface
 import EdgeCases.Object
 import EdgeCases.Scalar
@@ -15,6 +16,36 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
+
+
+buildRegularShapeInput :
+    (RegularShapeInputOptionalFields -> RegularShapeInputOptionalFields)
+    -> RegularShapeInput
+buildRegularShapeInput fillOptionals____ =
+    let
+        optionals____ =
+            fillOptionals____
+                { kind = Absent }
+    in
+    { kind = optionals____.kind }
+
+
+type alias RegularShapeInputOptionalFields =
+    { kind : OptionalArgument EdgeCases.Enum.RegularShapeInputKind.RegularShapeInputKind }
+
+
+{-| Type for the RegularShapeInput input object.
+-}
+type alias RegularShapeInput =
+    { kind : OptionalArgument EdgeCases.Enum.RegularShapeInputKind.RegularShapeInputKind }
+
+
+{-| Encode a RegularShapeInput into a value that can be used as an argument.
+-}
+encodeRegularShapeInput : RegularShapeInput -> Value
+encodeRegularShapeInput input____ =
+    Encode.maybeObject
+        [ ( "kind", Encode.enum EdgeCases.Enum.RegularShapeInputKind.toString |> Encode.optional input____.kind ) ]
 
 
 buildShapeInput :
@@ -49,3 +80,40 @@ encodeShapeInput : ShapeInput -> Value
 encodeShapeInput input____ =
     Encode.maybeObject
         [ ( "kind", Encode.string |> Encode.optional input____.kind ), ( "geometry", (Encode.float |> Encode.maybe |> Encode.list |> Encode.maybe |> Encode.list) |> Encode.optional input____.geometry ) ]
+
+
+buildShapeInputOneOf :
+    (ShapeInputOneOfOptionalFields -> ShapeInputOneOfOptionalFields)
+    -> ShapeInputOneOf
+buildShapeInputOneOf fillOptionals____ =
+    let
+        optionals____ =
+            fillOptionals____
+                { base = Absent, regular = Absent }
+    in
+    { base = optionals____.base
+    , regular = optionals____.regular
+    }
+
+
+type alias ShapeInputOneOfOptionalFields =
+    { base : OptionalArgument ShapeInput
+    , regular : OptionalArgument RegularShapeInput
+    }
+
+
+{-| Type for the ShapeInputOneOf input object.
+-}
+type ShapeInputOneOf
+    = Base ShapeInput
+    | Regular RegularShapeInput
+
+
+{-| Encode a ShapeInputOneOf into a value that can be used as an argument.
+-}
+encodeShapeInputOneOf : ShapeInputOneOf -> Value
+encodeShapeInputOneOf input____ =
+    Encode.maybeObject
+        [ ( "base", encodeShapeInput |> Encode.optional input____.base )
+        , ( "regular", encodeRegularShapeInput |> Encode.optional input____.regular )
+        ]
