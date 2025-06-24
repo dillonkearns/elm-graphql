@@ -10,6 +10,6 @@
   "devDependencies": {
     "elm": "latest-0.19.1",
     "elm-format": "0.8.3",
-    "elm-live": "3.4.0"
+    "elm-live": "4.0.2"
   }
 }
