@@ -1,0 +1,93 @@
+version: 2
+updates:
+- package-ecosystem: elm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 10
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.22
+    - 14.14.25
+    - 14.14.27
+    - 14.14.28
+    - 14.14.30
+    - 14.14.31
+    - 14.14.32
+    - 14.14.33
+    - 14.14.34
+    - 14.14.35
+    - 14.14.36
+    - 14.14.37
+    - 14.14.39
+    - 14.14.41
+    - 15.0.0
+  - dependency-name: typescript
+    versions:
+    - 4.1.3
+    - 4.2.2
+    - 4.2.3
+  - dependency-name: elm-live
+    versions:
+    - 4.0.2
+  - dependency-name: "@types/fs-extra"
+    versions:
+    - 9.0.6
+  - dependency-name: fs-extra
+    versions:
+    - 9.1.0
+  - dependency-name: node-elm-compiler
+    versions:
+    - 5.0.5
+  - dependency-name: "@types/request"
+    versions:
+    - 2.48.5
+  - dependency-name: ini
+    versions:
+    - 1.3.8
+  - dependency-name: elliptic
+    versions:
+    - 6.5.3
+    - 6.5.4
+  - dependency-name: dot-prop
+    versions:
+    - 4.2.1
+  - dependency-name: tar
+    versions:
+    - 4.4.13
+  - dependency-name: mixin-deep
+    versions:
+    - 1.3.2
+  - dependency-name: safer-eval
+    versions:
+    - 1.3.6
+- package-ecosystem: elm
+  directory: "/generator"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: elm-community/json-extra
+    versions:
+    - 4.3.0
+  - dependency-name: elm-community/string-extra
+    versions:
+    - 4.0.1
+  - dependency-name: elm-community/result-extra
+    versions:
+    - 2.4.0
+  - dependency-name: elm/json
+    versions:
+    - 1.1.3
+  - dependency-name: elm-explorations/test
+    versions:
+    - 1.2.2
