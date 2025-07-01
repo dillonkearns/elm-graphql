@@ -1,0 +1,21 @@
+- args:
+    permission:
+      allow_upsert: true
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+      - is_public
+      - task
+      localPresets:
+      - key: user_id
+        value: x-hasura-user-id
+      - key: ""
+        value: ""
+      set:
+        user_id: x-hasura-user-id
+    role: user
+    table:
+      name: todolist
+      schema: public
+  type: create_insert_permission

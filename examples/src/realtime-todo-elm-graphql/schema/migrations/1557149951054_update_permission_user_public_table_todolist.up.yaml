@@ -1,0 +1,22 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - created_at
+      - id
+      - is_completed
+      - is_public
+      - task
+      - user_id
+      filter:
+        _or:
+        - is_public:
+            _eq: true
+        - user_id:
+            _eq: X-Hasura-User-Id
+      limit: null
+    role: user
+    table:
+      name: todolist
+      schema: public
+  type: create_select_permission

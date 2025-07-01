@@ -1,0 +1,7 @@
+- args:
+    cascade: false
+    sql: |-
+      alter table users
+      add constraint unique_users_username
+      UNIQUE (username)
+  type: run_sql
